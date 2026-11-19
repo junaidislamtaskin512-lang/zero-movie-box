@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zero Movie Box — Premium Cinema & Downloads</title>
+    <title>Zero Movie Box</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-main: #06080c;
-            --bg-surface: #0d111a;
-            --bg-card: #131926;
+            --bg-main: #06080d;
+            --bg-surface: #0e131f;
+            --bg-card: #141b2b;
+            --accent: #e50914;
+            --accent-hover: #ff1723;
+            --accent-glow: rgba(229, 9, 20, 0.42);
             --gold: #f59e0b;
-            --gold-soft: rgba(245, 158, 11, 0.16);
-            --crimson: #e11d48;
-            --crimson-glow: rgba(225, 29, 72, 0.42);
             --emerald: #10b981;
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
-            --border-glass: rgba(255, 255, 255, 0.09);
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         * {
@@ -30,271 +30,295 @@
         }
 
         body {
-            background: radial-gradient(circle at top, #121829 0%, var(--bg-main) 55%);
-            color: var(--text-primary);
+            background: var(--bg-main);
+            color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Top Premium Bar */
-        .channel-ribbon {
-            background: linear-gradient(90deg, rgba(225, 29, 72, 0.18), rgba(245, 158, 11, 0.18));
-            border-bottom: 1px solid var(--border-glass);
-            padding: 7px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            font-size: 12px;
-        }
-
-        .ribbon-brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: #fde68a;
-        }
-
-        .ribbon-tag {
-            background: var(--gold-soft);
-            color: var(--gold);
-            border: 1px solid rgba(245, 158, 11, 0.35);
-            padding: 2px 9px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        /* Header */
+        /* Navbar */
         header {
             position: sticky;
             top: 0;
             z-index: 900;
-            background: rgba(6, 8, 12, 0.86);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-glass);
-            padding: 15px 5%;
+            background: rgba(6, 8, 13, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             flex-wrap: wrap;
         }
 
-        .brand-logo {
+        .brand {
             display: flex;
             align-items: center;
-            gap: 11px;
+            gap: 10px;
             cursor: pointer;
             user-select: none;
         }
 
-        .logo-emblem {
-            width: 40px;
-            height: 40px;
-            border-radius: 11px;
-            background: linear-gradient(135deg, var(--crimson), var(--gold));
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
             color: #fff;
-            box-shadow: 0 6px 20px var(--crimson-glow);
+            box-shadow: 0 4px 18px var(--accent-glow);
         }
 
-        .logo-text {
+        .brand-name {
             font-size: 22px;
             font-weight: 800;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.3px;
         }
 
-        .logo-text span {
-            background: linear-gradient(90deg, #ff4d6d, var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .brand-name span {
+            color: var(--accent);
         }
 
-        .search-wrap {
+        .search-form {
             display: flex;
             align-items: center;
             background: var(--bg-card);
-            border: 1px solid var(--border-glass);
+            border: 1px solid var(--border);
             border-radius: 999px;
-            padding: 8px 16px;
-            width: 350px;
+            padding: 7px 16px;
+            width: 340px;
             max-width: 100%;
             transition: 0.25s ease;
         }
 
-        .search-wrap:focus-within {
-            border-color: var(--gold);
-            box-shadow: 0 0 16px rgba(245, 158, 11, 0.22);
+        .search-form:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 14px var(--accent-glow);
         }
 
-        .search-wrap input {
+        .search-form input {
             background: transparent;
             border: none;
             outline: none;
-            color: var(--text-primary);
+            color: var(--text-main);
             width: 100%;
             font-size: 14px;
         }
 
-        .search-wrap button {
+        .search-form button {
             background: none;
             border: none;
-            color: var(--gold);
+            color: var(--accent);
             cursor: pointer;
             font-size: 15px;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
-            padding: 48px 5% 36px;
+            padding: 40px 5% 32px;
             background:
-                linear-gradient(180deg, rgba(6, 8, 12, 0.35) 0%, var(--bg-main) 100%),
-                url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-            border-bottom: 1px solid var(--border-glass);
-        }
-
-        .hero-inner {
-            max-width: 720px;
-            animation: fadeUp 0.6s ease;
-        }
-
-        .vip-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            background: var(--gold-soft);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            color: #fcd34d;
-            padding: 5px 14px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 14px;
+                linear-gradient(180deg, rgba(6, 8, 13, 0.35) 0%, var(--bg-main) 100%),
+                url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            border-bottom: 1px solid var(--border);
         }
 
         .hero h1 {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: 800;
-            line-height: 1.18;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .hero p {
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 14px;
-            line-height: 1.6;
+            max-width: 680px;
         }
 
-        /* Ad Slot */
-        .ad-container {
-            margin: 22px 5% 6px;
+        /* Ad Banner */
+        .ad-slot {
+            margin: 20px 5% 6px;
             background: var(--bg-surface);
-            border: 1px dashed rgba(245, 158, 11, 0.28);
-            border-radius: 12px;
-            padding: 14px;
+            border: 1px dashed rgba(255, 255, 255, 0.16);
+            border-radius: 10px;
+            padding: 13px;
             text-align: center;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 12px;
         }
 
-        /* Filter Bar */
-        .filter-bar {
+        /* Categories */
+        .nav-tabs {
             padding: 16px 5% 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .cat-list {
             display: flex;
             gap: 9px;
             overflow-x: auto;
-            padding-bottom: 4px;
         }
 
-        .cat-chip {
+        .tab-btn {
             background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            border: 1px solid var(--border);
             padding: 8px 17px;
             border-radius: 999px;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
-            transition: 0.25s ease;
+            transition: 0.2s ease;
         }
 
-        .cat-chip:hover, .cat-chip.active {
-            background: linear-gradient(135deg, var(--crimson), #b91c1c);
-            border-color: transparent;
-            box-shadow: 0 6px 18px var(--crimson-glow);
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 4px 16px var(--accent-glow);
         }
 
-        .quality-picker {
+        /* Special Series / Cartoon Season Box (CID, গোপাল ভাঁড়, মোটু পাতলু) */
+        .series-hub {
+            display: none;
+            margin: 14px 5% 4px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .series-hub.visible {
+            display: block;
+        }
+
+        .series-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .series-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .series-logo-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .season-select {
             background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            border: 1px solid var(--border);
             padding: 8px 14px;
-            border-radius: 10px;
+            border-radius: 9px;
             font-size: 13px;
+            font-weight: 600;
             outline: none;
             cursor: pointer;
         }
 
-        /* Catalog Grid */
-        .catalog-wrap {
+        .episode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 12px;
+        }
+
+        .ep-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .ep-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .ep-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .ep-title {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .ep-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Movie Catalog */
+        .main-wrap {
             padding: 18px 5% 60px;
         }
 
-        .catalog-head {
+        .section-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
-        .catalog-title {
-            font-size: 21px;
+        .section-title {
+            font-size: 20px;
             font-weight: 700;
-            border-left: 4px solid var(--gold);
+            border-left: 4px solid var(--accent);
             padding-left: 12px;
         }
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 20px;
         }
 
         .movie-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            animation: fadeUp 0.45s ease forwards;
+            transition: 0.28s ease;
+            animation: fadeUp 0.4s ease forwards;
         }
 
         .movie-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(245, 158, 11, 0.5);
-            box-shadow: 0 18px 34px rgba(0, 0, 0, 0.75);
+            transform: translateY(-7px);
+            border-color: rgba(229, 9, 20, 0.5);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.7);
         }
 
         .poster-box {
             position: relative;
-            height: 280px;
-            background: #1a2234;
+            height: 275px;
+            background: #1b2234;
             overflow: hidden;
         }
 
@@ -302,7 +326,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.45s ease, filter 0.3s ease;
+            transition: 0.4s ease;
         }
 
         .movie-card:hover .poster-box img {
@@ -310,337 +334,224 @@
             filter: brightness(0.65);
         }
 
-        .tag-quality {
+        .q-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(135deg, var(--crimson), #9f1239);
+            top: 9px;
+            right: 9px;
+            background: var(--accent);
             color: #fff;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-        }
-
-        .tag-lang {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(6, 8, 12, 0.85);
-            border: 1px solid var(--border-glass);
-            color: #fcd34d;
             font-size: 10px;
             font-weight: 700;
             padding: 3px 7px;
-            border-radius: 6px;
+            border-radius: 5px;
+        }
+
+        .l-badge {
+            position: absolute;
+            top: 9px;
+            left: 9px;
+            background: rgba(6, 8, 13, 0.85);
+            border: 1px solid var(--border);
+            color: #f3f4f6;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 7px;
+            border-radius: 5px;
             text-transform: uppercase;
         }
 
-        .hover-play {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.25s ease;
+        .card-body {
+            padding: 12px;
         }
 
-        .movie-card:hover .hover-play {
-            opacity: 1;
-        }
-
-        .play-ring {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--crimson), var(--gold));
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-        }
-
-        .card-info {
-            padding: 13px 14px 15px;
-        }
-
-        .card-name {
+        .card-title {
             font-size: 14px;
             font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
-        .card-sub {
+        .card-foot {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
         }
 
-        .star-score {
+        .star {
             color: var(--gold);
             font-weight: 600;
         }
 
         /* Pagination */
-        .pager {
+        .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 14px;
-            margin-top: 34px;
+            gap: 12px;
+            margin-top: 32px;
         }
 
-        .pager-btn {
+        .page-btn {
             background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-glass);
-            padding: 9px 18px;
-            border-radius: 9px;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
         }
 
-        .pager-btn:hover:not(:disabled) {
-            background: var(--gold);
-            color: #06080c;
-            border-color: var(--gold);
+        .page-btn:hover:not(:disabled) {
+            background: var(--accent);
+            border-color: var(--accent);
         }
 
-        .pager-btn:disabled {
+        .page-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
 
-        /* Premium Modal */
-        .modal-backdrop {
+        /* Landscape Player Modal */
+        .modal {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 2000;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(10px);
-            padding: 16px;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(8px);
+            padding: 14px;
             overflow-y: auto;
             align-items: center;
             justify-content: center;
         }
 
-        .modal-backdrop.open {
+        .modal.open {
             display: flex;
         }
 
-        .modal-panel {
+        .modal-dialog {
             width: 100%;
-            max-width: 960px;
+            max-width: 1040px;
             background: var(--bg-surface);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            border-radius: 16px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.9);
-            animation: popIn 0.25s ease;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
         }
 
         .modal-top {
-            padding: 14px 20px;
+            padding: 12px 18px;
             background: #090c14;
-            border-bottom: 1px solid var(--border-glass);
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 12px;
         }
 
-        .modal-brand-strip {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 9px 20px;
-            background: linear-gradient(90deg, rgba(225, 29, 72, 0.14), rgba(245, 158, 11, 0.14));
-            border-bottom: 1px solid var(--border-glass);
-            font-size: 12px;
-        }
-
-        .brand-highlight {
-            font-weight: 700;
-            color: #fde68a;
-        }
-
-        .close-x {
-            width: 36px;
-            height: 36px;
-            border-radius: 9px;
-            border: 1px solid var(--border-glass);
+        .close-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
             background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 20px;
+            color: #fff;
+            font-size: 19px;
             cursor: pointer;
-            transition: 0.2s;
         }
 
-        .close-x:hover {
-            background: var(--crimson);
-            border-color: var(--crimson);
+        .close-btn:hover {
+            background: var(--accent);
         }
 
-        .video-stage {
+        /* Landscape 16:9 Stage */
+        .landscape-stage {
             position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             background: #000;
         }
 
-        .video-stage iframe {
-            position: absolute;
-            inset: 0;
+        .landscape-stage iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
         }
 
-        .modal-body-pad {
-            padding: 18px 20px 22px;
+        .modal-controls {
+            padding: 16px 18px 20px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
-        .sec-label {
-            font-size: 12px;
+        .label-sm {
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
-            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
             margin-bottom: 8px;
             display: block;
         }
 
-        .btn-row {
+        .btn-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 9px;
+            gap: 8px;
         }
 
-        .srv-chip {
+        .srv-btn {
             background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-glass);
-            padding: 8px 14px;
-            border-radius: 8px;
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 7px 13px;
+            border-radius: 7px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
         }
 
-        .srv-chip:hover, .srv-chip.active {
-            background: var(--crimson);
-            border-color: var(--crimson);
+        .srv-btn:hover, .srv-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
         }
 
-        .dl-trigger-btn {
-            background: linear-gradient(135deg, var(--emerald), #059669);
+        .dl-btn {
+            text-decoration: none;
+            background: var(--emerald);
             color: #fff;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 9px;
-            font-size: 13px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 700;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
-            transition: transform 0.2s ease;
+            gap: 6px;
         }
 
-        .dl-trigger-btn:hover {
-            transform: translateY(-2px);
+        .dl-btn:hover {
+            filter: brightness(1.08);
         }
 
-        /* Download Hub Card inside Modal */
-        .dl-hub {
-            display: none;
-            background: #0b0f19;
-            border: 1px solid rgba(245, 158, 11, 0.35);
-            border-radius: 12px;
-            padding: 16px;
-            animation: fadeUp 0.25s ease;
-        }
-
-        .dl-hub.show {
-            display: block;
-        }
-
-        .dl-hub-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding-bottom: 10px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border-glass);
-        }
-
-        .dl-options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-            gap: 10px;
-        }
-
-        .dl-card-link {
-            text-decoration: none;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 10px;
-            padding: 11px 13px;
-            color: var(--text-primary);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            transition: 0.2s;
-        }
-
-        .dl-card-link:hover {
-            border-color: var(--gold);
-            transform: translateY(-2px);
-        }
-
-        .dl-q-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #fde68a;
-        }
-
-        .dl-q-sub {
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        .notice-box {
+        .info-box {
             text-align: center;
-            padding: 42px 16px;
-            color: var(--text-secondary);
-            font-size: 15px;
+            padding: 36px 16px;
+            color: var(--text-muted);
+            font-size: 14px;
         }
 
         footer {
             background: #040609;
-            border-top: 1px solid var(--border-glass);
-            padding: 26px 5%;
+            border-top: 1px solid var(--border);
+            padding: 24px 5%;
             text-align: center;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 12px;
         }
 
@@ -649,168 +560,129 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.96); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
         @media (max-width: 600px) {
-            .hero h1 { font-size: 26px; }
+            .hero h1 { font-size: 25px; }
             .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .poster-box { height: 220px; }
+            .poster-box { height: 215px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Channel & Website Identity Ribbon -->
-    <div class="channel-ribbon">
-        <div class="ribbon-brand">
-            <i class="fa-solid fa-crown"></i>
-            <span id="ribbonSiteName">Zero Movie Box</span>
-            <span>•</span>
-            <span id="ribbonChannelName">Gopal Hub</span>
-        </div>
-        <span class="ribbon-tag">Premium HD Stream & Download Hub</span>
-    </div>
-
-    <!-- Header -->
     <header>
-        <div class="brand-logo" onclick="resetCatalog()">
-            <div class="logo-emblem"><i class="fa-solid fa-film"></i></div>
-            <div class="logo-text">Zero <span>Movie Box</span></div>
+        <div class="brand" onclick="goHome()">
+            <div class="brand-icon"><i class="fa-solid fa-film"></i></div>
+            <div class="brand-name">Zero <span>Movie Box</span></div>
         </div>
 
-        <form class="search-wrap" onsubmit="searchSubmit(event)">
-            <input type="text" id="searchBox" placeholder="Search movies, languages, genres...">
+        <form class="search-form" onsubmit="onSearch(event)">
+            <input type="text" id="searchInput" placeholder="Search movies, OTT, Bangla, Hindi, English...">
             <button type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </header>
 
-    <!-- Hero Banner -->
     <section class="hero">
-        <div class="hero-inner">
-            <div class="vip-pill"><i class="fa-solid fa-sparkles"></i> <span id="heroBrandLabel">Zero Movie Box • Gopal Hub</span></div>
-            <h1>Watch & Download in Premium Style</h1>
-            <p>Smooth multi-server playback, quality tags, and a dedicated download box branded with your website and channel identity on every title.</p>
-        </div>
+        <h1>Zero Movie Box</h1>
+        <p>All languages, OTT & movie releases, plus CID, গোপাল ভাঁড় and মোটু পাতলু episodes organized by season in a clean landscape player.</p>
     </section>
 
-    <!-- Ad Slot -->
-    <div class="ad-container">
-        <!-- এখানে আপনার Adsterra / Monetag ব্যানার কোড বসান -->
-        <span>[ Advertisement Banner Slot — Paste Ad Code Here ]</span>
+    <div class="ad-slot">
+        <!-- এখানে আপনার ব্যানার অ্যাড কোড বসান -->
+        <span>[ Advertisement Banner Slot ]</span>
     </div>
 
-    <!-- Filter Toolbar -->
-    <div class="filter-bar">
-        <div class="cat-list">
-            <button class="cat-chip active" data-cat="trending" onclick="pickCategory('trending', this)">Trending</button>
-            <button class="cat-chip" data-cat="now_playing" onclick="pickCategory('now_playing', this)">Now In Cinemas</button>
-            <button class="cat-chip" data-cat="popular" onclick="pickCategory('popular', this)">Popular</button>
-            <button class="cat-chip" data-cat="hindi" onclick="pickCategory('hindi', this)">Hindi</button>
-            <button class="cat-chip" data-cat="bangla" onclick="pickCategory('bangla', this)">Bangla</button>
-            <button class="cat-chip" data-cat="south" onclick="pickCategory('south', this)">South Indian</button>
-        </div>
-
-        <select class="quality-picker" id="qualityMode" onchange="renderGrid()">
-            <option value="AUTO">Quality: Auto Detect</option>
-            <option value="4K HDR">Quality: 4K HDR</option>
-            <option value="1080p BluRay">Quality: 1080p BluRay</option>
-            <option value="720p WEB-DL">Quality: 720p WEB-DL</option>
-        </select>
+    <div class="nav-tabs" id="tabBar">
+        <button class="tab-btn active" data-tab="trending" onclick="switchTab('trending', this)">Trending</button>
+        <button class="tab-btn" data-tab="ott" onclick="switchTab('ott', this)">OTT & New</button>
+        <button class="tab-btn" data-tab="bangla" onclick="switchTab('bangla', this)">Bangla</button>
+        <button class="tab-btn" data-tab="hindi" onclick="switchTab('hindi', this)">Hindi</button>
+        <button class="tab-btn" data-tab="south" onclick="switchTab('south', this)">South</button>
+        <button class="tab-btn" data-tab="cid" onclick="switchTab('cid', this)">CID</button>
+        <button class="tab-btn" data-tab="gopal" onclick="switchTab('gopal', this)">গোপাল ভাঁড়</button>
+        <button class="tab-btn" data-tab="motu" onclick="switchTab('motu', this)">মোটু পাতলু</button>
     </div>
 
-    <!-- Main Movie Grid -->
-    <main class="catalog-wrap">
-        <div class="catalog-head">
-            <h2 class="catalog-title" id="gridHeading">Trending Movies</h2>
-            <span id="pageText" style="font-size: 12px; color: var(--text-secondary);">Page 1</span>
+    <!-- Season & Episode Hub for CID, গোপাল ভাঁড়, মোটু পাতলু -->
+    <section class="series-hub" id="seriesHub">
+        <div class="series-header">
+            <div class="series-badge-row">
+                <div class="series-logo-box" id="seriesLogo">CID</div>
+                <div>
+                    <h3 id="seriesTitle" style="font-size: 18px; font-weight: 700;">Series Name</h3>
+                    <div id="seriesSub" style="font-size: 12px; color: var(--text-muted);">Season-wise episodes</div>
+                </div>
+            </div>
+
+            <select class="season-select" id="seasonSelect" onchange="renderEpisodes()">
+                <option value="1">Season 1</option>
+                <option value="2">Season 2</option>
+                <option value="3">Season 3</option>
+            </select>
         </div>
 
-        <div id="noticeBox" class="notice-box" style="display: none;"></div>
+        <div class="episode-grid" id="episodeGrid"></div>
+    </section>
+
+    <!-- Main Movie Catalog -->
+    <main class="main-wrap">
+        <div class="section-top">
+            <h2 class="section-title" id="catalogTitle">Trending Movies</h2>
+            <span id="pageInfo" style="font-size: 12px; color: var(--text-muted);">Page 1</span>
+        </div>
+
+        <div id="statusBox" class="info-box" style="display: none;"></div>
         <div class="movie-grid" id="movieGrid"></div>
 
-        <div class="pager">
-            <button class="pager-btn" id="prevPageBtn" onclick="stepPage(-1)" disabled>
+        <div class="pagination">
+            <button class="page-btn" id="prevBtn" onclick="movePage(-1)" disabled>
                 <i class="fa-solid fa-chevron-left"></i> Prev
             </button>
-            <button class="pager-btn" id="nextPageBtn" onclick="stepPage(1)">
+            <button class="page-btn" id="nextBtn" onclick="movePage(1)">
                 Next <i class="fa-solid fa-chevron-right"></i>
             </button>
         </div>
     </main>
 
-    <!-- Player & Download Modal -->
-    <div class="modal-backdrop" id="playerModal" onclick="backdropClose(event)">
-        <div class="modal-panel">
+    <!-- Landscape Player & Download Modal -->
+    <div class="modal" id="playerModal" onclick="onBackdropClick(event)">
+        <div class="modal-dialog">
             <div class="modal-top">
                 <div>
-                    <h3 id="modalMovieTitle" style="font-size: 17px; font-weight: 700;">Movie Title</h3>
-                    <div id="modalMovieMeta" style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">Info</div>
+                    <h3 id="modalTitle" style="font-size: 16px; font-weight: 700;">Title</h3>
+                    <div id="modalMeta" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Info</div>
                 </div>
-                <button class="close-x" onclick="closePlayerModal()" title="Close">&times;</button>
+                <button class="close-btn" onclick="closeModal()" title="Close">&times;</button>
             </div>
 
-            <!-- Website & Channel Identity Strip inside every opened movie -->
-            <div class="modal-brand-strip">
-                <div>
-                    <i class="fa-solid fa-shield-halved" style="color: var(--gold);"></i>
-                    Streaming on <span class="brand-highlight" id="playerSiteBadge">Zero Movie Box</span>
-                    • Channel: <span class="brand-highlight" id="playerChannelBadge">Gopal Hub</span>
-                </div>
-                <span style="color: var(--text-secondary);" id="playerQualityBadge">HD</span>
-            </div>
-
-            <div class="video-stage">
+            <div class="landscape-stage">
                 <iframe id="playerFrame" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
             </div>
 
-            <div class="modal-body-pad">
+            <div class="modal-controls">
                 <div>
-                    <span class="sec-label"><i class="fa-solid fa-server"></i> Streaming Servers</span>
-                    <div class="btn-row">
-                        <button class="srv-chip active" id="srv1" onclick="selectServer(1)">Server 1 (HD)</button>
-                        <button class="srv-chip" id="srv2" onclick="selectServer(2)">Server 2 (Fast)</button>
-                        <button class="srv-chip" id="srv3" onclick="selectServer(3)">Server 3 (Multi)</button>
-                        <button class="srv-chip" id="srv4" onclick="selectServer(4)">Server 4 (Backup)</button>
+                    <span class="label-sm"><i class="fa-solid fa-server"></i> Streaming Servers</span>
+                    <div class="btn-group">
+                        <button class="srv-btn active" id="srv1" onclick="chooseServer(1)">Server 1 (HD)</button>
+                        <button class="srv-btn" id="srv2" onclick="chooseServer(2)">Server 2 (Fast)</button>
+                        <button class="srv-btn" id="srv3" onclick="chooseServer(3)">Server 3 (Multi)</button>
+                        <button class="srv-btn" id="srv4" onclick="chooseServer(4)">Server 4 (Backup)</button>
                     </div>
                 </div>
 
                 <div>
-                    <span class="sec-label"><i class="fa-solid fa-download"></i> Download Center</span>
-                    <button class="dl-trigger-btn" onclick="toggleDownloadHub()">
-                        <i class="fa-solid fa-cloud-arrow-down"></i>
-                        Open Download Options (<span id="dlBtnBrand">Zero Movie Box • Gopal Hub</span>)
-                    </button>
-                </div>
-
-                <!-- Branded Download Options Box -->
-                <div class="dl-hub" id="downloadHub">
-                    <div class="dl-hub-top">
-                        <div style="font-size: 13px; font-weight: 700;">
-                            <i class="fa-solid fa-crown" style="color: var(--gold);"></i>
-                            <span id="hubSiteName">Zero Movie Box</span> — <span id="hubChannelName">Gopal Hub</span>
-                        </div>
-                        <span style="font-size: 11px; color: var(--text-secondary);" id="hubMovieLabel">Select Quality</span>
-                    </div>
-
-                    <div class="dl-options-grid">
-                        <a href="#" target="_blank" rel="noopener noreferrer" id="link480" class="dl-card-link">
-                            <span class="dl-q-title">480p SD Quality</span>
-                            <span class="dl-q-sub" id="sub480">Zero Movie Box • Gopal Hub</span>
+                    <span class="label-sm"><i class="fa-solid fa-download"></i> Download Options</span>
+                    <div class="btn-group">
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl480" class="dl-btn">
+                            <i class="fa-solid fa-file-arrow-down"></i> 480p
                         </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" id="link720" class="dl-card-link">
-                            <span class="dl-q-title">720p HD Quality</span>
-                            <span class="dl-q-sub" id="sub720">Zero Movie Box • Gopal Hub</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl720" class="dl-btn">
+                            <i class="fa-solid fa-file-arrow-down"></i> 720p
                         </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" id="link1080" class="dl-card-link">
-                            <span class="dl-q-title">1080p Full HD</span>
-                            <span class="dl-q-sub" id="sub1080">Zero Movie Box • Gopal Hub</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl1080" class="dl-btn">
+                            <i class="fa-solid fa-file-arrow-down"></i> 1080p
                         </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" id="linkMirror" class="dl-card-link">
-                            <span class="dl-q-title">Fast Mirror Link</span>
-                            <span class="dl-q-sub" id="subMirror">Zero Movie Box • Gopal Hub</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="dlDirect" class="dl-btn">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> Mirror / Direct
                         </a>
                     </div>
                 </div>
@@ -819,170 +691,252 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 <strong id="footerSiteName">Zero Movie Box</strong> — <strong id="footerChannelName">Gopal Hub</strong>. All Rights Reserved.</p>
-        <p style="margin-top: 6px;">Movie metadata via TMDb API. External stream embeds and download links are provided via third-party sources.</p>
+        <p>&copy; 2026 <strong>Zero Movie Box</strong>. All Rights Reserved.</p>
     </footer>
 
     <script>
-        // ======================================================
-        // ১. আপনার ওয়েবসাইট ও চ্যানেলের নাম এখানে সেট করুন
-        // ======================================================
-        const BRAND_CONFIG = {
-            siteName: "Zero Movie Box",
-            channelName: "Gopal Hub"
+        // আপনার TMDB API Key
+        const TMDB_API_KEY = "b2d19b515e028c6ff0319cce58d65f74";
+
+        // ডাউনলোড লিংক টেমপ্লেট (প্রয়োজন অনুযায়ী নিজের লিংক/শর্টলিংক বসান)
+        const DOWNLOAD_TEMPLATES = {
+            sd480:  "https://example.com/download/480p?id={id}&title={title}",
+            hd720:  "https://example.com/download/720p?id={id}&title={title}",
+            fhd1080:"https://example.com/download/1080p?id={id}&title={title}",
+            direct: "https://example.com/download/direct?id={id}&title={title}"
         };
 
-        // ======================================================
-        // ২. আপনার TMDB API Key এখানে বসান
-        // ======================================================
-        const TMDB_API_KEY = "YOUR_TMDB_API_KEY_HERE";
-
-        // ======================================================
-        // ৩. আপনার ডাউনলোড / শর্টলিংক টেমপ্লেট এখানে বসান
-        // ======================================================
-        const DOWNLOAD_URLS = {
-            sd480:   "https://example.com/dl/480p?id={id}&title={title}",
-            hd720:   "https://example.com/dl/720p?id={id}&title={title}",
-            fhd1080: "https://example.com/dl/1080p?id={id}&title={title}",
-            mirror:  "https://example.com/dl/mirror?id={id}&title={title}"
+        // CID, গোপাল ভাঁড় ও মোটু পাতলু সিজন অনুযায়ী তালিকা
+        // এখানে নিজের পছন্দের এপিসোড বা এম্বেড লিংক/TMDB ID যোগ করতে পারবেন
+        const SERIES_DATA = {
+            cid: {
+                logo: "CID",
+                title: "CID — Season Wise Episodes",
+                sub: "Select season and watch episodes in landscape view",
+                seasons: {
+                    1: [
+                        { ep: "Episode 1", name: "CID Case File — Episode 01", date: "Season 1", tmdbId: 4614, embedUrl: "" },
+                        { ep: "Episode 2", name: "CID Case File — Episode 02", date: "Season 1", tmdbId: 4614, embedUrl: "" },
+                        { ep: "Episode 3", name: "CID Case File — Episode 03", date: "Season 1", tmdbId: 4614, embedUrl: "" }
+                    ],
+                    2: [
+                        { ep: "Episode 1", name: "CID Mystery — Season 2 Ep 01", date: "Season 2", tmdbId: 4614, embedUrl: "" },
+                        { ep: "Episode 2", name: "CID Mystery — Season 2 Ep 02", date: "Season 2", tmdbId: 4614, embedUrl: "" }
+                    ],
+                    3: [
+                        { ep: "Episode 1", name: "CID Special — Season 3 Ep 01", date: "Season 3", tmdbId: 4614, embedUrl: "" },
+                        { ep: "Episode 2", name: "CID Special — Season 3 Ep 02", date: "Season 3", tmdbId: 4614, embedUrl: "" }
+                    ]
+                }
+            },
+            gopal: {
+                logo: "গোপাল",
+                title: "গোপাল ভাঁড় — Season Wise Episodes",
+                sub: "দৈনিক আপডেট অনুযায়ী সিজন বেছে এপিসোড দেখুন",
+                seasons: {
+                    1: [
+                        { ep: "Episode 1", name: "গোপাল ভাঁড়ের বুদ্ধির খেলা — পর্ব ০১", date: "Season 1", tmdbId: 1000, embedUrl: "" },
+                        { ep: "Episode 2", name: "গোপাল ভাঁড় ও রাজদরবার — পর্ব ০২", date: "Season 1", tmdbId: 1000, embedUrl: "" },
+                        { ep: "Episode 3", name: "গোপাল ভাঁড়ের মজার গল্প — পর্ব ০৩", date: "Season 1", tmdbId: 1000, embedUrl: "" }
+                    ],
+                    2: [
+                        { ep: "Episode 1", name: "গোপাল ভাঁড় নতুন পর্ব — সিজন ২ পর্ব ০১", date: "Season 2", tmdbId: 1000, embedUrl: "" },
+                        { ep: "Episode 2", name: "গোপাল ভাঁড় নতুন পর্ব — সিজন ২ পর্ব ০২", date: "Season 2", tmdbId: 1000, embedUrl: "" }
+                    ],
+                    3: [
+                        { ep: "Episode 1", name: "গোপাল ভাঁড় স্পেশাল — সিজন ৩ পর্ব ০১", date: "Season 3", tmdbId: 1000, embedUrl: "" }
+                    ]
+                }
+            },
+            motu: {
+                logo: "মোটু",
+                title: "মোটু পাতলু — Season Wise Episodes",
+                sub: "সিজন ও এপিসোড অনুযায়ী মোটু পাতলু দেখুন",
+                seasons: {
+                    1: [
+                        { ep: "Episode 1", name: "Motu Patlu — Season 1 Episode 01", date: "Season 1", tmdbId: 65701, embedUrl: "" },
+                        { ep: "Episode 2", name: "Motu Patlu — Season 1 Episode 02", date: "Season 1", tmdbId: 65701, embedUrl: "" },
+                        { ep: "Episode 3", name: "Motu Patlu — Season 1 Episode 03", date: "Season 1", tmdbId: 65701, embedUrl: "" }
+                    ],
+                    2: [
+                        { ep: "Episode 1", name: "Motu Patlu — Season 2 Episode 01", date: "Season 2", tmdbId: 65701, embedUrl: "" },
+                        { ep: "Episode 2", name: "Motu Patlu — Season 2 Episode 02", date: "Season 2", tmdbId: 65701, embedUrl: "" }
+                    ],
+                    3: [
+                        { ep: "Episode 1", name: "Motu Patlu — Season 3 Episode 01", date: "Season 3", tmdbId: 65701, embedUrl: "" }
+                    ]
+                }
+            }
         };
 
-        const API_URL = "https://api.themoviedb.org/3";
-        const POSTER_URL = "https://image.tmdb.org/t/p/w500";
+        const API_BASE = "https://api.themoviedb.org/3";
+        const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
         let state = {
-            category: "trending",
-            query: "",
+            tab: "trending",
+            search: "",
             page: 1,
             totalPages: 1,
-            items: [],
-            currentMovie: null,
-            currentQuality: "1080p BluRay"
+            movies: [],
+            activeTarget: null
         };
 
-        function applyBrandNames() {
-            const combined = `${BRAND_CONFIG.siteName} • ${BRAND_CONFIG.channelName}`;
-            document.title = `${BRAND_CONFIG.siteName} — ${BRAND_CONFIG.channelName}`;
-            document.getElementById("ribbonSiteName").textContent = BRAND_CONFIG.siteName;
-            document.getElementById("ribbonChannelName").textContent = BRAND_CONFIG.channelName;
-            document.getElementById("heroBrandLabel").textContent = combined;
-            document.getElementById("playerSiteBadge").textContent = BRAND_CONFIG.siteName;
-            document.getElementById("playerChannelBadge").textContent = BRAND_CONFIG.channelName;
-            document.getElementById("dlBtnBrand").textContent = combined;
-            document.getElementById("hubSiteName").textContent = BRAND_CONFIG.siteName;
-            document.getElementById("hubChannelName").textContent = BRAND_CONFIG.channelName;
-            document.getElementById("footerSiteName").textContent = BRAND_CONFIG.siteName;
-            document.getElementById("footerChannelName").textContent = BRAND_CONFIG.channelName;
-
-            ["sub480", "sub720", "sub1080", "subMirror"].forEach(id => {
-                document.getElementById(id).textContent = combined;
-            });
-        }
-
-        function getQualityLabel(score) {
-            const mode = document.getElementById("qualityMode").value;
-            if (mode !== "AUTO") return mode;
-            if (score >= 7.8) return "1080p BluRay";
-            if (score >= 6.2) return "720p WEB-DL";
+        function getQualityTag(rating) {
+            if (rating >= 7.8) return "1080p";
+            if (rating >= 6.3) return "720p";
             return "HD";
         }
 
-        function getApiEndpoint() {
-            const { category, query, page } = state;
-            if (query) {
-                return `${API_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&page=${page}`;
+        function getEndpoint() {
+            const { tab, search, page } = state;
+            if (search) {
+                return `${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(search)}&page=${page}`;
             }
-            if (category === "now_playing") return `${API_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&page=${page}`;
-            if (category === "popular") return `${API_URL}/movie/popular?api_key=${TMDB_API_KEY}&page=${page}`;
-            if (category === "hindi") return `${API_URL}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=hi&sort_by=popularity.desc&page=${page}`;
-            if (category === "bangla") return `${API_URL}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=popularity.desc&page=${page}`;
-            if (category === "south") return `${API_URL}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=te|ta|ml|kn&sort_by=popularity.desc&page=${page}`;
-            return `${API_URL}/trending/movie/day?api_key=${TMDB_API_KEY}&page=${page}`;
+            if (tab === "ott") {
+                return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&sort_by=popularity.desc&page=${page}`;
+            }
+            if (tab === "bangla") {
+                return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=popularity.desc&page=${page}`;
+            }
+            if (tab === "hindi") {
+                return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=hi&sort_by=popularity.desc&page=${page}`;
+            }
+            if (tab === "south") {
+                return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=te|ta|ml|kn&sort_by=popularity.desc&page=${page}`;
+            }
+            return `${API_BASE}/trending/movie/day?api_key=${TMDB_API_KEY}&page=${page}`;
         }
 
-        function updateCatalogHeader() {
-            const labels = {
-                trending: "Trending Movies",
-                now_playing: "Now In Cinemas",
-                popular: "Popular Movies",
-                hindi: "Hindi Movies",
-                bangla: "Bangla Movies",
-                south: "South Indian Movies"
-            };
-            document.getElementById("gridHeading").textContent = state.query
-                ? `Search: "${state.query}"`
-                : (labels[state.category] || "Movies");
-            document.getElementById("pageText").textContent = `Page ${state.page} of ${state.totalPages}`;
-        }
-
-        async function loadCatalog() {
-            const notice = document.getElementById("noticeBox");
-            const grid = document.getElementById("movieGrid");
-
-            if (!TMDB_API_KEY || TMDB_API_KEY === "b2d19b515e028c6ff0319cce58d65f74") {
-                grid.innerHTML = "";
-                notice.style.display = "block";
-                notice.innerHTML = `<i class="fa-solid fa-key"></i> TMDB API Key বসানো হয়নি। কোডের ভেতর <code>YOUR_TMDB_API_KEY_HERE</code> এর জায়গায় আপনার API Key বসান।`;
+        function updateSeriesHub() {
+            const hub = document.getElementById("seriesHub");
+            if (!SERIES_DATA[state.tab]) {
+                hub.classList.remove("visible");
                 return;
             }
+            const info = SERIES_DATA[state.tab];
+            hub.classList.add("visible");
+            document.getElementById("seriesLogo").textContent = info.logo;
+            document.getElementById("seriesTitle").textContent = info.title;
+            document.getElementById("seriesSub").textContent = info.sub;
+            document.getElementById("seasonSelect").value = "1";
+            renderEpisodes();
+        }
 
-            notice.style.display = "block";
-            notice.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Loading movies...`;
+        function renderEpisodes() {
+            const series = SERIES_DATA[state.tab];
+            if (!series) return;
+            const seasonNum = document.getElementById("seasonSelect").value;
+            const list = series.seasons[seasonNum] || [];
+            const grid = document.getElementById("episodeGrid");
             grid.innerHTML = "";
-            updateCatalogHeader();
+
+            list.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "ep-card";
+                card.onclick = () => openPlayer({
+                    id: item.tmdbId,
+                    title: `${item.name} (${item.date})`,
+                    meta: `${series.logo} • ${item.date} • ${item.ep}`,
+                    customEmbed: item.embedUrl || ""
+                });
+
+                card.innerHTML = `
+                    <span class="ep-tag">${item.date} • ${item.ep}</span>
+                    <div class="ep-title">${escapeHtml(item.name)}</div>
+                    <div class="ep-meta">Click to watch in landscape</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateHeading() {
+            const titles = {
+                trending: "Trending Movies",
+                ott: "OTT & New Releases",
+                bangla: "Bangla Movies",
+                hindi: "Hindi Movies",
+                south: "South Indian Movies",
+                cid: "More Related Shows",
+                gopal: "More Related Shows",
+                motu: "More Related Shows"
+            };
+            document.getElementById("catalogTitle").textContent = state.search
+                ? `Search: "${state.search}"`
+                : (titles[state.tab] || "Movies");
+            document.getElementById("pageInfo").textContent = `Page ${state.page} of ${state.totalPages}`;
+        }
+
+        async function loadMovies() {
+            updateSeriesHub();
+            updateHeading();
+
+            const status = document.getElementById("statusBox");
+            const grid = document.getElementById("movieGrid");
+
+            status.style.display = "block";
+            status.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Loading...`;
+            grid.innerHTML = "";
 
             try {
-                const res = await fetch(getApiEndpoint());
-                if (!res.ok) throw new Error("Failed");
+                const res = await fetch(getEndpoint());
+                if (!res.ok) throw new Error("Network response error");
                 const data = await res.json();
+
                 state.totalPages = Math.min(data.total_pages || 1, 500);
-                state.items = (data.results || []).filter(m => m.poster_path);
-                notice.style.display = "none";
-                renderGrid();
-                updatePager();
-            } catch (e) {
-                notice.style.display = "block";
-                notice.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> মুভি লোড করা যাচ্ছে না। API Key বা নেটওয়ার্ক চেক করুন।`;
+                state.movies = (data.results || []).filter(
+                    item => item.poster_path && (item.title || item.name)
+                );
+
+                status.style.display = "none";
+                renderMovies();
+                updatePagination();
+            } catch (err) {
+                status.style.display = "block";
+                status.innerHTML = `<i class="fa-solid fa-wifi"></i> ডেটা লোড করতে সমস্যা হচ্ছে। ইন্টারনেট কানেকশন চেক করুন বা কিছুক্ষণ পর আবার চেষ্টা করুন।`;
             }
         }
 
-        function renderGrid() {
+        function renderMovies() {
             const grid = document.getElementById("movieGrid");
-            const notice = document.getElementById("noticeBox");
+            const status = document.getElementById("statusBox");
             grid.innerHTML = "";
 
-            if (!state.items.length) {
-                notice.style.display = "block";
-                notice.textContent = "কোনো মুভি পাওয়া যায়নি।";
+            if (!state.movies.length) {
+                status.style.display = "block";
+                status.textContent = "কোনো ফলাফল পাওয়া যায়নি।";
                 return;
             }
 
-            notice.style.display = "none";
+            status.style.display = "none";
 
-            state.items.forEach(movie => {
-                const year = movie.release_date ? movie.release_date.slice(0, 4) : "N/A";
-                const score = movie.vote_average ? movie.vote_average.toFixed(1) : "7.0";
-                const lang = (movie.original_language || "en").toUpperCase();
-                const quality = getQualityLabel(movie.vote_average || 7.0);
+            state.movies.forEach(item => {
+                const title = item.title || item.name;
+                const dateStr = item.release_date || item.first_air_date || "";
+                const year = dateStr ? dateStr.slice(0, 4) : "N/A";
+                const score = item.vote_average ? item.vote_average.toFixed(1) : "7.0";
+                const lang = (item.original_language || "en").toUpperCase();
+                const quality = getQualityTag(item.vote_average || 7.0);
 
                 const card = document.createElement("div");
                 card.className = "movie-card";
-                card.onclick = () => openPlayerModal(movie, quality);
+                card.onclick = () => openPlayer({
+                    id: item.id,
+                    title,
+                    meta: `${year} • ${lang} • ${quality} • ★ ${score}`,
+                    customEmbed: ""
+                });
 
                 card.innerHTML = `
                     <div class="poster-box">
-                        <span class="tag-lang">${lang}</span>
-                        <span class="tag-quality">${quality}</span>
-                        <img src="${POSTER_URL + movie.poster_path}" alt="${escapeText(movie.title)}" loading="lazy">
-                        <div class="hover-play">
-                            <div class="play-ring"><i class="fa-solid fa-play"></i></div>
-                        </div>
+                        <span class="l-badge">${lang}</span>
+                        <span class="q-badge">${quality}</span>
+                        <img src="${IMG_BASE + item.poster_path}" alt="${escapeHtml(title)}" loading="lazy">
                     </div>
-                    <div class="card-info">
-                        <div class="card-name" title="${escapeText(movie.title)}">${escapeText(movie.title)}</div>
-                        <div class="card-sub">
+                    <div class="card-body">
+                        <div class="card-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
+                        <div class="card-foot">
                             <span>${year}</span>
-                            <span class="star-score"><i class="fa-solid fa-star"></i> ${score}</span>
+                            <span class="star"><i class="fa-solid fa-star"></i> ${score}</span>
                         </div>
                     </div>
                 `;
@@ -990,120 +944,101 @@
             });
         }
 
-        function pickCategory(cat, btn) {
-            state.query = "";
-            state.category = cat;
+        function switchTab(tabName, btnEl) {
+            state.search = "";
+            state.tab = tabName;
             state.page = 1;
-            document.getElementById("searchBox").value = "";
-            document.querySelectorAll(".cat-chip").forEach(b => b.classList.remove("active"));
-            if (btn) btn.classList.add("active");
-            loadCatalog();
+            document.getElementById("searchInput").value = "";
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            if (btnEl) btnEl.classList.add("active");
+            loadMovies();
         }
 
-        function resetCatalog() {
-            const first = document.querySelector('.cat-chip[data-cat="trending"]');
-            pickCategory("trending", first);
+        function goHome() {
+            const firstBtn = document.querySelector('.tab-btn[data-tab="trending"]');
+            switchTab("trending", firstBtn);
         }
 
-        function searchSubmit(e) {
+        function onSearch(e) {
             e.preventDefault();
-            const q = document.getElementById("searchBox").value.trim();
+            const q = document.getElementById("searchInput").value.trim();
             if (!q) return;
-            state.query = q;
+            state.search = q;
             state.page = 1;
-            document.querySelectorAll(".cat-chip").forEach(b => b.classList.remove("active"));
-            loadCatalog();
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            loadMovies();
         }
 
-        function stepPage(dir) {
-            const next = state.page + dir;
+        function movePage(delta) {
+            const next = state.page + delta;
             if (next < 1 || next > state.totalPages) return;
             state.page = next;
-            loadCatalog();
-            window.scrollTo({ top: 280, behavior: "smooth" });
+            loadMovies();
+            window.scrollTo({ top: 260, behavior: "smooth" });
         }
 
-        function updatePager() {
-            document.getElementById("prevPageBtn").disabled = state.page <= 1;
-            document.getElementById("nextPageBtn").disabled = state.page >= state.totalPages;
+        function updatePagination() {
+            document.getElementById("prevBtn").disabled = state.page <= 1;
+            document.getElementById("nextBtn").disabled = state.page >= state.totalPages;
         }
 
-        function getServerSrc(num, id) {
-            if (num === 1) return `https://vidsrc.xyz/embed/movie/${id}`;
-            if (num === 2) return `https://vidsrc.pro/embed/movie/${id}`;
-            if (num === 3) return `https://multiembed.mov/?video_id=${id}&tmdb=1`;
-            return `https://vidsrc.me/embed/movie/${id}`;
+        function getStreamUrl(serverNum, target) {
+            if (serverNum === 1 && target.customEmbed) return target.customEmbed;
+            if (serverNum === 1) return `https://vidsrc.xyz/embed/movie/${target.id}`;
+            if (serverNum === 2) return `https://vidsrc.pro/embed/movie/${target.id}`;
+            if (serverNum === 3) return `https://multiembed.mov/?video_id=${target.id}&tmdb=1`;
+            return `https://vidsrc.me/embed/movie/${target.id}`;
         }
 
-        function prepareDownloadLinks(movie) {
-            const encodedTitle = encodeURIComponent(movie.title || "movie");
-            const id = movie.id;
-            const fill = (tpl) => tpl.replace("{id}", id).replace("{title}", encodedTitle);
+        function setDownloadLinks(target) {
+            const encodedTitle = encodeURIComponent(target.title || "video");
+            const fill = tpl => tpl.replace("{id}", target.id).replace("{title}", encodedTitle);
 
-            document.getElementById("link480").href = fill(DOWNLOAD_URLS.sd480);
-            document.getElementById("link720").href = fill(DOWNLOAD_URLS.hd720);
-            document.getElementById("link1080").href = fill(DOWNLOAD_URLS.fhd1080);
-            document.getElementById("linkMirror").href = fill(DOWNLOAD_URLS.mirror);
-            document.getElementById("hubMovieLabel").textContent = `${movie.title} (${state.currentQuality})`;
+            document.getElementById("dl480").href = fill(DOWNLOAD_TEMPLATES.sd480);
+            document.getElementById("dl720").href = fill(DOWNLOAD_TEMPLATES.hd720);
+            document.getElementById("dl1080").href = fill(DOWNLOAD_TEMPLATES.fhd1080);
+            document.getElementById("dlDirect").href = fill(DOWNLOAD_TEMPLATES.direct);
         }
 
-        function openPlayerModal(movie, quality) {
-            state.currentMovie = movie;
-            state.currentQuality = quality;
-
-            const year = movie.release_date ? movie.release_date.slice(0, 4) : "N/A";
-            const lang = (movie.original_language || "en").toUpperCase();
-            const score = movie.vote_average ? movie.vote_average.toFixed(1) : "7.0";
-
-            document.getElementById("modalMovieTitle").textContent = movie.title;
-            document.getElementById("modalMovieMeta").textContent = `${year} • ${lang} • ★ ${score}`;
-            document.getElementById("playerQualityBadge").textContent = quality;
-            document.getElementById("downloadHub").classList.remove("show");
-
-            prepareDownloadLinks(movie);
-            selectServer(1);
-
+        function openPlayer(target) {
+            state.activeTarget = target;
+            document.getElementById("modalTitle").textContent = target.title;
+            document.getElementById("modalMeta").textContent = target.meta;
+            setDownloadLinks(target);
+            chooseServer(1);
             document.getElementById("playerModal").classList.add("open");
             document.body.style.overflow = "hidden";
         }
 
-        function selectServer(num) {
-            if (!state.currentMovie) return;
+        function chooseServer(num) {
+            if (!state.activeTarget) return;
             for (let i = 1; i <= 4; i++) {
                 document.getElementById(`srv${i}`).classList.toggle("active", i === num);
             }
-            document.getElementById("playerFrame").src = getServerSrc(num, state.currentMovie.id);
+            document.getElementById("playerFrame").src = getStreamUrl(num, state.activeTarget);
         }
 
-        function toggleDownloadHub() {
-            document.getElementById("downloadHub").classList.toggle("show");
-        }
-
-        function closePlayerModal() {
+        function closeModal() {
             document.getElementById("playerModal").classList.remove("open");
-            document.getElementById("downloadHub").classList.remove("show");
             document.getElementById("playerFrame").src = "";
             document.body.style.overflow = "";
         }
 
-        function backdropClose(e) {
-            if (e.target.id === "playerModal") closePlayerModal();
+        function onBackdropClick(e) {
+            if (e.target.id === "playerModal") closeModal();
         }
 
-        function escapeText(str = "") {
-            return str.replace(/[&<>"']/g, c => ({
+        function escapeHtml(str = "") {
+            return str.replace(/[&<>"']/g, m => ({
                 "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-            }[c]));
+            }[m]));
         }
 
         document.addEventListener("keydown", e => {
-            if (e.key === "Escape") closePlayerModal();
+            if (e.key === "Escape") closeModal();
         });
 
-        window.addEventListener("DOMContentLoaded", () => {
-            applyBrandNames();
-            loadCatalog();
-        });
+        window.addEventListener("DOMContentLoaded", loadMovies);
     </script>
 </body>
 </html>
