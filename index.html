@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zero Movie Box - Auto Live Streaming Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Zero Movie Box</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         :root {
-            --bg-dark: #090b0f;
-            --card-bg: #131720;
+            --bg-dark: #080a0f;
+            --bg-elevated: #111622;
+            --card-bg: #151b29;
             --primary: #e50914;
-            --primary-glow: rgba(229, 9, 20, 0.5);
+            --primary-hover: #ff1420;
+            --primary-glow: rgba(229, 9, 20, 0.45);
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
             --text-main: #ffffff;
             --text-muted: #9ca3af;
+            --border-subtle: rgba(255, 255, 255, 0.08);
         }
 
         * {
@@ -28,60 +33,66 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
+            line-height: 1.5;
         }
 
-        /* Navbar */
+        /* Header */
         header {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(9, 11, 15, 0.92);
-            backdrop-filter: blur(12px);
-            padding: 15px 5%;
+            background: rgba(8, 10, 15, 0.92);
+            backdrop-filter: blur(14px);
+            padding: 14px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 16px;
             flex-wrap: wrap;
-            gap: 15px;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .logo {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
+            user-select: none;
+        }
+
+        .logo i {
+            color: var(--primary);
+            filter: drop-shadow(0 0 10px var(--primary-glow));
         }
 
         .logo span {
             color: var(--primary);
-            text-shadow: 0 0 15px var(--primary-glow);
         }
 
         .search-box {
             display: flex;
             align-items: center;
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-subtle);
             border-radius: 30px;
-            padding: 8px 18px;
-            width: 340px;
+            padding: 7px 16px;
+            width: 350px;
             max-width: 100%;
-            transition: 0.3s;
+            transition: 0.25s ease;
         }
 
         .search-box:focus-within {
             border-color: var(--primary);
-            box-shadow: 0 0 12px var(--primary-glow);
+            box-shadow: 0 0 14px var(--primary-glow);
         }
 
         .search-box input {
             background: transparent;
             border: none;
             outline: none;
-            color: white;
+            color: var(--text-main);
             width: 100%;
             font-size: 14px;
         }
@@ -91,61 +102,89 @@
             border: none;
             color: var(--primary);
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
+            padding-left: 6px;
         }
 
         /* Hero Banner */
         .hero {
             position: relative;
-            height: 360px;
-            background: linear-gradient(to top, var(--bg-dark) 10%, rgba(9, 11, 15, 0.4) 60%, rgba(9, 11, 15, 0.85) 100%),
-                        url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            min-height: 330px;
+            background:
+                linear-gradient(to top, var(--bg-dark) 8%, rgba(8, 10, 15, 0.55) 55%, rgba(8, 10, 15, 0.88) 100%),
+                url('https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
             display: flex;
             align-items: flex-end;
-            padding: 40px 5%;
+            padding: 42px 5%;
+            animation: fadeIn 0.7s ease;
         }
 
-        .hero-content h1 {
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(229, 9, 20, 0.18);
+            border: 1px solid rgba(229, 9, 20, 0.5);
+            color: #ff6b72;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
             font-size: 34px;
-            margin-bottom: 10px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        .hero-content p {
+        .hero p {
             color: var(--text-muted);
             font-size: 14px;
-            max-width: 600px;
+            max-width: 650px;
         }
 
-        /* Ad Banner Space */
-        .ad-space {
-            margin: 20px 5%;
-            background: #10141c;
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            padding: 15px;
+        /* Ad Banner Container */
+        .ad-box {
+            margin: 22px 5% 8px;
+            background: var(--bg-elevated);
+            border: 1px dashed rgba(255, 255, 255, 0.16);
+            border-radius: 10px;
+            padding: 14px;
             text-align: center;
             color: var(--text-muted);
-            font-size: 13px;
+            font-size: 12px;
         }
 
-        /* Filter Tabs */
-        .categories {
-            padding: 15px 5%;
+        /* Categories & Quality Filter */
+        .toolbar {
+            padding: 16px 5% 6px;
             display: flex;
-            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
             overflow-x: auto;
+            padding-bottom: 4px;
         }
 
         .cat-btn {
             background: var(--card-bg);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 8px 20px;
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+            padding: 8px 18px;
             border-radius: 20px;
-            cursor: pointer;
             font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
             white-space: nowrap;
-            transition: 0.3s;
+            transition: 0.25s ease;
         }
 
         .cat-btn.active, .cat-btn:hover {
@@ -154,14 +193,34 @@
             box-shadow: 0 0 12px var(--primary-glow);
         }
 
+        .quality-select {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+        }
+
         /* Movie Grid */
         .container {
-            padding: 20px 5% 60px;
+            padding: 18px 5% 60px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .section-title {
-            font-size: 22px;
-            margin-bottom: 20px;
+            font-size: 21px;
+            font-weight: 600;
             border-left: 4px solid var(--primary);
             padding-left: 12px;
         }
@@ -176,159 +235,236 @@
             background: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
-            transition: 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--border-subtle);
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeInUp 0.5s ease forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            animation: cardAppear 0.45s ease forwards;
         }
 
         .movie-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 15px var(--primary-glow);
-            border-color: rgba(229, 9, 20, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.75), 0 0 14px var(--primary-glow);
+            border-color: rgba(229, 9, 20, 0.45);
         }
 
-        .poster-wrapper {
+        .poster-wrap {
             position: relative;
             height: 280px;
+            background: #1b2234;
             overflow: hidden;
-            background: #1a1f2c;
         }
 
-        .poster-wrapper img {
+        .poster-wrap img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
+            transition: transform 0.45s ease, filter 0.3s ease;
         }
 
-        .movie-card:hover .poster-wrapper img {
-            transform: scale(1.08);
-            filter: brightness(0.6);
+        .movie-card:hover .poster-wrap img {
+            transform: scale(1.07);
+            filter: brightness(0.65);
         }
 
-        .quality-tag {
+        .badge-quality {
             position: absolute;
             top: 10px;
             right: 10px;
             background: var(--primary);
-            color: white;
+            color: #fff;
             font-size: 11px;
             font-weight: 700;
             padding: 3px 8px;
-            border-radius: 4px;
+            border-radius: 5px;
         }
 
-        .play-overlay {
+        .badge-lang {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(8, 10, 15, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #e5e7eb;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 7px;
+            border-radius: 5px;
+            text-transform: uppercase;
+        }
+
+        .play-hover {
             position: absolute;
             inset: 0;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             opacity: 0;
-            transition: 0.3s;
+            transition: opacity 0.25s ease;
         }
 
-        .movie-card:hover .play-overlay {
+        .movie-card:hover .play-hover {
             opacity: 1;
         }
 
-        .play-circle {
+        .play-btn-circle {
             width: 52px;
             height: 52px;
-            background: var(--primary);
             border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             font-size: 18px;
-            color: white;
-            box-shadow: 0 0 20px var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
-        .movie-info {
-            padding: 12px;
+        .card-body {
+            padding: 12px 14px 14px;
         }
 
-        .movie-title {
+        .card-title {
             font-size: 14px;
             font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
-        .movie-meta {
+        .card-meta {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 12px;
             color: var(--text-muted);
         }
 
-        .rating {
+        .rating-star {
             color: #fbbf24;
             font-weight: 600;
         }
 
-        /* Video Modal */
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin-top: 34px;
+        }
+
+        .page-btn {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Modal Player & Download Hub */
         .modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.94);
             z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
+            background: rgba(0, 0, 0, 0.92);
             backdrop-filter: blur(8px);
+            padding: 16px;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
         }
 
-        .modal-content {
-            background: var(--card-bg);
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-box {
             width: 100%;
-            max-width: 920px;
+            max-width: 960px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
             border-radius: 14px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+            animation: zoomIn 0.25s ease;
         }
 
-        .modal-header {
+        .modal-top {
             padding: 14px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+            background: #0d111a;
         }
 
-        .close-btn {
-            background: none;
+        .modal-title-wrap h3 {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .modal-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .close-modal {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
             border: none;
-            color: white;
-            font-size: 26px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            font-size: 20px;
             cursor: pointer;
+            transition: 0.2s;
         }
 
-        .close-btn:hover { color: var(--primary); }
+        .close-modal:hover {
+            background: var(--primary);
+        }
 
-        .video-container {
+        .player-frame-wrap {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             background: #000;
         }
 
-        .video-container iframe {
+        .player-frame-wrap iframe {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        .modal-footer {
-            padding: 15px 20px;
+        .controls-panel {
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -336,223 +472,386 @@
             gap: 12px;
         }
 
-        .server-btns {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+        .panel-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: block;
         }
 
-        .btn-server {
-            background: #232936;
-            color: white;
+        .server-group, .download-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .srv-btn {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
             padding: 8px 14px;
-            border-radius: 6px;
-            border: none;
-            font-size: 13px;
+            border-radius: 7px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .btn-server.active, .btn-server:hover {
+        .srv-btn:hover, .srv-btn.active {
             background: var(--primary);
+            border-color: var(--primary);
         }
 
-        .loader {
+        .dl-btn {
+            text-decoration: none;
+            padding: 9px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .dl-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+
+        .dl-480 { background: #4b5563; }
+        .dl-720 { background: var(--accent-blue); }
+        .dl-1080 { background: var(--accent-green); }
+        .dl-mirror { background: #7c3aed; }
+
+        .helper-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            padding: 10px 14px;
+            border-radius: 8px;
+        }
+
+        .status-box {
             text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: var(--primary);
-            display: none;
+            padding: 40px 16px;
+            color: var(--text-muted);
+            font-size: 15px;
         }
 
         footer {
-            background: #06080b;
-            padding: 25px 5%;
+            background: #05070a;
+            border-top: 1px solid var(--border-subtle);
+            padding: 26px 5%;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-muted);
-            font-size: 13px;
+            font-size: 12px;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(16px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         @media (max-width: 600px) {
+            .hero h1 { font-size: 25px; }
             .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .poster-wrapper { height: 220px; }
-            .hero { height: 260px; }
-            .hero-content h1 { font-size: 24px; }
+            .poster-wrap { height: 220px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Top Navigation -->
     <header>
-        <div class="logo" onclick="loadMovies('trending')">
-            <i class="fa-solid fa-play-circle" style="color: var(--primary);"></i>
+        <div class="logo" onclick="resetHome()">
+            <i class="fa-solid fa-film"></i>
             Zero <span>Movie Box</span>
         </div>
-        <form class="search-box" onsubmit="handleSearch(event)">
-            <input type="text" id="searchInput" placeholder="Search any movie (Bangla, Hindi, English)...">
-            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+        <form class="search-box" onsubmit="onSearchSubmit(event)">
+            <input type="text" id="searchInput" placeholder="Search Bangla, Hindi, Hollywood, South movies...">
+            <button type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </header>
 
+    <!-- Hero Banner -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>Live Auto-Updated Movie Streaming</h1>
-            <p>All latest Hollywood, Bollywood, South & Bangla movies updated automatically in HD quality. Just click and play instantly.</p>
+        <div>
+            <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Auto-Synced Catalog & Multi-Server Player</div>
+            <h1>Watch & Download Movies on Zero Movie Box</h1>
+            <p>Browse trending releases, switch between multiple streaming servers smoothly, and pick your preferred download option in one place.</p>
         </div>
     </section>
 
-    <!-- Adsterra / Monetag Banner Ad Space -->
-    <div class="ad-space">
-        <!-- আপনার Adsterra বা Monetag Banner কোড এখানে পেস্ট করবেন -->
-        <p>[ Advertisement Space - Paste Your Ad Network Banner Code Here ]</p>
+    <!-- Ad Banner Slot -->
+    <div class="ad-box" id="topAdSlot">
+        <!-- এখানে আপনার Adsterra / Monetag ব্যানার অ্যাড কোড পেস্ট করুন -->
+        <span>[ Advertisement Slot — Paste Banner Ad Code Here ]</span>
     </div>
 
-    <div class="categories">
-        <button class="cat-btn active" onclick="loadMovies('trending', this)">Trending Live</button>
-        <button class="cat-btn" onclick="loadMovies('now_playing', this)">Now In Cinemas</button>
-        <button class="cat-btn" onclick="loadMovies('popular', this)">Most Popular</button>
-        <button class="cat-btn" onclick="loadMovies('hindi', this)">Bollywood / Hindi</button>
-        <button class="cat-btn" onclick="loadMovies('bangla', this)">Bangla Movies</button>
+    <!-- Category & Quality Filter Toolbar -->
+    <div class="toolbar">
+        <div class="categories" id="categoryBar">
+            <button class="cat-btn active" data-cat="trending" onclick="selectCategory('trending', this)">Trending Now</button>
+            <button class="cat-btn" data-cat="now_playing" onclick="selectCategory('now_playing', this)">Now In Cinemas</button>
+            <button class="cat-btn" data-cat="popular" onclick="selectCategory('popular', this)">Popular</button>
+            <button class="cat-btn" data-cat="hindi" onclick="selectCategory('hindi', this)">Bollywood / Hindi</button>
+            <button class="cat-btn" data-cat="bangla" onclick="selectCategory('bangla', this)">Bangla Movies</button>
+            <button class="cat-btn" data-cat="south" onclick="selectCategory('south', this)">South Indian</button>
+        </div>
+
+        <select class="quality-select" id="qualityFilter" onchange="applyQualityDisplay()">
+            <option value="AUTO">Quality Tag: Auto (By Rating)</option>
+            <option value="4K HDR">Quality Tag: 4K HDR</option>
+            <option value="1080p BluRay">Quality Tag: 1080p BluRay</option>
+            <option value="720p WEB-DL">Quality Tag: 720p WEB-DL</option>
+        </select>
     </div>
 
-    <div class="container">
-        <h2 class="section-title" id="sectionTitle">Trending Live Movies</h2>
-        <div class="loader" id="loader"><i class="fa-solid fa-spinner fa-spin"></i> Loading Live Movies...</div>
+    <!-- Main Movie Catalog -->
+    <main class="container">
+        <div class="section-header">
+            <h2 class="section-title" id="sectionTitle">Trending Now</h2>
+            <span id="pageIndicator" style="font-size: 12px; color: var(--text-muted);">Page 1</span>
+        </div>
+
+        <div id="statusBox" class="status-box" style="display: none;"></div>
         <div class="movie-grid" id="movieGrid"></div>
-    </div>
 
-    <!-- Live Auto-Embed Player Modal -->
-    <div class="modal" id="videoModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Loading Movie...</h3>
-                <button class="close-btn" onclick="closePlayer()">&times;</button>
-            </div>
-            
-            <div class="video-container">
-                <iframe id="videoFrame" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
-            </div>
+        <div class="pagination">
+            <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled>
+                <i class="fa-solid fa-chevron-left"></i> Previous
+            </button>
+            <button class="page-btn" id="nextBtn" onclick="changePage(1)">
+                Next <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
 
-            <div class="modal-footer">
-                <div class="server-btns">
-                    <button class="btn-server active" id="srv1" onclick="changeServer(1)">Server 1 (Auto HD)</button>
-                    <button class="btn-server" id="srv2" onclick="changeServer(2)">Server 2 (Fast)</button>
-                    <button class="btn-server" id="srv3" onclick="changeServer(3)">Server 3 (Backup)</button>
+    <!-- Player & Download Modal -->
+    <div class="modal" id="movieModal" onclick="handleBackdropClick(event)">
+        <div class="modal-box">
+            <div class="modal-top">
+                <div class="modal-title-wrap">
+                    <h3 id="modalTitle">Movie Title</h3>
+                    <div class="modal-sub" id="modalMeta">Year • Language • Rating</div>
                 </div>
-                <span style="font-size: 12px; color: var(--text-muted);">If one server lags, switch to Server 2 or 3</span>
+                <button class="close-modal" onclick="closeModal()" title="Close">&times;</button>
+            </div>
+
+            <div class="player-frame-wrap">
+                <iframe id="streamFrame" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
+            </div>
+
+            <div class="controls-panel">
+                <!-- Streaming Servers -->
+                <div>
+                    <span class="panel-label"><i class="fa-solid fa-server"></i> Streaming Servers (Switch if buffering)</span>
+                    <div class="server-group">
+                        <button class="srv-btn active" id="srvBtn1" onclick="setServer(1)">Server 1 (Primary HD)</button>
+                        <button class="srv-btn" id="srvBtn2" onclick="setServer(2)">Server 2 (Fast Stream)</button>
+                        <button class="srv-btn" id="srvBtn3" onclick="setServer(3)">Server 3 (Multi-Source)</button>
+                        <button class="srv-btn" id="srvBtn4" onclick="setServer(4)">Server 4 (Backup)</button>
+                    </div>
+                </div>
+
+                <!-- Download Quality Options -->
+                <div>
+                    <span class="panel-label"><i class="fa-solid fa-download"></i> Download Options (Select Quality / Source)</span>
+                    <div class="download-group">
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl480" class="dl-btn dl-480">
+                            <i class="fa-solid fa-file-video"></i> 480p SD
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl720" class="dl-btn dl-720">
+                            <i class="fa-solid fa-file-video"></i> 720p HD
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl1080" class="dl-btn dl-1080">
+                            <i class="fa-solid fa-crown"></i> 1080p Full HD
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="dlMirror" class="dl-btn dl-mirror">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> Fast Mirror / Direct
+                        </a>
+                    </div>
+                </div>
+
+                <div class="helper-note" id="playerNote">
+                    Tip: যদি কোনো সার্ভার লোড না হয় বা স্লো মনে হয়, তাহলে <strong>Server 2, 3 বা 4</strong>-এ ক্লিক করুন। ডাউনলোড বাটনগুলোতে আপনার পছন্দমতো ডাউনলোড/শর্টলিংক বসিয়ে নিতে পারবেন।
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 <strong>Zero Movie Box</strong>. Auto-Streaming Engine.</p>
-        <p style="margin-top: 5px; font-size: 11px;">Disclaimer: This site does not store any files on its server. All contents are streamed automatically from third-party public APIs.</p>
+        <p>&copy; 2026 <strong>Zero Movie Box</strong>. All Rights Reserved.</p>
+        <p style="margin-top: 6px;">Metadata powered by TMDb API. Embedded streams & external download links belong to their respective third-party sources.</p>
     </footer>
 
     <script>
-        // ধাপ ২ অনুযায়ী নিচে আপনার ফ্রি TMDB API Key বসাবেন
-        const TMDB_API_KEY = "b2d19b515e028c6ff0319cce58d65f74"; 
-        
-        const BASE_URL = "https://api.themoviedb.org/3";
-        const IMG_URL = "https://image.tmdb.org/t/p/w500";
-        let currentMovieId = null;
+        // ==========================================================
+        // ১. এখানে আপনার TMDB API Key বসান
+        // ==========================================================
+        const TMDB_API_KEY = "b2d19b515e028c6ff0319cce58d65f74";
 
-        // অটোমেটিক মুভি লোড করার ফাংশন
-        async function loadMovies(type, btn = null) {
-            if (btn) {
-                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+        // ==========================================================
+        // ২. এখানে আপনার ডাউনলোড লিংক / শর্টলিংক টেমপ্লেট সেট করুন
+        // {id} এবং {title} অটোমেটিক মুভির তথ্য দিয়ে রিপ্লেস হবে
+        // ==========================================================
+        const DOWNLOAD_TEMPLATES = {
+            sd480:  "https://example.com/dl/480p?tmdb={id}&q={title}",
+            hd720:  "https://example.com/dl/720p?tmdb={id}&q={title}",
+            fhd1080:"https://example.com/dl/1080p?tmdb={id}&q={title}",
+            mirror: "https://example.com/dl/mirror?tmdb={id}&q={title}"
+        };
+
+        const API_BASE = "https://api.themoviedb.org/3";
+        const IMG_BASE = "https://image.tmdb.org/t/p/w500";
+
+        let state = {
+            category: "trending",
+            searchQuery: "",
+            page: 1,
+            totalPages: 1,
+            movies: [],
+            activeMovie: null,
+            activeServer: 1
+        };
+
+        function inferQualityBadge(voteAverage) {
+            const forced = document.getElementById("qualityFilter").value;
+            if (forced !== "AUTO") return forced;
+            if (voteAverage >= 7.8) return "1080p BluRay";
+            if (voteAverage >= 6.2) return "720p WEB-DL";
+            return "HD";
+        }
+
+        function buildEndpoint() {
+            const { category, searchQuery, page } = state;
+            if (searchQuery) {
+                return `${API_BASE}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(searchQuery)}&page=${page}`;
             }
-
-            const loader = document.getElementById('loader');
-            const grid = document.getElementById('movieGrid');
-            const titleEl = document.getElementById('sectionTitle');
-            
-            loader.style.display = 'block';
-            grid.innerHTML = '';
-
-            let endpoint = "";
-            if (type === 'trending') {
-                endpoint = `${BASE_URL}/trending/movie/day?api_key=${TMDB_API_KEY}`;
-                titleEl.innerText = "Trending Live Movies";
-            } else if (type === 'now_playing') {
-                endpoint = `${BASE_URL}/movie/now_playing?api_key=${TMDB_API_KEY}`;
-                titleEl.innerText = "Now Playing In Cinemas";
-            } else if (type === 'popular') {
-                endpoint = `${BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`;
-                titleEl.innerText = "Most Popular Worldwide";
-            } else if (type === 'hindi') {
-                endpoint = `${BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=hi&sort_by=release_date.desc`;
-                titleEl.innerText = "Latest Bollywood / Hindi Movies";
-            } else if (type === 'bangla') {
-                endpoint = `${BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=release_date.desc`;
-                titleEl.innerText = "Latest Bangla Movies";
-            }
-
-            try {
-                const res = await fetch(endpoint);
-                const data = await res.json();
-                loader.style.display = 'none';
-                displayMovies(data.results);
-            } catch (error) {
-                loader.innerText = "API Key সেট করা হয়নি! নিচের নির্দেশনা দেখে আপনার ফ্রি TMDB API Key বসান।";
+            switch (category) {
+                case "now_playing":
+                    return `${API_BASE}/movie/now_playing?api_key=${TMDB_API_KEY}&page=${page}`;
+                case "popular":
+                    return `${API_BASE}/movie/popular?api_key=${TMDB_API_KEY}&page=${page}`;
+                case "hindi":
+                    return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=hi&sort_by=popularity.desc&page=${page}`;
+                case "bangla":
+                    return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=popularity.desc&page=${page}`;
+                case "south":
+                    return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=te|ta|ml|kn&sort_by=popularity.desc&page=${page}`;
+                case "trending":
+                default:
+                    return `${API_BASE}/trending/movie/day?api_key=${TMDB_API_KEY}&page=${page}`;
             }
         }
 
-        // সার্চ ফাংশন
-        async function handleSearch(e) {
-            e.preventDefault();
-            const query = document.getElementById('searchInput').value.trim();
-            if (!query) return;
-
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('movieGrid').innerHTML = '';
-            document.getElementById('sectionTitle').innerText = `Search Results for: "${query}"`;
-
-            const res = await fetch(`${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`);
-            const data = await res.json();
-            document.getElementById('loader').style.display = 'none';
-            displayMovies(data.results);
+        function updateHeading() {
+            const titleMap = {
+                trending: "Trending Now",
+                now_playing: "Now In Cinemas",
+                popular: "Most Popular Movies",
+                hindi: "Bollywood / Hindi Movies",
+                bangla: "Bangla Movies",
+                south: "South Indian Movies"
+            };
+            const el = document.getElementById("sectionTitle");
+            el.textContent = state.searchQuery
+                ? `Search Results for "${state.searchQuery}"`
+                : (titleMap[state.category] || "Movies");
+            document.getElementById("pageIndicator").textContent = `Page ${state.page} of ${state.totalPages}`;
         }
 
-        // মুভি কার্ড তৈরি
-        function displayMovies(movies) {
-            const grid = document.getElementById('movieGrid');
-            grid.innerHTML = '';
+        async function fetchMovies() {
+            const statusBox = document.getElementById("statusBox");
+            const grid = document.getElementById("movieGrid");
 
-            if (!movies || movies.length === 0) {
-                grid.innerHTML = '<p>No movies found!</p>';
+            if (!TMDB_API_KEY || TMDB_API_KEY === "YOUR_TMDB_API_KEY_HERE") {
+                grid.innerHTML = "";
+                statusBox.style.display = "block";
+                statusBox.innerHTML = `<i class="fa-solid fa-key"></i> TMDB API Key এখনো বসানো হয়নি। কোডের ভেতর <code>YOUR_TMDB_API_KEY_HERE</code> মুছে আপনার API Key বসিয়ে সেভ করুন।`;
                 return;
             }
 
-            movies.forEach(movie => {
-                if (!movie.poster_path) return;
-                const year = movie.release_date ? movie.release_date.split('-')[0] : '2026';
-                const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '7.5';
+            statusBox.style.display = "block";
+            statusBox.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Loading movies...`;
+            grid.innerHTML = "";
+            updateHeading();
 
-                const card = document.createElement('div');
-                card.className = 'movie-card';
-                card.onclick = () => openAutoPlayer(movie.id, movie.title);
+            try {
+                const res = await fetch(buildEndpoint());
+                if (!res.ok) throw new Error("API request failed");
+                const data = await res.json();
+
+                state.totalPages = Math.min(data.total_pages || 1, 500);
+                state.movies = (data.results || []).filter(m => m.poster_path);
+
+                statusBox.style.display = "none";
+                renderMovies();
+                updatePaginationButtons();
+            } catch (err) {
+                statusBox.style.display = "block";
+                statusBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> মুভি লোড করতে সমস্যা হচ্ছে। আপনার TMDB API Key বা ইন্টারনেট কানেকশন চেক করুন।`;
+            }
+        }
+
+        function renderMovies() {
+            const grid = document.getElementById("movieGrid");
+            const statusBox = document.getElementById("statusBox");
+            grid.innerHTML = "";
+
+            if (!state.movies.length) {
+                statusBox.style.display = "block";
+                statusBox.textContent = "কোনো মুভি পাওয়া যায়নি। অন্য নাম বা ক্যাটাগরি দিয়ে চেষ্টা করুন।";
+                return;
+            }
+
+            statusBox.style.display = "none";
+
+            state.movies.forEach(movie => {
+                const year = movie.release_date ? movie.release_date.slice(0, 4) : "N/A";
+                const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "7.0";
+                const lang = (movie.original_language || "en").toUpperCase();
+                const quality = inferQualityBadge(movie.vote_average || 7.0);
+
+                const card = document.createElement("div");
+                card.className = "movie-card";
+                card.onclick = () => openMovieModal(movie, quality);
+
                 card.innerHTML = `
-                    <div class="poster-wrapper">
-                        <span class="quality-tag">HD LIVE</span>
-                        <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}" loading="lazy">
-                        <div class="play-overlay">
-                            <div class="play-circle"><i class="fa-solid fa-play"></i></div>
+                    <div class="poster-wrap">
+                        <span class="badge-lang">${lang}</span>
+                        <span class="badge-quality">${quality}</span>
+                        <img src="${IMG_BASE + movie.poster_path}" alt="${escapeHtml(movie.title)}" loading="lazy">
+                        <div class="play-hover">
+                            <div class="play-btn-circle"><i class="fa-solid fa-play"></i></div>
                         </div>
                     </div>
-                    <div class="movie-info">
-                        <div class="movie-title">${movie.title}</div>
-                        <div class="movie-meta">
+                    <div class="card-body">
+                        <div class="card-title" title="${escapeHtml(movie.title)}">${escapeHtml(movie.title)}</div>
+                        <div class="card-meta">
                             <span>${year}</span>
-                            <span class="rating"><i class="fa-solid fa-star"></i> ${rating}</span>
+                            <span class="rating-star"><i class="fa-solid fa-star"></i> ${rating}</span>
                         </div>
                     </div>
                 `;
@@ -560,39 +859,128 @@
             });
         }
 
-        // অটো-এম্বেড প্লেয়ার ওপেন (কোনো লিংক বসানো ছাড়াই মুভি চলবে)
-        function openAutoPlayer(tmdbId, title) {
-            currentMovieId = tmdbId;
-            document.getElementById('modalTitle').innerText = title;
-            changeServer(1);
-            document.getElementById('videoModal').style.display = 'flex';
+        function applyQualityDisplay() {
+            renderMovies();
         }
 
-        // ৩টি অটো-এম্বেড সার্ভার সুইচিং
-        function changeServer(serverNum) {
-            if (!currentMovieId) return;
-            const frame = document.getElementById('videoFrame');
-            
-            document.querySelectorAll('.btn-server').forEach(b => b.classList.remove('active'));
-            document.getElementById(`srv${serverNum}`).classList.add('active');
+        function selectCategory(cat, btnEl) {
+            state.searchQuery = "";
+            state.category = cat;
+            state.page = 1;
+            document.getElementById("searchInput").value = "";
 
-            // থার্ড-পার্টি অটো স্ট্রিমিং সার্ভার লিংক (TMDB ID দিয়ে অটো মুভি খুঁজে প্লে করে)
-            if (serverNum === 1) {
-                frame.src = `https://vidsrc.xyz/embed/movie/${currentMovieId}`;
-            } else if (serverNum === 2) {
-                frame.src = `https://vidsrc.pro/embed/movie/${currentMovieId}`;
-            } else if (serverNum === 3) {
-                frame.src = `https://multiembed.mov/?video_id=${currentMovieId}&tmdb=1`;
+            document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+            if (btnEl) btnEl.classList.add("active");
+
+            fetchMovies();
+        }
+
+        function resetHome() {
+            const firstBtn = document.querySelector('.cat-btn[data-cat="trending"]');
+            selectCategory("trending", firstBtn);
+        }
+
+        function onSearchSubmit(e) {
+            e.preventDefault();
+            const q = document.getElementById("searchInput").value.trim();
+            if (!q) return;
+            state.searchQuery = q;
+            state.page = 1;
+            document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+            fetchMovies();
+        }
+
+        function changePage(delta) {
+            const nextPage = state.page + delta;
+            if (nextPage < 1 || nextPage > state.totalPages) return;
+            state.page = nextPage;
+            fetchMovies();
+            window.scrollTo({ top: 300, behavior: "smooth" });
+        }
+
+        function updatePaginationButtons() {
+            document.getElementById("prevBtn").disabled = state.page <= 1;
+            document.getElementById("nextBtn").disabled = state.page >= state.totalPages;
+        }
+
+        function buildServerUrl(serverNum, tmdbId) {
+            switch (serverNum) {
+                case 1:
+                    return `https://vidsrc.xyz/embed/movie/${tmdbId}`;
+                case 2:
+                    return `https://vidsrc.pro/embed/movie/${tmdbId}`;
+                case 3:
+                    return `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1`;
+                case 4:
+                default:
+                    return `https://vidsrc.me/embed/movie/${tmdbId}`;
             }
         }
 
-        function closePlayer() {
-            document.getElementById('videoModal').style.display = 'none';
-            document.getElementById('videoFrame').src = '';
+        function populateDownloadLinks(movie) {
+            const encodedTitle = encodeURIComponent(movie.title || "movie");
+            const id = movie.id;
+
+            const fill = (tpl) => tpl.replace("{id}", id).replace("{title}", encodedTitle);
+
+            document.getElementById("dl480").href = fill(DOWNLOAD_TEMPLATES.sd480);
+            document.getElementById("dl720").href = fill(DOWNLOAD_TEMPLATES.hd720);
+            document.getElementById("dl1080").href = fill(DOWNLOAD_TEMPLATES.fhd1080);
+            document.getElementById("dlMirror").href = fill(DOWNLOAD_TEMPLATES.mirror);
         }
 
-        // পেজ লোড হলেই অটোমেটিক মুভি চলে আসবে
-        window.onload = () => loadMovies('trending');
+        function openMovieModal(movie, quality) {
+            state.activeMovie = movie;
+            state.activeServer = 1;
+
+            const year = movie.release_date ? movie.release_date.slice(0, 4) : "N/A";
+            const lang = (movie.original_language || "en").toUpperCase();
+            const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "7.0";
+
+            document.getElementById("modalTitle").textContent = movie.title;
+            document.getElementById("modalMeta").textContent = `${year} • ${lang} • ${quality} • ★ ${rating}`;
+
+            populateDownloadLinks(movie);
+            setServer(1);
+
+            document.getElementById("movieModal").classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function setServer(num) {
+            if (!state.activeMovie) return;
+            state.activeServer = num;
+
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`srvBtn${i}`).classList.toggle("active", i === num);
+            }
+
+            document.getElementById("streamFrame").src = buildServerUrl(num, state.activeMovie.id);
+        }
+
+        function closeModal() {
+            document.getElementById("movieModal").classList.remove("active");
+            document.getElementById("streamFrame").src = "";
+            document.body.style.overflow = "";
+        }
+
+        function handleBackdropClick(e) {
+            if (e.target.id === "movieModal") {
+                closeModal();
+            }
+        }
+
+        function escapeHtml(str = "") {
+            return str.replace(/[&<>"']/g, m => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+            }[m]));
+        }
+
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") closeModal();
+        });
+
+        window.addEventListener("DOMContentLoaded", fetchMovies);
     </script>
 </body>
 </html>
