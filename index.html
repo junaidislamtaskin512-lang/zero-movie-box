@@ -13,13 +13,13 @@
             --bg-surface: #0e131f;
             --bg-card: #141b2b;
             --accent: #e50914;
-            --accent-hover: #ff1723;
             --accent-glow: rgba(229, 9, 20, 0.42);
             --gold: #f59e0b;
             --emerald: #10b981;
+            --blue: #3b82f6;
             --text-main: #ffffff;
             --text-muted: #9ca3af;
-            --border: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.09);
         }
 
         * {
@@ -36,19 +36,19 @@
             overflow-x: hidden;
         }
 
-        /* Navbar */
+        /* Header */
         header {
             position: sticky;
             top: 0;
             z-index: 900;
-            background: rgba(6, 8, 13, 0.92);
+            background: rgba(6, 8, 13, 0.94);
             backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border);
-            padding: 14px 5%;
+            padding: 13px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
@@ -76,7 +76,6 @@
         .brand-name {
             font-size: 22px;
             font-weight: 800;
-            letter-spacing: 0.3px;
         }
 
         .brand-name span {
@@ -89,22 +88,21 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 999px;
-            padding: 7px 16px;
+            padding: 7px 15px;
             width: 340px;
             max-width: 100%;
-            transition: 0.25s ease;
         }
 
         .search-form:focus-within {
             border-color: var(--accent);
-            box-shadow: 0 0 14px var(--accent-glow);
+            box-shadow: 0 0 12px var(--accent-glow);
         }
 
         .search-form input {
             background: transparent;
             border: none;
             outline: none;
-            color: var(--text-main);
+            color: #fff;
             width: 100%;
             font-size: 14px;
         }
@@ -119,17 +117,17 @@
 
         /* Hero */
         .hero {
-            padding: 40px 5% 32px;
+            padding: 36px 5% 28px;
             background:
-                linear-gradient(180deg, rgba(6, 8, 13, 0.35) 0%, var(--bg-main) 100%),
-                url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+                linear-gradient(180deg, rgba(6, 8, 13, 0.4) 0%, var(--bg-main) 100%),
+                radial-gradient(circle at top right, rgba(229, 9, 20, 0.22), transparent 55%);
             border-bottom: 1px solid var(--border);
         }
 
         .hero h1 {
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .hero p {
@@ -138,21 +136,21 @@
             max-width: 680px;
         }
 
-        /* Ad Banner */
+        /* Ad Slot */
         .ad-slot {
-            margin: 20px 5% 6px;
+            margin: 18px 5% 6px;
             background: var(--bg-surface);
             border: 1px dashed rgba(255, 255, 255, 0.16);
             border-radius: 10px;
-            padding: 13px;
+            padding: 12px;
             text-align: center;
             color: var(--text-muted);
             font-size: 12px;
         }
 
-        /* Categories */
+        /* Tabs */
         .nav-tabs {
-            padding: 16px 5% 8px;
+            padding: 14px 5% 8px;
             display: flex;
             gap: 9px;
             overflow-x: auto;
@@ -160,9 +158,9 @@
 
         .tab-btn {
             background: var(--bg-card);
-            color: var(--text-main);
+            color: #fff;
             border: 1px solid var(--border);
-            padding: 8px 17px;
+            padding: 8px 16px;
             border-radius: 999px;
             font-size: 13px;
             font-weight: 600;
@@ -177,57 +175,58 @@
             box-shadow: 0 4px 16px var(--accent-glow);
         }
 
-        /* Special Series / Cartoon Season Box (CID, গোপাল ভাঁড়, মোটু পাতলু) */
+        /* Series & Cartoon Season Box (CID, গোপাল ভাঁড়, মোটু পাতলু) */
         .series-hub {
             display: none;
-            margin: 14px 5% 4px;
+            margin: 14px 5% 6px;
             background: var(--bg-surface);
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 18px;
-            animation: fadeUp 0.3s ease;
         }
 
         .series-hub.visible {
             display: block;
         }
 
-        .series-header {
+        .series-top {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
             gap: 12px;
+            padding-bottom: 14px;
             margin-bottom: 14px;
-            padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
         }
 
-        .series-badge-row {
+        .series-id-wrap {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .series-logo-box {
-            width: 48px;
-            height: 48px;
+        .series-badge-logo {
+            width: 52px;
+            height: 52px;
             border-radius: 12px;
             background: linear-gradient(135deg, var(--accent), var(--gold));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
             font-weight: 800;
+            font-size: 15px;
+            text-align: center;
+            padding: 4px;
             color: #fff;
             flex-shrink: 0;
         }
 
-        .season-select {
+        .season-picker {
             background: var(--bg-card);
-            color: var(--text-main);
+            color: #fff;
             border: 1px solid var(--border);
-            padding: 8px 14px;
+            padding: 9px 14px;
             border-radius: 9px;
             font-size: 13px;
             font-weight: 600;
@@ -235,17 +234,17 @@
             cursor: pointer;
         }
 
-        .episode-grid {
+        .ep-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 12px;
         }
 
-        .ep-card {
+        .ep-item {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px 14px;
+            border-radius: 11px;
+            padding: 13px;
             cursor: pointer;
             transition: 0.2s ease;
             display: flex;
@@ -253,37 +252,37 @@
             gap: 5px;
         }
 
-        .ep-card:hover {
+        .ep-item:hover {
             border-color: var(--accent);
             transform: translateY(-3px);
         }
 
-        .ep-tag {
+        .ep-num {
             font-size: 11px;
             font-weight: 700;
             color: var(--gold);
         }
 
-        .ep-title {
-            font-size: 13px;
+        .ep-name {
+            font-size: 14px;
             font-weight: 600;
         }
 
-        .ep-meta {
+        .ep-size {
             font-size: 11px;
             color: var(--text-muted);
         }
 
-        /* Movie Catalog */
+        /* Catalog */
         .main-wrap {
-            padding: 18px 5% 60px;
+            padding: 16px 5% 60px;
         }
 
         .section-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .section-title {
@@ -295,8 +294,8 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+            gap: 18px;
         }
 
         .movie-card {
@@ -305,33 +304,42 @@
             border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            transition: 0.28s ease;
-            animation: fadeUp 0.4s ease forwards;
+            transition: 0.25s ease;
         }
 
         .movie-card:hover {
-            transform: translateY(-7px);
-            border-color: rgba(229, 9, 20, 0.5);
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.7);
+            transform: translateY(-6px);
+            border-color: rgba(229, 9, 20, 0.55);
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.7);
         }
 
         .poster-box {
             position: relative;
-            height: 275px;
-            background: #1b2234;
+            height: 265px;
+            background: linear-gradient(145deg, #182033, #0f1422);
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .poster-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.4s ease;
+            display: block;
         }
 
-        .movie-card:hover .poster-box img {
-            transform: scale(1.06);
-            filter: brightness(0.65);
+        .poster-fallback {
+            padding: 16px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
         }
 
         .q-badge {
@@ -344,13 +352,14 @@
             font-weight: 700;
             padding: 3px 7px;
             border-radius: 5px;
+            z-index: 2;
         }
 
         .l-badge {
             position: absolute;
             top: 9px;
             left: 9px;
-            background: rgba(6, 8, 13, 0.85);
+            background: rgba(6, 8, 13, 0.88);
             border: 1px solid var(--border);
             color: #f3f4f6;
             font-size: 10px;
@@ -358,10 +367,11 @@
             padding: 3px 7px;
             border-radius: 5px;
             text-transform: uppercase;
+            z-index: 2;
         }
 
         .card-body {
-            padding: 12px;
+            padding: 11px 12px 13px;
         }
 
         .card-title {
@@ -391,12 +401,12 @@
             justify-content: center;
             align-items: center;
             gap: 12px;
-            margin-top: 32px;
+            margin-top: 30px;
         }
 
         .page-btn {
             background: var(--bg-card);
-            color: var(--text-main);
+            color: #fff;
             border: 1px solid var(--border);
             padding: 8px 16px;
             border-radius: 8px;
@@ -415,7 +425,7 @@
             cursor: not-allowed;
         }
 
-        /* Landscape Player Modal */
+        /* Player & Download Modal */
         .modal {
             display: none;
             position: fixed;
@@ -423,7 +433,7 @@
             z-index: 2000;
             background: rgba(0, 0, 0, 0.94);
             backdrop-filter: blur(8px);
-            padding: 14px;
+            padding: 12px;
             overflow-y: auto;
             align-items: center;
             justify-content: center;
@@ -440,17 +450,36 @@
             border: 1px solid var(--border);
             border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
         }
 
         .modal-top {
-            padding: 12px 18px;
+            padding: 12px 16px;
             background: #090c14;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rotate-btn {
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .close-btn {
@@ -468,26 +497,41 @@
             background: var(--accent);
         }
 
-        /* Landscape 16:9 Stage */
-        .landscape-stage {
+        /* Landscape Player Container */
+        .player-wrap {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
             background: #000;
         }
 
-        .landscape-stage iframe {
+        .player-wrap iframe, .player-wrap video {
             width: 100%;
             height: 100%;
             border: none;
             display: block;
+            background: #000;
+        }
+
+        .player-placeholder {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            background: #070a10;
+            color: var(--text-muted);
+            gap: 10px;
         }
 
         .modal-controls {
-            padding: 16px 18px 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 15px;
         }
 
         .label-sm {
@@ -522,21 +566,68 @@
             border-color: var(--accent);
         }
 
-        .dl-btn {
-            text-decoration: none;
-            background: var(--emerald);
-            color: #fff;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        /* Download Quality Cards with MB / GB Size */
+        .dl-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+            gap: 10px;
         }
 
-        .dl-btn:hover {
-            filter: brightness(1.08);
+        .dl-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 13px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .dl-card:hover {
+            border-color: var(--emerald);
+            transform: translateY(-2px);
+        }
+
+        .dl-res {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .dl-size {
+            font-size: 11px;
+            color: #6ee7b7;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .dl-icon-pill {
+            background: var(--emerald);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .dl-alert {
+            display: none;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fde68a;
+            padding: 10px 14px;
+            border-radius: 9px;
+            font-size: 12px;
+            line-height: 1.5;
         }
 
         .info-box {
@@ -549,19 +640,14 @@
         footer {
             background: #040609;
             border-top: 1px solid var(--border);
-            padding: 24px 5%;
+            padding: 22px 5%;
             text-align: center;
             color: var(--text-muted);
             font-size: 12px;
         }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(14px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         @media (max-width: 600px) {
-            .hero h1 { font-size: 25px; }
+            .hero h1 { font-size: 24px; }
             .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .poster-box { height: 215px; }
         }
@@ -576,18 +662,17 @@
         </div>
 
         <form class="search-form" onsubmit="onSearch(event)">
-            <input type="text" id="searchInput" placeholder="Search movies, OTT, Bangla, Hindi, English...">
+            <input type="text" id="searchInput" placeholder="Search movies, OTT, Bangla, Hindi, CID...">
             <button type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </header>
 
     <section class="hero">
         <h1>Zero Movie Box</h1>
-        <p>All languages, OTT & movie releases, plus CID, গোপাল ভাঁড় and মোটু পাতলু episodes organized by season in a clean landscape player.</p>
+        <p>Movies, OTT releases, Bangla, Hindi, South, plus CID, গোপাল ভাঁড় and মোটু পাতলু organized by season and episode.</p>
     </section>
 
     <div class="ad-slot">
-        <!-- এখানে আপনার ব্যানার অ্যাড কোড বসান -->
         <span>[ Advertisement Banner Slot ]</span>
     </div>
 
@@ -597,33 +682,33 @@
         <button class="tab-btn" data-tab="bangla" onclick="switchTab('bangla', this)">Bangla</button>
         <button class="tab-btn" data-tab="hindi" onclick="switchTab('hindi', this)">Hindi</button>
         <button class="tab-btn" data-tab="south" onclick="switchTab('south', this)">South</button>
-        <button class="tab-btn" data-tab="cid" onclick="switchTab('cid', this)">CID</button>
+        <button class="tab-btn" data-tab="cid" onclick="switchTab('cid', this)">CID (Sony Aath / TV)</button>
         <button class="tab-btn" data-tab="gopal" onclick="switchTab('gopal', this)">গোপাল ভাঁড়</button>
         <button class="tab-btn" data-tab="motu" onclick="switchTab('motu', this)">মোটু পাতলু</button>
     </div>
 
     <!-- Season & Episode Hub for CID, গোপাল ভাঁড়, মোটু পাতলু -->
     <section class="series-hub" id="seriesHub">
-        <div class="series-header">
-            <div class="series-badge-row">
-                <div class="series-logo-box" id="seriesLogo">CID</div>
+        <div class="series-top">
+            <div class="series-id-wrap">
+                <div class="series-badge-logo" id="seriesLogo">CID</div>
                 <div>
-                    <h3 id="seriesTitle" style="font-size: 18px; font-weight: 700;">Series Name</h3>
-                    <div id="seriesSub" style="font-size: 12px; color: var(--text-muted);">Season-wise episodes</div>
+                    <h3 id="seriesTitle" style="font-size: 18px; font-weight: 700;">Series</h3>
+                    <div id="seriesSub" style="font-size: 12px; color: var(--text-muted);">Select season & episode</div>
                 </div>
             </div>
 
-            <select class="season-select" id="seasonSelect" onchange="renderEpisodes()">
+            <select class="season-picker" id="seasonSelect" onchange="renderEpisodes()">
                 <option value="1">Season 1</option>
                 <option value="2">Season 2</option>
                 <option value="3">Season 3</option>
             </select>
         </div>
 
-        <div class="episode-grid" id="episodeGrid"></div>
+        <div class="ep-grid" id="episodeGrid"></div>
     </section>
 
-    <!-- Main Movie Catalog -->
+    <!-- Main Movie Grid -->
     <main class="main-wrap">
         <div class="section-top">
             <h2 class="section-title" id="catalogTitle">Trending Movies</h2>
@@ -651,16 +736,28 @@
                     <h3 id="modalTitle" style="font-size: 16px; font-weight: 700;">Title</h3>
                     <div id="modalMeta" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Info</div>
                 </div>
-                <button class="close-btn" onclick="closeModal()" title="Close">&times;</button>
+                <div class="top-actions">
+                    <button class="rotate-btn" onclick="enterLandscapeFullscreen()" title="Fullscreen & Rotate Landscape">
+                        <i class="fa-solid fa-expand"></i> Fullscreen / Rotate
+                    </button>
+                    <button class="close-btn" onclick="closeModal()" title="Close">&times;</button>
+                </div>
             </div>
 
-            <div class="landscape-stage">
+            <div class="player-wrap" id="playerContainer">
                 <iframe id="playerFrame" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
+                <video id="directVideo" controls playsinline style="display: none;"></video>
+                <div class="player-placeholder" id="playerPlaceholder">
+                    <i class="fa-solid fa-circle-play" style="font-size: 36px; color: var(--accent);"></i>
+                    <div id="placeholderText" style="font-size: 14px; max-width: 480px;">
+                        এই পর্বের ভিডিও লিংক এখনো যুক্ত করা হয়নি। কোডের <code>SERIES_DATA</code> অংশে এই এপিসোডের এম্বেড বা MP4 লিংক বসালে এখানে সরাসরি চলবে।
+                    </div>
+                </div>
             </div>
 
             <div class="modal-controls">
-                <div>
-                    <span class="label-sm"><i class="fa-solid fa-server"></i> Streaming Servers</span>
+                <div id="serverRow">
+                    <span class="label-sm"><i class="fa-solid fa-server"></i> Streaming Servers (Switch if one fails)</span>
                     <div class="btn-group">
                         <button class="srv-btn active" id="srv1" onclick="chooseServer(1)">Server 1 (HD)</button>
                         <button class="srv-btn" id="srv2" onclick="chooseServer(2)">Server 2 (Fast)</button>
@@ -670,22 +767,43 @@
                 </div>
 
                 <div>
-                    <span class="label-sm"><i class="fa-solid fa-download"></i> Download Options</span>
-                    <div class="btn-group">
-                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl480" class="dl-btn">
-                            <i class="fa-solid fa-file-arrow-down"></i> 480p
-                        </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl720" class="dl-btn">
-                            <i class="fa-solid fa-file-arrow-down"></i> 720p
-                        </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" id="dl1080" class="dl-btn">
-                            <i class="fa-solid fa-file-arrow-down"></i> 1080p
-                        </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" id="dlDirect" class="dl-btn">
-                            <i class="fa-solid fa-cloud-arrow-down"></i> Mirror / Direct
-                        </a>
+                    <span class="label-sm"><i class="fa-solid fa-download"></i> Download Options (Resolution & File Size)</span>
+                    <div class="dl-grid">
+                        <button type="button" class="dl-card" onclick="triggerDownload('480p')">
+                            <div>
+                                <div class="dl-res">480p SD Quality</div>
+                                <div class="dl-size" id="size480">Size: 420 MB • MP4</div>
+                            </div>
+                            <div class="dl-icon-pill"><i class="fa-solid fa-download"></i></div>
+                        </button>
+
+                        <button type="button" class="dl-card" onclick="triggerDownload('720p')">
+                            <div>
+                                <div class="dl-res">720p HD Quality</div>
+                                <div class="dl-size" id="size720">Size: 1.15 GB • MP4</div>
+                            </div>
+                            <div class="dl-icon-pill"><i class="fa-solid fa-download"></i></div>
+                        </button>
+
+                        <button type="button" class="dl-card" onclick="triggerDownload('1080p')">
+                            <div>
+                                <div class="dl-res">1080p Full HD</div>
+                                <div class="dl-size" id="size1080">Size: 2.35 GB • MKV/MP4</div>
+                            </div>
+                            <div class="dl-icon-pill"><i class="fa-solid fa-download"></i></div>
+                        </button>
+
+                        <button type="button" class="dl-card" onclick="triggerDownload('direct')">
+                            <div>
+                                <div class="dl-res">Fast Direct / Mirror</div>
+                                <div class="dl-size" id="sizeDirect">Auto Best Quality</div>
+                            </div>
+                            <div class="dl-icon-pill"><i class="fa-solid fa-cloud-arrow-down"></i></div>
+                        </button>
                     </div>
                 </div>
+
+                <div class="dl-alert" id="dlAlert"></div>
             </div>
         </div>
     </div>
@@ -695,89 +813,186 @@
     </footer>
 
     <script>
-        // আপনার TMDB API Key
         const TMDB_API_KEY = "b2d19b515e028c6ff0319cce58d65f74";
+        const API_BASE = "https://api.themoviedb.org/3";
+        const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
-        // ডাউনলোড লিংক টেমপ্লেট (প্রয়োজন অনুযায়ী নিজের লিংক/শর্টলিংক বসান)
-        const DOWNLOAD_TEMPLATES = {
-            sd480:  "https://example.com/download/480p?id={id}&title={title}",
-            hd720:  "https://example.com/download/720p?id={id}&title={title}",
-            fhd1080:"https://example.com/download/1080p?id={id}&title={title}",
-            direct: "https://example.com/download/direct?id={id}&title={title}"
+        // ============================================================
+        // এখানে আপনার আসল ডাউনলোড ফাইল / শর্টলিংক / গুগল ড্রাইভ লিংক বসান
+        // যদি ডিরেক্ট .mp4 লিংক দেন, তাহলে ব্রাউজার থেকে সরাসরি ফাইল ডাউনলোড শুরু হবে
+        // ============================================================
+        const GLOBAL_DOWNLOAD_BASE = {
+            "480p": "",   // যেমন: "https://your-download-server.com/480p/{id}"
+            "720p": "",   // যেমন: "https://your-download-server.com/720p/{id}"
+            "1080p": "",  // যেমন: "https://your-download-server.com/1080p/{id}"
+            "direct": ""  // যেমন: "https://your-download-server.com/direct/{id}"
         };
 
-        // CID, গোপাল ভাঁড় ও মোটু পাতলু সিজন অনুযায়ী তালিকা
-        // এখানে নিজের পছন্দের এপিসোড বা এম্বেড লিংক/TMDB ID যোগ করতে পারবেন
+        // ============================================================
+        // CID (Sony Aath বাংলা), গোপাল ভাঁড় ও মোটু পাতলু — সিজন ও এপিসোড
+        // প্রতিটি এপিসোডের videoUrl-এ এম্বেড লিংক বা ডিরেক্ট .mp4 লিংক বসান
+        // এবং downloadLinks-এ ৪৮০p/৭২০p/১০৮০p লিংক দিলে সরাসরি ডাউনলোড হবে
+        // ============================================================
         const SERIES_DATA = {
             cid: {
                 logo: "CID",
-                title: "CID — Season Wise Episodes",
-                sub: "Select season and watch episodes in landscape view",
+                title: "CID — Sony Aath Bangla & Hindi",
+                sub: "সিজন অনুযায়ী এপিসোড বেছে দেখুন ও ডাউনলোড করুন",
                 seasons: {
                     1: [
-                        { ep: "Episode 1", name: "CID Case File — Episode 01", date: "Season 1", tmdbId: 4614, embedUrl: "" },
-                        { ep: "Episode 2", name: "CID Case File — Episode 02", date: "Season 1", tmdbId: 4614, embedUrl: "" },
-                        { ep: "Episode 3", name: "CID Case File — Episode 03", date: "Season 1", tmdbId: 4614, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "CID Bangla — রহস্যময় খুন (পর্ব ০১)",
+                            sizes: { "480p": "180 MB", "720p": "420 MB", "1080p": "890 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        },
+                        {
+                            ep: "Episode 02",
+                            name: "CID Bangla — অদৃশ্য আততায়ী (পর্ব ০২)",
+                            sizes: { "480p": "175 MB", "720p": "410 MB", "1080p": "860 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        },
+                        {
+                            ep: "Episode 03",
+                            name: "CID Bangla — বন্ধ ঘরের রহস্য (পর্ব ০৩)",
+                            sizes: { "480p": "190 MB", "720p": "440 MB", "1080p": "910 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ],
                     2: [
-                        { ep: "Episode 1", name: "CID Mystery — Season 2 Ep 01", date: "Season 2", tmdbId: 4614, embedUrl: "" },
-                        { ep: "Episode 2", name: "CID Mystery — Season 2 Ep 02", date: "Season 2", tmdbId: 4614, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "CID Bangla — সিজন ২ স্পেশাল (পর্ব ০১)",
+                            sizes: { "480p": "185 MB", "720p": "430 MB", "1080p": "900 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        },
+                        {
+                            ep: "Episode 02",
+                            name: "CID Bangla — সিজন ২ স্পেশাল (পর্ব ০২)",
+                            sizes: { "480p": "180 MB", "720p": "425 MB", "1080p": "880 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ],
                     3: [
-                        { ep: "Episode 1", name: "CID Special — Season 3 Ep 01", date: "Season 3", tmdbId: 4614, embedUrl: "" },
-                        { ep: "Episode 2", name: "CID Special — Season 3 Ep 02", date: "Season 3", tmdbId: 4614, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "CID Bangla — সিজন ৩ নতুন পর্ব ০১",
+                            sizes: { "480p": "195 MB", "720p": "450 MB", "1080p": "940 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ]
                 }
             },
             gopal: {
-                logo: "গোপাল",
-                title: "গোপাল ভাঁড় — Season Wise Episodes",
-                sub: "দৈনিক আপডেট অনুযায়ী সিজন বেছে এপিসোড দেখুন",
+                logo: "গোপাল ভাঁড়",
+                title: "গোপাল ভাঁড় — বাংলা কার্টুন সিরিজ",
+                sub: "সিজন অনুযায়ী গোপাল ভাঁড়ের পর্ব দেখুন ও ডাউনলোড করুন",
                 seasons: {
                     1: [
-                        { ep: "Episode 1", name: "গোপাল ভাঁড়ের বুদ্ধির খেলা — পর্ব ০১", date: "Season 1", tmdbId: 1000, embedUrl: "" },
-                        { ep: "Episode 2", name: "গোপাল ভাঁড় ও রাজদরবার — পর্ব ০২", date: "Season 1", tmdbId: 1000, embedUrl: "" },
-                        { ep: "Episode 3", name: "গোপাল ভাঁড়ের মজার গল্প — পর্ব ০৩", date: "Season 1", tmdbId: 1000, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "গোপাল ভাঁড় — মহারাজা কৃষ্ণচন্দ্র ও গোপাল (পর্ব ০১)",
+                            sizes: { "480p": "95 MB", "720p": "210 MB", "1080p": "450 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        },
+                        {
+                            ep: "Episode 02",
+                            name: "গোপাল ভাঁড় — মন্ত্রীমশাইয়ের জব্দ (পর্ব ০২)",
+                            sizes: { "480p": "90 MB", "720p": "205 MB", "1080p": "430 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        },
+                        {
+                            ep: "Episode 03",
+                            name: "গোপাল ভাঁড় — বুদ্ধির পরীক্ষা (পর্ব ০৩)",
+                            sizes: { "480p": "98 MB", "720p": "220 MB", "1080p": "460 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ],
                     2: [
-                        { ep: "Episode 1", name: "গোপাল ভাঁড় নতুন পর্ব — সিজন ২ পর্ব ০১", date: "Season 2", tmdbId: 1000, embedUrl: "" },
-                        { ep: "Episode 2", name: "গোপাল ভাঁড় নতুন পর্ব — সিজন ২ পর্ব ০২", date: "Season 2", tmdbId: 1000, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "গোপাল ভাঁড় — সিজন ২ নতুন গল্প (পর্ব ০১)",
+                            sizes: { "480p": "92 MB", "720p": "215 MB", "1080p": "440 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ],
                     3: [
-                        { ep: "Episode 1", name: "গোপাল ভাঁড় স্পেশাল — সিজন ৩ পর্ব ০১", date: "Season 3", tmdbId: 1000, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "গোপাল ভাঁড় — সিজন ৩ হাসির পর্ব (পর্ব ০১)",
+                            sizes: { "480p": "96 MB", "720p": "218 MB", "1080p": "455 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ]
                 }
             },
             motu: {
-                logo: "মোটু",
-                title: "মোটু পাতলু — Season Wise Episodes",
-                sub: "সিজন ও এপিসোড অনুযায়ী মোটু পাতলু দেখুন",
+                logo: "মোটু পাতলু",
+                title: "মোটু পাতলু — বাংলা ও হিন্দি এপিসোড",
+                sub: "সিজন অনুযায়ী মোটু পাতলু দেখুন ও ডাউনলোড করুন",
                 seasons: {
                     1: [
-                        { ep: "Episode 1", name: "Motu Patlu — Season 1 Episode 01", date: "Season 1", tmdbId: 65701, embedUrl: "" },
-                        { ep: "Episode 2", name: "Motu Patlu — Season 1 Episode 02", date: "Season 1", tmdbId: 65701, embedUrl: "" },
-                        { ep: "Episode 3", name: "Motu Patlu — Season 1 Episode 03", date: "Season 1", tmdbId: 65701, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "মোটু পাতলু — ফুরফুরি নগরের কাণ্ড (পর্ব ০১)",
+                            sizes: { "480p": "110 MB", "720p": "240 MB", "1080p": "510 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        },
+                        {
+                            ep: "Episode 02",
+                            name: "মোটু পাতলু — জন দ্য ডন (পর্ব ০২)",
+                            sizes: { "480p": "105 MB", "720p": "235 MB", "1080p": "495 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        },
+                        {
+                            ep: "Episode 03",
+                            name: "মোটু পাতলু — সিঙ্গারা চ্যালেঞ্জ (পর্ব ০৩)",
+                            sizes: { "480p": "115 MB", "720p": "250 MB", "1080p": "520 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ],
                     2: [
-                        { ep: "Episode 1", name: "Motu Patlu — Season 2 Episode 01", date: "Season 2", tmdbId: 65701, embedUrl: "" },
-                        { ep: "Episode 2", name: "Motu Patlu — Season 2 Episode 02", date: "Season 2", tmdbId: 65701, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "মোটু পাতলু — সিজন ২ নতুন অভিযান (পর্ব ০১)",
+                            sizes: { "480p": "112 MB", "720p": "245 MB", "1080p": "505 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ],
                     3: [
-                        { ep: "Episode 1", name: "Motu Patlu — Season 3 Episode 01", date: "Season 3", tmdbId: 65701, embedUrl: "" }
+                        {
+                            ep: "Episode 01",
+                            name: "মোটু পাতলু — সিজন ৩ স্পেশাল (পর্ব ০১)",
+                            sizes: { "480p": "118 MB", "720p": "255 MB", "1080p": "530 MB" },
+                            videoUrl: "",
+                            downloadLinks: { "480p": "", "720p": "", "1080p": "", "direct": "" }
+                        }
                     ]
                 }
             }
         };
-
-        const API_BASE = "https://api.themoviedb.org/3";
-        const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
         let state = {
             tab: "trending",
             search: "",
             page: 1,
             totalPages: 1,
-            movies: [],
+            items: [],
             activeTarget: null
         };
 
@@ -825,25 +1040,28 @@
         function renderEpisodes() {
             const series = SERIES_DATA[state.tab];
             if (!series) return;
-            const seasonNum = document.getElementById("seasonSelect").value;
-            const list = series.seasons[seasonNum] || [];
+            const season = document.getElementById("seasonSelect").value;
+            const episodes = series.seasons[season] || [];
             const grid = document.getElementById("episodeGrid");
             grid.innerHTML = "";
 
-            list.forEach(item => {
+            episodes.forEach(epObj => {
                 const card = document.createElement("div");
-                card.className = "ep-card";
+                card.className = "ep-item";
                 card.onclick = () => openPlayer({
-                    id: item.tmdbId,
-                    title: `${item.name} (${item.date})`,
-                    meta: `${series.logo} • ${item.date} • ${item.ep}`,
-                    customEmbed: item.embedUrl || ""
+                    type: "episode",
+                    id: `${state.tab}-s${season}-${epObj.ep}`,
+                    title: `${epObj.name} (Season ${season})`,
+                    meta: `${series.logo} • Season ${season} • ${epObj.ep}`,
+                    customVideoUrl: epObj.videoUrl || "",
+                    sizes: epObj.sizes || { "480p": "150 MB", "720p": "350 MB", "1080p": "750 MB" },
+                    downloadLinks: epObj.downloadLinks || {}
                 });
 
                 card.innerHTML = `
-                    <span class="ep-tag">${item.date} • ${item.ep}</span>
-                    <div class="ep-title">${escapeHtml(item.name)}</div>
-                    <div class="ep-meta">Click to watch in landscape</div>
+                    <span class="ep-num">Season ${season} • ${epObj.ep}</span>
+                    <div class="ep-name">${escapeHtml(epObj.name)}</div>
+                    <div class="ep-size">720p: ${epObj.sizes?.["720p"] || "350 MB"} • 1080p: ${epObj.sizes?.["1080p"] || "750 MB"}</div>
                 `;
                 grid.appendChild(card);
             });
@@ -856,9 +1074,9 @@
                 bangla: "Bangla Movies",
                 hindi: "Hindi Movies",
                 south: "South Indian Movies",
-                cid: "More Related Shows",
-                gopal: "More Related Shows",
-                motu: "More Related Shows"
+                cid: "More Movies & Shows",
+                gopal: "More Movies & Shows",
+                motu: "More Movies & Shows"
             };
             document.getElementById("catalogTitle").textContent = state.search
                 ? `Search: "${state.search}"`
@@ -879,20 +1097,18 @@
 
             try {
                 const res = await fetch(getEndpoint());
-                if (!res.ok) throw new Error("Network response error");
+                if (!res.ok) throw new Error("API Error");
                 const data = await res.json();
 
                 state.totalPages = Math.min(data.total_pages || 1, 500);
-                state.movies = (data.results || []).filter(
-                    item => item.poster_path && (item.title || item.name)
-                );
+                state.items = (data.results || []).filter(m => m.title || m.name);
 
                 status.style.display = "none";
                 renderMovies();
                 updatePagination();
             } catch (err) {
                 status.style.display = "block";
-                status.innerHTML = `<i class="fa-solid fa-wifi"></i> ডেটা লোড করতে সমস্যা হচ্ছে। ইন্টারনেট কানেকশন চেক করুন বা কিছুক্ষণ পর আবার চেষ্টা করুন।`;
+                status.innerHTML = `<i class="fa-solid fa-wifi"></i> ডেটা লোড হতে সমস্যা হচ্ছে। নেটওয়ার্ক বা DNS চেক করে আবার রিফ্রেশ করুন।`;
             }
         }
 
@@ -901,36 +1117,45 @@
             const status = document.getElementById("statusBox");
             grid.innerHTML = "";
 
-            if (!state.movies.length) {
+            if (!state.items.length) {
                 status.style.display = "block";
-                status.textContent = "কোনো ফলাফল পাওয়া যায়নি।";
+                status.textContent = "কোনো মুভি বা শো পাওয়া যায়নি।";
                 return;
             }
 
             status.style.display = "none";
 
-            state.movies.forEach(item => {
+            state.items.forEach(item => {
                 const title = item.title || item.name;
+                const mediaType = item.media_type === "tv" ? "tv" : "movie";
                 const dateStr = item.release_date || item.first_air_date || "";
                 const year = dateStr ? dateStr.slice(0, 4) : "N/A";
                 const score = item.vote_average ? item.vote_average.toFixed(1) : "7.0";
                 const lang = (item.original_language || "en").toUpperCase();
                 const quality = getQualityTag(item.vote_average || 7.0);
+                const posterSrc = item.poster_path ? (IMG_BASE + item.poster_path) : "";
 
                 const card = document.createElement("div");
                 card.className = "movie-card";
                 card.onclick = () => openPlayer({
+                    type: mediaType,
                     id: item.id,
                     title,
                     meta: `${year} • ${lang} • ${quality} • ★ ${score}`,
-                    customEmbed: ""
+                    customVideoUrl: "",
+                    sizes: { "480p": "420 MB", "720p": "1.15 GB", "1080p": "2.35 GB" },
+                    downloadLinks: {}
                 });
 
                 card.innerHTML = `
                     <div class="poster-box">
                         <span class="l-badge">${lang}</span>
                         <span class="q-badge">${quality}</span>
-                        <img src="${IMG_BASE + item.poster_path}" alt="${escapeHtml(title)}" loading="lazy">
+                        ${posterSrc ? `<img src="${posterSrc}" alt="${escapeHtml(title)}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ""}
+                        <div class="poster-fallback" style="${posterSrc ? "" : "display:flex;"}">
+                            <i class="fa-solid fa-clapperboard" style="font-size: 28px; color: var(--accent);"></i>
+                            <span>${escapeHtml(title)}</span>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="card-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
@@ -944,19 +1169,19 @@
             });
         }
 
-        function switchTab(tabName, btnEl) {
+        function switchTab(tabName, btn) {
             state.search = "";
             state.tab = tabName;
             state.page = 1;
             document.getElementById("searchInput").value = "";
             document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-            if (btnEl) btnEl.classList.add("active");
+            if (btn) btn.classList.add("active");
             loadMovies();
         }
 
         function goHome() {
-            const firstBtn = document.querySelector('.tab-btn[data-tab="trending"]');
-            switchTab("trending", firstBtn);
+            const first = document.querySelector('.tab-btn[data-tab="trending"]');
+            switchTab("trending", first);
         }
 
         function onSearch(e) {
@@ -969,12 +1194,12 @@
             loadMovies();
         }
 
-        function movePage(delta) {
-            const next = state.page + delta;
+        function movePage(step) {
+            const next = state.page + step;
             if (next < 1 || next > state.totalPages) return;
             state.page = next;
             loadMovies();
-            window.scrollTo({ top: 260, behavior: "smooth" });
+            window.scrollTo({ top: 240, behavior: "smooth" });
         }
 
         function updatePagination() {
@@ -982,46 +1207,126 @@
             document.getElementById("nextBtn").disabled = state.page >= state.totalPages;
         }
 
-        function getStreamUrl(serverNum, target) {
-            if (serverNum === 1 && target.customEmbed) return target.customEmbed;
-            if (serverNum === 1) return `https://vidsrc.xyz/embed/movie/${target.id}`;
-            if (serverNum === 2) return `https://vidsrc.pro/embed/movie/${target.id}`;
-            if (serverNum === 3) return `https://multiembed.mov/?video_id=${target.id}&tmdb=1`;
-            return `https://vidsrc.me/embed/movie/${target.id}`;
-        }
-
-        function setDownloadLinks(target) {
-            const encodedTitle = encodeURIComponent(target.title || "video");
-            const fill = tpl => tpl.replace("{id}", target.id).replace("{title}", encodedTitle);
-
-            document.getElementById("dl480").href = fill(DOWNLOAD_TEMPLATES.sd480);
-            document.getElementById("dl720").href = fill(DOWNLOAD_TEMPLATES.hd720);
-            document.getElementById("dl1080").href = fill(DOWNLOAD_TEMPLATES.fhd1080);
-            document.getElementById("dlDirect").href = fill(DOWNLOAD_TEMPLATES.direct);
+        function getAutoEmbedUrl(serverNum, target) {
+            const kind = target.type === "tv" ? "tv" : "movie";
+            const suffix = kind === "tv" ? `${target.id}/1/1` : `${target.id}`;
+            if (serverNum === 1) return `https://vidsrc.xyz/embed/${kind}/${suffix}`;
+            if (serverNum === 2) return `https://vidsrc.pro/embed/${kind}/${suffix}`;
+            if (serverNum === 3) return `https://multiembed.mov/?video_id=${target.id}&tmdb=1${kind === "tv" ? "&s=1&e=1" : ""}`;
+            return `https://vidsrc.me/embed/${kind}/${suffix}`;
         }
 
         function openPlayer(target) {
             state.activeTarget = target;
             document.getElementById("modalTitle").textContent = target.title;
             document.getElementById("modalMeta").textContent = target.meta;
-            setDownloadLinks(target);
-            chooseServer(1);
+            document.getElementById("dlAlert").style.display = "none";
+
+            // Update MB / GB sizes per item
+            document.getElementById("size480").textContent = `Size: ${target.sizes?.["480p"] || "420 MB"} • MP4`;
+            document.getElementById("size720").textContent = `Size: ${target.sizes?.["720p"] || "1.15 GB"} • MP4`;
+            document.getElementById("size1080").textContent = `Size: ${target.sizes?.["1080p"] || "2.35 GB"} • MKV/MP4`;
+            document.getElementById("sizeDirect").textContent = `Fast Server • ${target.sizes?.["720p"] || "1.15 GB"}`;
+
+            const frame = document.getElementById("playerFrame");
+            const videoEl = document.getElementById("directVideo");
+            const placeholder = document.getElementById("playerPlaceholder");
+            const serverRow = document.getElementById("serverRow");
+
+            frame.style.display = "none";
+            frame.src = "";
+            videoEl.style.display = "none";
+            videoEl.src = "";
+            placeholder.style.display = "none";
+
+            if (target.type === "episode") {
+                serverRow.style.display = "none";
+                if (target.customVideoUrl) {
+                    if (/\.(mp4|webm|m3u8)(\?|$)/i.test(target.customVideoUrl)) {
+                        videoEl.src = target.customVideoUrl;
+                        videoEl.style.display = "block";
+                    } else {
+                        frame.src = target.customVideoUrl;
+                        frame.style.display = "block";
+                    }
+                } else {
+                    placeholder.style.display = "flex";
+                }
+            } else {
+                serverRow.style.display = "block";
+                frame.style.display = "block";
+                chooseServer(1);
+            }
+
             document.getElementById("playerModal").classList.add("open");
             document.body.style.overflow = "hidden";
         }
 
         function chooseServer(num) {
-            if (!state.activeTarget) return;
+            if (!state.activeTarget || state.activeTarget.type === "episode") return;
             for (let i = 1; i <= 4; i++) {
                 document.getElementById(`srv${i}`).classList.toggle("active", i === num);
             }
-            document.getElementById("playerFrame").src = getStreamUrl(num, state.activeTarget);
+            document.getElementById("playerFrame").src = getAutoEmbedUrl(num, state.activeTarget);
+        }
+
+        // Fullscreen + Landscape Orientation Lock on Mobile
+        async function enterLandscapeFullscreen() {
+            const container = document.getElementById("playerContainer");
+            try {
+                if (container.requestFullscreen) {
+                    await container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    await container.webkitRequestFullscreen();
+                }
+                if (screen.orientation && screen.orientation.lock) {
+                    await screen.orientation.lock("landscape");
+                }
+            } catch (e) {
+                // ব্রাউজার অটো-রোটেশন লক না করলে প্লেয়ারের ভেতরের ফুলস্ক্রিন আইকন ব্যবহার হবে
+            }
+        }
+
+        // Direct File Download or Custom Link Handler (No more example.com)
+        function triggerDownload(qualityKey) {
+            if (!state.activeTarget) return;
+            const alertBox = document.getElementById("dlAlert");
+
+            const itemLink = state.activeTarget.downloadLinks?.[qualityKey] || "";
+            const globalTpl = GLOBAL_DOWNLOAD_BASE[qualityKey] || "";
+            const finalUrl = itemLink || (globalTpl ? globalTpl.replace("{id}", state.activeTarget.id).replace("{title}", encodeURIComponent(state.activeTarget.title)) : "");
+
+            if (!finalUrl) {
+                alertBox.style.display = "block";
+                alertBox.innerHTML = `<strong>${qualityKey.toUpperCase()} (${state.activeTarget.sizes?.[qualityKey] || "HD"})</strong> ডাউনলোড লিংক এখনো সেট করা হয়নি। কোডের <code>SERIES_DATA</code> অথবা <code>GLOBAL_DOWNLOAD_BASE</code>-এ আপনার ডাইরেক্ট <code>.mp4</code> বা ফাইল লিংক বসালে ক্লিক করলেই সরাসরি ডাউনলোড শুরু হবে।`;
+                return;
+            }
+
+            alertBox.style.display = "none";
+
+            // যদি ডিরেক্ট ভিডিও ফাইল (.mp4 / .mkv) হয়, ব্রাউজার থেকে সরাসরি ফাইল ডাউনলোড ট্রিগার করবে
+            if (/\.(mp4|mkv|webm)(\?|$)/i.test(finalUrl)) {
+                const a = document.createElement("a");
+                a.href = finalUrl;
+                a.download = `${state.activeTarget.title}-${qualityKey}.mp4`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            } else {
+                window.open(finalUrl, "_blank", "noopener,noreferrer");
+            }
         }
 
         function closeModal() {
             document.getElementById("playerModal").classList.remove("open");
             document.getElementById("playerFrame").src = "";
+            const v = document.getElementById("directVideo");
+            v.pause();
+            v.src = "";
             document.body.style.overflow = "";
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+            }
         }
 
         function onBackdropClick(e) {
