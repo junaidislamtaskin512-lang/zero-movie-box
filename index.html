@@ -9,9 +9,9 @@
 
     <style>
         :root {
-            --bg-main: #0d1118;
-            --bg-card: #161c28;
-            --bg-panel: #1e2636;
+            --bg-main: #0b0f17;
+            --bg-card: #151c29;
+            --bg-panel: #1d2638;
             --red-btn: #b91c1c;
             --red-hover: #dc2626;
             --cyan: #06b6d4;
@@ -34,14 +34,14 @@
         }
 
         body {
-            background: var(--bg-main);
+            background: radial-gradient(circle at top, #131c2e 0%, #0b0f17 55%, #070a10 100%);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 74px;
+            padding-bottom: 78px;
         }
 
-        /* Cinema Mode Overlay */
+        /* Cinema Mode */
         body.cinema-active .topbar,
         body.cinema-active .wrap > *:not(.detail-modal),
         body.cinema-active footer,
@@ -50,8 +50,11 @@
         body.cinema-active .detail-poster,
         body.cinema-active .detail-title,
         body.cinema-active .detail-sub,
+        body.cinema-active .action-row-btns,
         body.cinema-active .meta-3,
         body.cinema-active .story-box,
+        body.cinema-active .cast-box,
+        body.cinema-active .tv-picker-box,
         body.cinema-active .shots-head,
         body.cinema-active .shots-list,
         body.cinema-active .dl-title,
@@ -59,7 +62,7 @@
         body.cinema-active .dl-note,
         body.cinema-active .related-section,
         body.cinema-active .tg-join {
-            opacity: 0.08;
+            opacity: 0.06;
             pointer-events: none;
         }
 
@@ -85,7 +88,7 @@
             position: sticky;
             top: 0;
             z-index: 900;
-            background: rgba(13, 17, 24, 0.96);
+            background: rgba(11, 15, 23, 0.96);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--line);
             padding: 11px 4%;
@@ -164,6 +167,161 @@
             max-width: 1180px;
             margin: 0 auto;
             padding: 14px 4% 40px;
+        }
+
+        /* Hero Featured Banner Slider */
+        .hero-slider {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            margin-bottom: 14px;
+            background: #121824;
+            min-height: 235px;
+        }
+
+        .hero-slide {
+            position: relative;
+            min-height: 235px;
+            display: flex;
+            align-items: flex-end;
+            background-size: cover;
+            background-position: center;
+            padding: 18px;
+        }
+
+        .hero-slide::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(11, 15, 23, 0.12) 0%, rgba(11, 15, 23, 0.88) 76%, rgba(11, 15, 23, 0.98) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--red-hover);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 999px;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 21px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 6px;
+        }
+
+        .hero-meta {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn-play {
+            background: var(--red-hover);
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-btn-alt {
+            background: rgba(29, 38, 56, 0.92);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-dots {
+            position: absolute;
+            bottom: 12px;
+            right: 14px;
+            z-index: 3;
+            display: flex;
+            gap: 6px;
+        }
+
+        .hero-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+        }
+
+        .hero-dot.active {
+            background: var(--cyan);
+            width: 20px;
+            border-radius: 999px;
+        }
+
+        /* Mood / Vibe Strip */
+        .vibe-strip {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            scrollbar-width: thin;
+        }
+
+        .vibe-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            color: #f3f4f6;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .vibe-chip:hover, .vibe-chip.active {
+            border-color: var(--cyan);
+            background: #1d2738;
+            color: var(--cyan);
+        }
+
+        .vibe-chip.surprise {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(6, 182, 212, 0.25));
+            border-color: rgba(6, 182, 212, 0.5);
+            color: #fff;
         }
 
         /* Trending Strip */
@@ -342,7 +500,7 @@
             line-height: 1.2;
         }
 
-        /* All OTT Directory Panel */
+        /* All OTT Platforms Directory Panel */
         .all-ott-panel {
             display: none;
             background: var(--bg-card);
@@ -387,7 +545,102 @@
             flex-shrink: 0;
         }
 
-        /* Search Box + Smart Live Suggestions */
+        /* Inside OTT Platform Hub */
+        .ott-hub-box {
+            display: none;
+            background: linear-gradient(145deg, #162033, #111724);
+            border: 1px solid rgba(6, 182, 212, 0.45);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+        }
+
+        .ott-hub-box.open {
+            display: block;
+        }
+
+        .ott-hub-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .ott-hub-brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .ott-hub-brand .ott-logo-wrap {
+            margin: 0;
+            width: 50px;
+            height: 50px;
+        }
+
+        .ott-inner-search {
+            display: flex;
+            align-items: stretch;
+            background: var(--bg-card);
+            border: 1px solid rgba(6, 182, 212, 0.55);
+            border-radius: 9px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .ott-inner-search input {
+            flex: 1;
+            min-width: 0;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 11px 13px;
+            font-size: 13px;
+        }
+
+        .ott-inner-search button {
+            background: var(--cyan);
+            color: #071018;
+            border: none;
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .ott-cat-tabs {
+            display: flex;
+            gap: 7px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: thin;
+        }
+
+        .ott-cat-btn {
+            background: var(--bg-panel);
+            color: #f3f4f6;
+            border: 1px solid var(--line);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .ott-cat-btn.active, .ott-cat-btn:hover {
+            background: var(--red-hover);
+            border-color: var(--red-hover);
+            color: #fff;
+        }
+
+        /* Global Search Box + Magnifying Glass Search Icon + Smart Live Suggestions */
         .search-wrapper {
             position: relative;
             margin-bottom: 12px;
@@ -397,9 +650,10 @@
             display: flex;
             align-items: stretch;
             background: var(--bg-card);
-            border: 1px solid rgba(6, 182, 212, 0.5);
-            border-radius: 8px;
+            border: 1px solid rgba(6, 182, 212, 0.6);
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
         }
 
         .search-brand-tag {
@@ -417,22 +671,45 @@
 
         .search-box input {
             flex: 1;
+            min-width: 0;
             background: transparent;
             border: none;
             outline: none;
             color: #fff;
-            padding: 12px 13px;
+            padding: 12px 12px;
             font-size: 14px;
         }
 
+        .search-clear-btn {
+            background: transparent;
+            color: var(--muted);
+            border: none;
+            padding: 0 10px;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .search-submit {
-            background: var(--cyan);
-            color: #071018;
+            background: linear-gradient(135deg, #06b6d4, #0284c7);
+            color: #ffffff;
             border: none;
             padding: 0 18px;
-            font-size: 15px;
+            min-width: 50px;
+            font-size: 16px;
             font-weight: 800;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .search-submit:hover {
+            background: linear-gradient(135deg, #22d3ee, #0ea5e9);
         }
 
         .suggest-dropdown {
@@ -480,7 +757,7 @@
             flex-shrink: 0;
         }
 
-        /* Combo Filter Bar (Genre + Year + Language + Quality) */
+        /* Combo Filter Bar */
         .combo-filter-bar {
             background: var(--bg-card);
             border: 1px solid var(--line);
@@ -515,7 +792,7 @@
             cursor: pointer;
         }
 
-        /* User Lists Panel (Watchlist & Continue Watching) */
+        /* User Lists Panel */
         .user-lists-panel {
             display: none;
             background: var(--bg-card);
@@ -531,9 +808,24 @@
 
         .mini-cards-row {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
-            gap: 9px;
-            margin-top: 9px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.14);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--cyan);
+            border-radius: 999px;
         }
 
         /* Colored Zones */
@@ -604,7 +896,7 @@
             overflow-x: auto;
         }
 
-        /* Series Hub (CID, গোপাল ভাঁড়, মোটু পাতলু) */
+        /* Series Hub */
         .series-hub {
             display: none;
             background: var(--bg-card);
@@ -740,6 +1032,11 @@
             padding: 2px 7px;
             border-radius: 4px;
             z-index: 2;
+        }
+
+        .b-tl.admin-pick {
+            background: #10b981;
+            color: #06130e;
         }
 
         .b-tr {
@@ -944,6 +1241,12 @@
             color: #fca5a5;
         }
 
+        .act-pill-btn.resume {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--green);
+            color: #6ee7b7;
+        }
+
         .meta-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -970,10 +1273,20 @@
             margin-bottom: 12px;
         }
 
+        .hook-line {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
         .story-box h4 {
             color: #38bdf8;
             font-size: 13px;
             margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .story-box p {
@@ -1028,7 +1341,7 @@
             line-height: 1.25;
         }
 
-        /* Dynamic TV Season & Episode Selector */
+        /* Dynamic TV Season & Episode Picker */
         .tv-picker-box {
             display: none;
             background: var(--bg-panel);
@@ -1052,7 +1365,7 @@
         /* Player + Landscape + Cinema Controls */
         .watch-box {
             background: var(--bg-panel);
-            border: 1px solid var(--line);
+            border: 1px solid rgba(16, 185, 129, 0.28);
             border-radius: 10px;
             padding: 12px;
             margin-bottom: 14px;
@@ -1065,6 +1378,16 @@
             gap: 8px;
             margin-bottom: 10px;
             flex-wrap: wrap;
+        }
+
+        .ad-guard-pill {
+            background: rgba(16, 185, 129, 0.16);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 4px 9px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 800;
         }
 
         .watch-btns {
@@ -1291,7 +1614,7 @@
             left: 0;
             right: 0;
             z-index: 980;
-            background: rgba(13, 17, 24, 0.97);
+            background: rgba(11, 15, 23, 0.97);
             border-top: 1px solid var(--line);
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -1336,6 +1659,8 @@
         }
 
         @media (min-width: 768px) {
+            .hero-slider, .hero-slide { min-height: 295px; }
+            .hero-title { font-size: 27px; }
             .cat-grid { grid-template-columns: repeat(4, 1fr); }
             .zone-grid { grid-template-columns: repeat(3, 1fr); }
             .all-ott-grid { grid-template-columns: repeat(4, 1fr); }
@@ -1345,6 +1670,31 @@
             .related-grid { grid-template-columns: repeat(4, 1fr); }
         }
     </style>
+
+    <!-- Controlled Ad Frequency Guard: দর্শক বিরক্ত না হয় তাই প্রতি সেশনে একবারের বেশি পপআপ ট্রিগার হবে না এবং প্লেয়ারে বাধা দেবে না -->
+    <script>
+        (function () {
+            const MAX_AD_TRIGGERS_PER_SESSION = 1;
+            const COOLDOWN_MS = 30 * 60 * 1000;
+            let triggerCount = 0;
+            let lastTriggerAt = 0;
+
+            const origOpen = window.open;
+            window.open = function (url, target, features) {
+                const inPlayerArea = Boolean(document.activeElement && document.activeElement.closest && document.activeElement.closest(".watch-box, .detail-modal"));
+                const now = Date.now();
+                if (inPlayerArea) {
+                    return null;
+                }
+                if (triggerCount >= MAX_AD_TRIGGERS_PER_SESSION || (now - lastTriggerAt) < COOLDOWN_MS) {
+                    return null;
+                }
+                triggerCount++;
+                lastTriggerAt = now;
+                return origOpen.call(window, url, target, features);
+            };
+        })();
+    </script>
 </head>
 <body>
 
@@ -1371,6 +1721,48 @@
     </div>
 
     <div class="wrap">
+        <!-- Hero Featured Banner Slider -->
+        <div class="hero-slider" id="heroSlider">
+            <div class="hero-slide" id="heroSlide">
+                <div class="hero-content">
+                    <span class="hero-badge" id="heroBadge">FEATURED</span>
+                    <h1 class="hero-title" id="heroTitle">Loading Featured Movie...</h1>
+                    <div class="hero-meta" id="heroMeta">★ 8.0 • WEB-DL</div>
+                    <div class="hero-btns">
+                        <button type="button" class="hero-btn-play" id="heroPlayBtn">
+                            <i class="fa-solid fa-play"></i> Watch Now
+                        </button>
+                        <button type="button" class="hero-btn-alt" onclick="surpriseMePick()">
+                            <i class="fa-solid fa-dice"></i> Surprise Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-dots" id="heroDots"></div>
+        </div>
+
+        <!-- Mood / Vibe & Discovery Strip -->
+        <div class="vibe-strip">
+            <button type="button" class="vibe-chip surprise" onclick="surpriseMePick()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Surprise Me
+            </button>
+            <button type="button" class="vibe-chip" onclick="pickVibe('recently_added', 'RECENTLY ADDED', this)">
+                <i class="fa-solid fa-sparkles"></i> Recently Added
+            </button>
+            <button type="button" class="vibe-chip" onclick="pickVibe('weekend_chill', 'WEEKEND CHILL (COMEDY & FAMILY)', this)">
+                <i class="fa-solid fa-face-laugh-beam"></i> Weekend Chill
+            </button>
+            <button type="button" class="vibe-chip" onclick="pickVibe('mind_thriller', 'MIND-BENDING THRILLER', this)">
+                <i class="fa-solid fa-brain"></i> Mind Thriller
+            </button>
+            <button type="button" class="vibe-chip" onclick="pickVibe('late_horror', 'LATE NIGHT HORROR', this)">
+                <i class="fa-solid fa-moon"></i> Late Night Horror
+            </button>
+            <button type="button" class="vibe-chip" onclick="pickVibe('bangla_dub_pick', 'BANGLA DUBBED & BANGLA', this)">
+                <i class="fa-solid fa-closed-captioning"></i> Bangla Dub / Picks
+            </button>
+        </div>
+
         <!-- Trending Now Strip -->
         <div class="trending-strip">
             <div class="trending-head">
@@ -1445,7 +1837,7 @@
             </div>
         </div>
 
-        <!-- All OTT Platforms Directory -->
+        <!-- All OTT Platforms Directory Panel -->
         <div class="all-ott-panel" id="allOttPanel">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <strong style="font-size: 14px; color: var(--cyan);"><i class="fa-solid fa-tv"></i> All OTT Platforms (সব ওটিটি প্ল্যাটফর্ম)</strong>
@@ -1454,17 +1846,54 @@
             <div class="all-ott-grid" id="allOttGrid"></div>
         </div>
 
-        <!-- Search Box + Smart Suggestions -->
+        <!-- Dedicated OTT Hub (প্রতিটি OTT প্ল্যাটফর্মের ভেতরের ক্যাটাগরি ও সার্চ বক্স) -->
+        <div class="ott-hub-box" id="ottHubBox">
+            <div class="ott-hub-top">
+                <div class="ott-hub-brand">
+                    <div class="ott-logo-wrap"><img id="ottHubLogo" alt="OTT"></div>
+                    <div>
+                        <div id="ottHubTitle" style="font-size: 16px; font-weight: 800; color: #fff;">OTT Platform</div>
+                        <div style="font-size: 11px; color: var(--cyan);">Movies, Web Series, Natok/Drama, Cartoon & Artists</div>
+                    </div>
+                </div>
+                <button type="button" class="back-btn" onclick="closeOttHub()">
+                    <i class="fa-solid fa-xmark"></i> Exit OTT Hub
+                </button>
+            </div>
+
+            <!-- OTT-এর ভেতরের নিজস্ব সার্চ বক্স -->
+            <form class="ott-inner-search" onsubmit="runOttInnerSearch(event)">
+                <input type="text" id="ottInnerInput" autocomplete="off" placeholder="এই OTT-এর ভেতরে Movie, Natok, Drama, Web Series, Cartoon বা Artist নাম লিখুন...">
+                <button type="submit" title="Search Inside OTT"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+
+            <!-- OTT-এর ভেতরের আলাদা ক্যাটাগরি ট্যাবসমূহ -->
+            <div class="ott-cat-tabs" id="ottCatTabs">
+                <button type="button" class="ott-cat-btn active" onclick="selectOttInnerCategory('all', 'ALL', this)">All Videos</button>
+                <button type="button" class="ott-cat-btn" onclick="selectOttInnerCategory('movie', 'MOVIES', this)">Movies</button>
+                <button type="button" class="ott-cat-btn" onclick="selectOttInnerCategory('series', 'WEB SERIES', this)">Web Series</button>
+                <button type="button" class="ott-cat-btn" onclick="selectOttInnerCategory('drama', 'DRAMA & NATOK', this)">Drama / Natok</button>
+                <button type="button" class="ott-cat-btn" onclick="selectOttInnerCategory('cartoon', 'CARTOON & ANIME', this)">Cartoon & Anime</button>
+                <button type="button" class="ott-cat-btn" onclick="selectOttInnerCategory('action', 'ACTION', this)">Action</button>
+                <button type="button" class="ott-cat-btn" onclick="selectOttInnerCategory('thriller', 'THRILLER', this)">Thriller</button>
+                <button type="button" class="ott-cat-btn" onclick="selectOttInnerCategory('romance', 'ROMANCE', this)">Romance</button>
+            </div>
+        </div>
+
+        <!-- Global Search Box + Magnifying Glass Search Icon + Smart Live Suggestions -->
         <div class="search-wrapper">
             <form class="search-box" onsubmit="runSearch(event)">
                 <div class="search-brand-tag"><i class="fa-solid fa-play"></i> Zero Movie Box</div>
-                <input type="text" id="searchInput" autocomplete="off" placeholder="Movie, Series বা Actor/Actress-এর নাম লিখুন..." oninput="handleLiveSuggest(this.value)">
-                <button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <input type="text" id="searchInput" autocomplete="off" placeholder="Movie, Natok, Series, Cartoon বা Artist-এর নাম লিখুন... (শর্টকাট: /)" oninput="handleLiveSuggest(this.value)">
+                <button type="button" class="search-clear-btn" onclick="clearSearchInput()" title="Clear"><i class="fa-solid fa-xmark"></i></button>
+                <button type="submit" class="search-submit" id="searchIconBtn" title="Search Movie / Series" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </form>
             <div class="suggest-dropdown" id="suggestDropdown"></div>
         </div>
 
-        <!-- Combo Filter Bar (Genre + Year + Language + Quality) -->
+        <!-- Combo Filter Bar -->
         <div class="combo-filter-bar">
             <select class="filter-sel" id="filterGenre" onchange="applyComboFilters()">
                 <option value="">All Genres (সব জনরা)</option>
@@ -1475,7 +1904,7 @@
                 <option value="10749">Romance</option>
                 <option value="878">Sci-Fi</option>
                 <option value="53">Thriller</option>
-                <option value="16">Animation</option>
+                <option value="16">Animation / Cartoon</option>
             </select>
 
             <select class="filter-sel" id="filterYear" onchange="applyComboFilters()">
@@ -1512,16 +1941,16 @@
 
         <!-- Colored Special Zones -->
         <div class="zone-grid">
-            <button class="zone-btn z-purple" onclick="selectCategory('anime', 'ANIME ZONE', this)">
-                <span><i class="fa-solid fa-dragon"></i> ANIME ZONE</span>
+            <button class="zone-btn z-purple" onclick="selectCategory('anime', 'CARTOON & ANIME ZONE', this)">
+                <span><i class="fa-solid fa-dragon"></i> CARTOON & ANIME</span>
                 <span class="zone-badge">FRESH</span>
             </button>
             <button class="zone-btn z-pink" onclick="selectCategory('adult', '18+ ADULT', this)">
                 <span><i class="fa-solid fa-circle-exclamation"></i> 18+ ADULT</span>
                 <span class="zone-badge">HOT</span>
             </button>
-            <button class="zone-btn z-blue" onclick="selectCategory('tv_drama', 'ONGOING SERIES & DRAMA', this)">
-                <span><i class="fa-solid fa-hourglass-half"></i> ONGOING SERIES</span>
+            <button class="zone-btn z-blue" onclick="selectCategory('tv_drama', 'WEB SERIES, DRAMA & NATOK', this)">
+                <span><i class="fa-solid fa-hourglass-half"></i> SERIES & DRAMA</span>
                 <span class="zone-badge">NEW</span>
             </button>
             <button class="zone-btn z-teal" onclick="selectCategory('south', 'SOUTH INDIAN', this)">
@@ -1608,7 +2037,7 @@
     <div class="detail-modal" id="detailModal">
         <div class="detail-sheet">
             <div class="detail-top">
-                <button class="back-btn" onclick="closeDetail()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <button class="back-btn" onclick="closeDetail()"><i class="fa-solid fa-arrow-left"></i> Back (Esc)</button>
                 <span style="font-size: 12px; font-weight: 700; color: var(--muted);">Zero Movie Box</span>
             </div>
 
@@ -1620,6 +2049,9 @@
             <div class="detail-sub" id="dSub">WEB-DL • HD</div>
 
             <div class="action-row-btns">
+                <button type="button" class="act-pill-btn resume" id="resumeBtn" style="display: none;" onclick="resumeWatchingAction()">
+                    <i class="fa-solid fa-play"></i> Resume Watching
+                </button>
                 <button type="button" class="act-pill-btn" id="saveWatchlistBtn" onclick="toggleCurrentWatchlist()">
                     <i class="fa-regular fa-bookmark"></i> Save Watchlist
                 </button>
@@ -1638,8 +2070,12 @@
             </div>
 
             <div class="story-box">
-                <h4><i class="fa-solid fa-book-open"></i> Storyline</h4>
-                <p id="dStory">Storyline...</p>
+                <h4>
+                    <span><i class="fa-solid fa-book-open"></i> Storyline & Hook</span>
+                    <button type="button" class="back-btn" style="padding: 4px 9px; font-size: 11px;" onclick="togglePlotDetails()">Plot Details</button>
+                </h4>
+                <div class="hook-line" id="dHook">Why Watch: High-voltage entertainment & engaging twists.</div>
+                <p id="dStory" style="display: none;">Storyline...</p>
             </div>
 
             <!-- Cast Strip -->
@@ -1657,12 +2093,15 @@
                 </div>
             </div>
 
-            <!-- Player Box with Rotate + Cinema Mode -->
-            <div class="watch-box">
+            <!-- Player Box with Smooth Watch Mode + Rotate + Cinema Mode -->
+            <div class="watch-box" id="watchBox">
                 <div class="watch-header">
-                    <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">
-                        <i class="fa-solid fa-play-circle"></i> WATCH ONLINE (<span id="srvLabel">Server 1</span>)
-                    </span>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">
+                            <i class="fa-solid fa-play-circle"></i> WATCH ONLINE (<span id="srvLabel">Server 1</span>)
+                        </span>
+                        <span class="ad-guard-pill"><i class="fa-solid fa-shield-check"></i> Smooth Watch Mode</span>
+                    </div>
                     <div class="watch-btns">
                         <button type="button" class="cinema-toggle-btn" onclick="toggleCinemaMode()">
                             <i class="fa-solid fa-lightbulb"></i> Cinema Mode
@@ -1767,7 +2206,7 @@
         // টেলিগ্রাম চ্যানেল লিংক
         const TELEGRAM_URL = "https://t.me/your_channel_username";
 
-        // আপনার Adsterra SmartLink ডাউনলোড বাটনগুলোতে যুক্ত করা হয়েছে
+        // Adsterra SmartLink
         const SMARTLINK_URL = "https://directyp.org/4/74eeb78b8b270869e86ae9597b52efc4";
         const DOWNLOAD_CONFIG = {
             "480p": SMARTLINK_URL,
@@ -1776,26 +2215,7 @@
             "best": SMARTLINK_URL
         };
 
-        // অ্যাডমিন হিসেবে নিজের কালেক্ট করা কাস্টম পোস্ট এখানে যোগ করতে পারবেন
-        const CUSTOM_POSTS = [
-            // উদাহরণ:
-            // {
-            //     id: "custom-1",
-            //     type: "Movie",
-            //     mediaKind: "movie",
-            //     title: "Custom Demo Release",
-            //     lang: "BN",
-            //     quality: "4K WEB-DL",
-            //     rating: "8.8",
-            //     date: "2026",
-            //     overview: "এখানে আপনার কালেক্ট করা কনটেন্টের বিবরণ লিখুন।",
-            //     poster: "",
-            //     backdrop: "",
-            //     videoUrl: "",
-            //     sizes: { "480p": "750 MB", "720p": "1.6 GB", "1080p": "3.2 GB", "best": "5.5 GB" },
-            //     dl: { "480p": SMARTLINK_URL, "720p": SMARTLINK_URL, "1080p": SMARTLINK_URL, "best": SMARTLINK_URL }
-            // }
-        ];
+        const CUSTOM_POSTS = [];
 
         function makeOttLogo(bg1, bg2, text, subText, accent) {
             const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
@@ -1883,11 +2303,18 @@
         let state = {
             mode: "all_movies",
             providerId: "",
+            activeOttName: "",
+            activeOttLogo: "",
+            ottInnerCat: "all",
+            ottInnerQuery: "",
             heading: "RECENTLY UPDATED",
             query: "",
             page: 1,
             totalPages: 1,
             items: [],
+            heroList: [],
+            heroIdx: 0,
+            heroTimer: null,
             activeSeries: "cid",
             currentItem: null,
             selectedSeason: 1,
@@ -1951,7 +2378,7 @@
                     <div class="ott-logo-wrap"><img src="${p.logo}" alt="${esc(p.name)}"></div>
                     <div>
                         <div style="font-size: 13px; font-weight: 800; color: #fff;">${esc(p.name)}</div>
-                        <div style="font-size: 11px; color: var(--cyan); margin-top: 2px;">All Movies & Series →</div>
+                        <div style="font-size: 11px; color: var(--cyan); margin-top: 2px;">Open OTT Hub →</div>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -1968,9 +2395,13 @@
             return "HD";
         }
 
+        function buildHookLine(title, quality, lang, rating) {
+            return `Why Watch: ${title} (${lang} • ${quality}) — Rated ★ ${rating} with engaging scenes & twists.`;
+        }
+
         function normalizeTmdbItem(m, fallbackKind) {
             const title = m.title || m.name;
-            const mediaKind = (m.media_type === "tv" || fallbackKind === "tv_drama" || fallbackKind === "anime") ? "tv" : "movie";
+            const mediaKind = (m.media_type === "tv" || fallbackKind === "tv_drama" || fallbackKind === "anime" || fallbackKind === "series" || fallbackKind === "drama" || fallbackKind === "cartoon") ? "tv" : "movie";
             const date = m.release_date || m.first_air_date || "2026";
             const vote = m.vote_average ? m.vote_average.toFixed(1) : "7.4";
             const lang = (m.original_language || "en").toUpperCase();
@@ -1980,13 +2411,14 @@
 
             return {
                 id: m.id,
-                type: mediaKind === "tv" ? "Series / Drama" : "Movie",
+                type: mediaKind === "tv" ? "Series / Drama / Show" : "Movie",
                 mediaKind,
                 title,
                 lang,
                 quality,
                 rating: vote,
                 date,
+                adminPick: Boolean(m.adminPick),
                 overview: m.overview || "Storyline details are available on the stream.",
                 poster,
                 backdrop,
@@ -1994,6 +2426,75 @@
                 sizes: { "480p": "780 MB", "720p": "1.8 GB", "1080p": "3.8 GB", "best": "6.4 GB" },
                 dl: {}
             };
+        }
+
+        async function initHeroSlider() {
+            try {
+                const res = await fetch(`${API_BASE}/trending/movie/day?api_key=${TMDB_API_KEY}&page=1`);
+                const data = await res.json();
+                const list = (data.results || []).filter(x => x.backdrop_path || x.poster_path).slice(0, 4).map(x => normalizeTmdbItem(x, "movie"));
+                if (!list.length) return;
+                state.heroList = list;
+                renderHeroSlide(0);
+                clearInterval(state.heroTimer);
+                state.heroTimer = setInterval(() => {
+                    renderHeroSlide((state.heroIdx + 1) % state.heroList.length);
+                }, 5500);
+            } catch (e) {}
+        }
+
+        function renderHeroSlide(idx) {
+            if (!state.heroList.length) return;
+            state.heroIdx = idx;
+            const item = state.heroList[idx];
+            const slide = document.getElementById("heroSlide");
+            const bg = item.backdrop || item.poster;
+            slide.style.backgroundImage = `url('${bg}')`;
+            document.getElementById("heroBadge").textContent = `FEATURED #${idx + 1}`;
+            document.getElementById("heroTitle").textContent = item.title;
+            document.getElementById("heroMeta").textContent = `★ ${item.rating} • ${item.lang} • ${item.quality} • ${(item.date || "2026").slice(0, 4)}`;
+            document.getElementById("heroPlayBtn").onclick = () => openDetail(item);
+
+            const dots = document.getElementById("heroDots");
+            dots.innerHTML = "";
+            state.heroList.forEach((_, i) => {
+                const d = document.createElement("button");
+                d.type = "button";
+                d.className = `hero-dot ${i === idx ? "active" : ""}`;
+                d.onclick = () => renderHeroSlide(i);
+                dots.appendChild(d);
+            });
+        }
+
+        async function surpriseMePick() {
+            try {
+                const randPg = Math.floor(Math.random() * 5) + 1;
+                const res = await fetch(`${API_BASE}/movie/top_rated?api_key=${TMDB_API_KEY}&page=${randPg}`);
+                const data = await res.json();
+                const list = (data.results || []).filter(x => x.title || x.name);
+                if (!list.length) return;
+                const pick = list[Math.floor(Math.random() * list.length)];
+                openDetail(normalizeTmdbItem(pick, "movie"));
+            } catch (e) {}
+        }
+
+        function pickVibe(vibeKey, label, btnEl) {
+            closeOttHub(false);
+            document.querySelectorAll(".vibe-chip").forEach(c => c.classList.remove("active"));
+            if (btnEl) btnEl.classList.add("active");
+            state.query = "";
+            state.providerId = "";
+            state.page = 1;
+            state.heading = label;
+
+            if (vibeKey === "recently_added") state.mode = "upcoming";
+            else if (vibeKey === "weekend_chill") state.mode = "comedy_family";
+            else if (vibeKey === "mind_thriller") state.mode = "thriller";
+            else if (vibeKey === "late_horror") state.mode = "horror";
+            else if (vibeKey === "bangla_dub_pick") state.mode = "bn_dub";
+            else state.mode = "all_movies";
+
+            loadCatalog(true);
         }
 
         async function loadTrendingStrip() {
@@ -2018,21 +2519,128 @@
             } catch (e) {}
         }
 
+        // OTT Hub Functions
+        function pickOtt(ottName, providerId, chipEl) {
+            const found = OTT_PLATFORMS.find(p => p.name === ottName);
+            state.activeOttName = ottName;
+            state.providerId = providerId;
+            state.activeOttLogo = found ? found.logo : "";
+            state.ottInnerCat = "all";
+            state.ottInnerQuery = "";
+            state.query = "";
+            state.mode = "ott";
+            state.page = 1;
+            state.heading = `${ottName} — ALL VIDEOS`;
+
+            document.querySelectorAll(".ott-chip, .ott-platform-card").forEach(c => c.classList.remove("active"));
+            if (chipEl) chipEl.classList.add("active");
+
+            document.getElementById("ottHubLogo").src = state.activeOttLogo;
+            document.getElementById("ottHubTitle").textContent = `${ottName} Hub`;
+            document.getElementById("ottInnerInput").value = "";
+            document.querySelectorAll(".ott-cat-btn").forEach((btn, idx) => btn.classList.toggle("active", idx === 0));
+
+            const hub = document.getElementById("ottHubBox");
+            hub.classList.add("open");
+            loadCatalog(false);
+            hub.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function closeOttHub(reloadAll = true) {
+            state.activeOttName = "";
+            state.providerId = "";
+            state.ottInnerCat = "all";
+            state.ottInnerQuery = "";
+            document.getElementById("ottHubBox").classList.remove("open");
+            document.querySelectorAll(".ott-chip, .ott-platform-card").forEach(c => c.classList.remove("active"));
+            if (reloadAll) {
+                state.mode = "all_movies";
+                state.heading = "RECENTLY UPDATED";
+                state.page = 1;
+                loadCatalog(false);
+            }
+        }
+
+        function selectOttInnerCategory(catKey, catLabel, btnEl) {
+            state.ottInnerCat = catKey;
+            state.page = 1;
+            state.heading = `${state.activeOttName} — ${catLabel}`;
+            document.querySelectorAll(".ott-cat-btn").forEach(b => b.classList.remove("active"));
+            if (btnEl) btnEl.classList.add("active");
+            loadCatalog(false);
+        }
+
+        function runOttInnerSearch(e) {
+            e.preventDefault();
+            const q = document.getElementById("ottInnerInput").value.trim();
+            state.ottInnerQuery = q;
+            state.page = 1;
+            state.heading = q ? `${state.activeOttName} Search: "${q}"` : `${state.activeOttName} — ALL VIDEOS`;
+            loadCatalog(false);
+        }
+
+        async function fetchOttHubItems(pg) {
+            const pid = state.providerId;
+            const cat = state.ottInnerCat;
+            const q = state.ottInnerQuery;
+
+            if (q) {
+                const searchOut = await searchActorOrQuery(`${q} ${state.activeOttName}`);
+                let items = searchOut.results;
+                if (!items.length) {
+                    const fallbackOut = await searchActorOrQuery(q);
+                    items = fallbackOut.results;
+                }
+                return { results: items, totalPages: searchOut.totalPages || 1 };
+            }
+
+            let mediaEndpoint = "movie";
+            let extraParams = `&with_watch_providers=${pid}&watch_region=IN&sort_by=popularity.desc&page=${pg}`;
+
+            if (cat === "series") {
+                mediaEndpoint = "tv";
+            } else if (cat === "drama") {
+                mediaEndpoint = "tv";
+                extraParams = `&with_watch_providers=${pid}&watch_region=IN&with_genres=18&sort_by=popularity.desc&page=${pg}`;
+            } else if (cat === "cartoon") {
+                mediaEndpoint = "tv";
+                extraParams = `&with_watch_providers=${pid}&watch_region=IN&with_genres=16&sort_by=popularity.desc&page=${pg}`;
+            } else if (cat === "action") {
+                extraParams = `&with_watch_providers=${pid}&watch_region=IN&with_genres=28&sort_by=popularity.desc&page=${pg}`;
+            } else if (cat === "thriller") {
+                extraParams = `&with_watch_providers=${pid}&watch_region=IN&with_genres=53&sort_by=popularity.desc&page=${pg}`;
+            } else if (cat === "romance") {
+                extraParams = `&with_watch_providers=${pid}&watch_region=IN&with_genres=10749&sort_by=popularity.desc&page=${pg}`;
+            }
+
+            const res = await fetch(`${API_BASE}/discover/${mediaEndpoint}?api_key=${TMDB_API_KEY}${extraParams}`);
+            const data = await res.json();
+            let list = (data.results || []).filter(x => x.title || x.name).map(x => ({ ...x, media_type: mediaEndpoint }));
+
+            if (list.length < 6) {
+                const kw = cat === "cartoon" ? `${state.activeOttName} cartoon` : (cat === "drama" ? `${state.activeOttName} natok drama` : state.activeOttName);
+                const extraRes = await fetch(`${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(kw)}&page=1`);
+                const extraData = await extraRes.json();
+                const extraList = (extraData.results || []).filter(x => x.title || x.name);
+                list = [...list, ...extraList];
+            }
+
+            return {
+                results: list,
+                totalPages: Math.min(data.total_pages || 1, 500)
+            };
+        }
+
         function buildEndpoint(overridePage) {
             const pg = overridePage || state.page;
-            const { mode, query, providerId } = state;
+            const { mode } = state;
             const cGenre = document.getElementById("filterGenre")?.value || "";
             const cYear = document.getElementById("filterYear")?.value || "";
             const cLang = document.getElementById("filterLang")?.value || "";
 
-            if (query) {
-                return `${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&page=${pg}`;
-            }
             if (mode === "top_rated") return `${API_BASE}/movie/top_rated?api_key=${TMDB_API_KEY}&page=${pg}`;
             if (mode === "upcoming") return `${API_BASE}/movie/upcoming?api_key=${TMDB_API_KEY}&page=${pg}`;
-            if (mode === "ott" && providerId) {
-                return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_watch_providers=${providerId}&watch_region=IN&sort_by=popularity.desc&page=${pg}`;
-            }
+            if (mode === "comedy_family") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=35,10751&sort_by=popularity.desc&page=${pg}`;
             if (mode === "live_trending") return `${API_BASE}/trending/all/day?api_key=${TMDB_API_KEY}&page=${pg}`;
             if (mode === "bn") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=popularity.desc&page=${pg}`;
             if (mode === "bn_dub") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=release_date.desc&page=${pg}`;
@@ -2044,7 +2652,7 @@
             if (mode === "horror") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=27&sort_by=popularity.desc&page=${pg}`;
             if (mode === "romance") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=10749&sort_by=popularity.desc&page=${pg}`;
             if (mode === "tv_drama") return `${API_BASE}/discover/tv?api_key=${TMDB_API_KEY}&sort_by=popularity.desc&page=${pg}`;
-            if (mode === "anime") return `${API_BASE}/discover/tv?api_key=${TMDB_API_KEY}&with_genres=16&with_original_language=ja&sort_by=popularity.desc&page=${pg}`;
+            if (mode === "anime") return `${API_BASE}/discover/tv?api_key=${TMDB_API_KEY}&with_genres=16&sort_by=popularity.desc&page=${pg}`;
             if (mode === "south") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=te|ta|ml|kn&sort_by=popularity.desc&page=${pg}`;
             if (mode === "adult") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&include_adult=true&sort_by=popularity.desc&page=${pg}`;
 
@@ -2114,26 +2722,22 @@
                     const out = await searchActorOrQuery(state.query);
                     list = out.results.map(x => normalizeTmdbItem(x, state.mode));
                     pages = out.totalPages;
+                } else if (state.mode === "ott" && state.providerId) {
+                    const ottOut = await fetchOttHubItems(state.page);
+                    list = ottOut.results.map(x => normalizeTmdbItem(x, state.ottInnerCat));
+                    pages = ottOut.totalPages;
                 } else {
                     const res = await fetch(buildEndpoint(state.page));
                     const data = await res.json();
                     list = (data.results || []).filter(x => x.title || x.name).map(x => normalizeTmdbItem(x, state.mode));
                     pages = Math.min(data.total_pages || 1, 500);
-
-                    if (state.mode === "ott" && list.length < 8) {
-                        const ottTitle = state.heading.replace(" OTT", "");
-                        const extraRes = await fetch(`${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(ottTitle)}&page=1`);
-                        const extraData = await extraRes.json();
-                        const extraItems = (extraData.results || []).filter(x => x.title || x.name).map(x => normalizeTmdbItem(x, state.mode));
-                        list = [...list, ...extraItems];
-                    }
                 }
 
-                if (state.page === 1 && !state.query && CUSTOM_POSTS.length) {
+                if (state.page === 1 && !state.query && state.mode !== "ott" && CUSTOM_POSTS.length) {
                     list = [...CUSTOM_POSTS, ...list];
                 }
 
-                if (!list.length) {
+                if (!list.length && !state.query && state.mode !== "ott") {
                     const fbRes = await fetch(`${API_BASE}/movie/popular?api_key=${TMDB_API_KEY}&page=1`);
                     const fbData = await fbRes.json();
                     list = (fbData.results || []).filter(x => x.title || x.name).map(x => normalizeTmdbItem(x, state.mode));
@@ -2150,7 +2754,7 @@
                 }
             } catch (e) {
                 status.style.display = "block";
-                status.textContent = "নেটওয়ার্ক বা সার্ভার লোড হতে সময় নিচ্ছে। আবার চেষ্টা করুন।";
+                status.innerHTML = `নেটওয়ার্ক বা সার্ভার লোড হতে সময় নিচ্ছে। <button type="button" class="back-btn" style="margin-top:8px;" onclick="loadCatalog(false)">Retry Now</button>`;
             }
         }
 
@@ -2163,13 +2767,13 @@
 
             let filtered = [...state.items];
             if (qFilter) filtered = filtered.filter(it => it.quality === qFilter);
-            if (yFilter) filtered = filtered.filter(it => (it.date || "").startsWith(yFilter));
-            if (lFilter) filtered = filtered.filter(it => it.lang === lFilter);
+            if (!state.query && yFilter) filtered = filtered.filter(it => (it.date || "").startsWith(yFilter));
+            if (!state.query && lFilter) filtered = filtered.filter(it => it.lang === lFilter);
 
             grid.innerHTML = "";
             if (!filtered.length) {
                 status.style.display = "block";
-                status.textContent = "এই ফিল্টারে কোনো আইটেম পাওয়া যায়নি।";
+                status.textContent = "এই নামে বা ফিল্টারে কোনো আইটেম পাওয়া যায়নি।";
                 return;
             }
 
@@ -2177,13 +2781,20 @@
 
             filtered.forEach((item, idx) => {
                 const year = (item.date || "2026").slice(0, 4);
+                let topLeftBadge = "";
+                if (item.adminPick) {
+                    topLeftBadge = `<span class="b-tl admin-pick">ADMIN PICK</span>`;
+                } else if (idx < 2 && !state.query) {
+                    topLeftBadge = `<span class="b-tl">${idx === 0 ? "TRENDING" : "PINNED"}</span>`;
+                }
+
                 const card = document.createElement("div");
                 card.className = "m-card";
                 card.onclick = () => openDetail(item);
 
                 card.innerHTML = `
                     <div class="m-poster">
-                        ${idx < 2 ? `<span class="b-tl">${idx === 0 ? "TRENDING" : "PINNED"}</span>` : ""}
+                        ${topLeftBadge}
                         <span class="b-tr">${item.quality}</span>
                         <span class="b-bl">${item.lang}</span>
                         <span class="b-br">${item.mediaKind === "tv" ? "SERIES" : "MOVIE"}</span>
@@ -2239,7 +2850,19 @@
                     });
                     drop.classList.add("open");
                 } catch (e) {}
-            }, 260);
+            }, 220);
+        }
+
+        function clearSearchInput() {
+            document.getElementById("searchInput").value = "";
+            document.getElementById("suggestDropdown").classList.remove("open");
+            if (state.query) {
+                state.query = "";
+                state.mode = "all_movies";
+                state.heading = "RECENTLY UPDATED";
+                state.page = 1;
+                loadCatalog(false);
+            }
         }
 
         document.addEventListener("click", (e) => {
@@ -2249,6 +2872,7 @@
         });
 
         function applyComboFilters() {
+            closeOttHub(false);
             state.query = "";
             state.providerId = "";
             state.mode = "all_movies";
@@ -2266,47 +2890,47 @@
         }
 
         function selectCategory(mode, label, btnEl) {
+            closeOttHub(false);
             state.query = "";
             state.providerId = "";
             state.mode = mode;
             state.heading = label;
             state.page = 1;
             document.getElementById("searchInput").value = "";
-            document.querySelectorAll(".cat-pill, .zone-btn, .ott-chip").forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".cat-pill, .zone-btn, .ott-chip, .vibe-chip").forEach(b => b.classList.remove("active"));
             if (btnEl) btnEl.classList.add("active");
-            loadCatalog(true);
-        }
-
-        function pickOtt(ottName, providerId, chipEl) {
-            state.query = "";
-            state.mode = "ott";
-            state.providerId = providerId;
-            state.heading = `${ottName} OTT`;
-            state.page = 1;
-            document.getElementById("searchInput").value = "";
-            document.querySelectorAll(".ott-chip, .ott-platform-card").forEach(c => c.classList.remove("active"));
-            if (chipEl) chipEl.classList.add("active");
             loadCatalog(true);
         }
 
         function runSearch(e) {
             e.preventDefault();
+            closeOttHub(false);
             document.getElementById("suggestDropdown").classList.remove("open");
             const q = document.getElementById("searchInput").value.trim();
-            if (!q) return;
+            if (!q) {
+                document.getElementById("searchInput").focus();
+                return;
+            }
+            ["filterYear", "filterLang"].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = "";
+            });
             state.query = q;
             state.providerId = "";
+            state.mode = "search";
             state.heading = `Results for "${q}"`;
             state.page = 1;
             loadCatalog(true);
         }
 
         function resetHome() {
+            closeOttHub(false);
             state.query = "";
             state.providerId = "";
             state.mode = "all_movies";
             state.heading = "RECENTLY UPDATED";
             state.page = 1;
+            document.title = "Zero Movie Box";
             history.replaceState(null, "", window.location.pathname + window.location.search);
             document.getElementById("searchInput").value = "";
             document.getElementById("seriesHub").classList.remove("open");
@@ -2381,7 +3005,6 @@
             document.getElementById("nextBtn").disabled = state.page >= state.totalPages;
         }
 
-        // Watchlist & Continue Watching
         function toggleUserLists(tabName) {
             state.activeUserListTab = tabName;
             const panel = document.getElementById("userListsPanel");
@@ -2406,6 +3029,7 @@
             }
 
             items.forEach(it => {
+                const prog = it.progress || 45;
                 const card = document.createElement("div");
                 card.className = "m-card";
                 card.onclick = () => openDetail(it);
@@ -2413,7 +3037,13 @@
                     <div class="m-poster">
                         ${it.poster ? `<img src="${it.poster}" alt="${esc(it.title)}">` : `<div class="m-alt" style="display:flex;"><span>${esc(it.title)}</span></div>`}
                     </div>
-                    <div class="m-body"><div class="m-title">${esc(it.title)}</div></div>
+                    <div class="m-body">
+                        <div class="m-title">${esc(it.title)}</div>
+                        ${tabName === "history" ? `
+                            <div style="font-size: 10px; color: var(--cyan);">Watched ${prog}%</div>
+                            <div class="progress-track"><div class="progress-fill" style="width: ${prog}%;"></div></div>
+                        ` : ""}
+                    </div>
                 `;
                 grid.appendChild(card);
             });
@@ -2421,9 +3051,17 @@
 
         function addToHistory(item) {
             if (!item || !item.id) return;
-            const hist = getSavedList("zmb_history").filter(x => String(x.id) !== String(item.id));
-            hist.unshift(item);
-            setSavedList("zmb_history", hist);
+            const hist = getSavedList("zmb_history");
+            const existing = hist.find(x => String(x.id) === String(item.id));
+            const nextProg = existing ? Math.min(95, (existing.progress || 35) + 20) : 35;
+            const updated = hist.filter(x => String(x.id) !== String(item.id));
+            updated.unshift({
+                ...item,
+                progress: nextProg,
+                lastSeason: state.selectedSeason,
+                lastEpisode: state.selectedEpisode
+            });
+            setSavedList("zmb_history", updated);
         }
 
         function syncWatchlistButton() {
@@ -2434,6 +3072,24 @@
             btn.innerHTML = exists
                 ? `<i class="fa-solid fa-bookmark"></i> Saved`
                 : `<i class="fa-regular fa-bookmark"></i> Save Watchlist`;
+
+            const histItem = getSavedList("zmb_history").find(x => String(x.id) === String(state.currentItem.id));
+            const resBtn = document.getElementById("resumeBtn");
+            if (histItem && resBtn) {
+                resBtn.style.display = "inline-flex";
+                resBtn.innerHTML = `<i class="fa-solid fa-play"></i> Resume (${histItem.progress || 35}%)`;
+            } else if (resBtn) {
+                resBtn.style.display = "none";
+            }
+        }
+
+        function resumeWatchingAction() {
+            const histItem = getSavedList("zmb_history").find(x => String(x.id) === String(state.currentItem?.id));
+            if (histItem && histItem.lastSeason) {
+                state.selectedSeason = histItem.lastSeason;
+                state.selectedEpisode = histItem.lastEpisode || 1;
+            }
+            switchServer(1);
         }
 
         function toggleCurrentWatchlist() {
@@ -2449,7 +3105,12 @@
             syncWatchlistButton();
         }
 
-        // ৬টি ব্যাকআপ সার্ভার
+        function togglePlotDetails() {
+            const p = document.getElementById("dStory");
+            p.style.display = p.style.display === "none" ? "block" : "none";
+        }
+
+        // ৬টি সরাসরি প্লেয়ার সার্ভার
         function getServerUrl(num, item, sNum = 1, eNum = 1) {
             if (item.videoUrl) return item.videoUrl;
             if (item.mediaKind === "episode") return "";
@@ -2471,6 +3132,8 @@
             state.rotated = false;
             document.getElementById("playerStage").classList.remove("rotated-view");
             document.getElementById("dlNote").style.display = "none";
+            document.getElementById("dStory").style.display = "none";
+            document.title = `${item.title} (${item.rating}) — Zero Movie Box`;
 
             if (typeof item.id === "number") {
                 history.replaceState(null, "", `#${item.mediaKind}-${item.id}`);
@@ -2485,6 +3148,7 @@
             document.getElementById("mType").textContent = item.type;
             document.getElementById("mLang").textContent = item.lang;
             document.getElementById("mQual").textContent = item.quality;
+            document.getElementById("dHook").textContent = buildHookLine(item.title, item.quality, item.lang, item.rating);
             document.getElementById("dStory").textContent = item.overview;
 
             document.getElementById("sz480").textContent = item.sizes?.["480p"] || "780 MB";
@@ -2541,7 +3205,6 @@
                 const yt = (videos.results || []).find(v => v.site === "YouTube" && (v.type === "Trailer" || v.type === "Teaser")) || (videos.results || []).find(v => v.site === "YouTube");
                 state.trailerKey = yt ? yt.key : "";
 
-                // Cast Strip
                 const castList = document.getElementById("castList");
                 castList.innerHTML = "";
                 (credits.cast || []).slice(0, 10).forEach(person => {
@@ -2561,7 +3224,6 @@
                     castList.appendChild(cCard);
                 });
 
-                // Dynamic TV Season & Episode Picker
                 if (kind === "tv" && Array.isArray(details.seasons)) {
                     const validSeasons = details.seasons.filter(s => s.season_number >= 1);
                     if (validSeasons.length) {
@@ -2579,7 +3241,6 @@
                     }
                 }
 
-                // Similar Movies / Shows
                 const relGrid = document.getElementById("relatedGrid");
                 relGrid.innerHTML = "";
                 (similar.results || []).filter(x => x.title || x.name).slice(0, 8).forEach(rel => {
@@ -2665,6 +3326,7 @@
                 vid.src = url;
                 vid.style.display = "block";
             } else {
+                frame.removeAttribute("sandbox");
                 frame.src = url;
                 frame.style.display = "block";
             }
@@ -2721,13 +3383,18 @@
                 a.click();
                 a.remove();
             } else {
-                window.open(targetUrl, "_blank", "noopener,noreferrer");
+                const win = window.open(targetUrl, "_blank", "noopener,noreferrer");
+                if (!win) {
+                    note.style.display = "block";
+                    note.innerHTML = `ডাউনলোড লিংক: <a href="${esc(targetUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);">এখানে ক্লিক করুন</a>`;
+                }
             }
         }
 
         function closeDetail() {
             state.cinemaMode = false;
             document.body.classList.remove("cinema-active");
+            document.title = "Zero Movie Box";
             document.getElementById("detailModal").classList.remove("open");
             document.getElementById("playerFrame").src = "";
             const vid = document.getElementById("videoTag");
@@ -2761,6 +3428,24 @@
             document.getElementById("reqNote").value = "";
         }
 
+        document.addEventListener("keydown", (e) => {
+            const activeTag = document.activeElement?.tagName?.toLowerCase();
+            const isTyping = activeTag === "input" || activeTag === "textarea" || activeTag === "select";
+
+            if (e.key === "Escape") {
+                if (document.getElementById("reqModal")?.classList.contains("open")) {
+                    closeRequestModal();
+                } else if (document.getElementById("detailModal")?.classList.contains("open")) {
+                    closeDetail();
+                }
+            } else if (e.key === "/" && !isTyping) {
+                e.preventDefault();
+                const inp = document.getElementById("searchInput");
+                inp?.focus();
+                inp?.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
+
         async function checkDirectHashOpen() {
             const h = window.location.hash || "";
             const match = h.match(/^#(movie|tv)-(\d+)$/);
@@ -2786,6 +3471,7 @@
             updateSavedCounter();
             initOttRowLogos();
             buildAllOttDirectory();
+            initHeroSlider();
             loadTrendingStrip();
             loadCatalog(false);
             checkDirectHashOpen();
