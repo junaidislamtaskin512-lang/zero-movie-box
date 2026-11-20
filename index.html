@@ -20,6 +20,7 @@
             --purple: #7c3aed;
             --pink: #db2777;
             --teal: #0d9488;
+            --green: #10b981;
             --text: #f3f4f6;
             --muted: #9ca3af;
             --line: rgba(255, 255, 255, 0.09);
@@ -37,6 +38,46 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+            padding-bottom: 74px;
+        }
+
+        /* Cinema Mode Overlay */
+        body.cinema-active .topbar,
+        body.cinema-active .wrap > *:not(.detail-modal),
+        body.cinema-active footer,
+        body.cinema-active .mobile-bottom-nav,
+        body.cinema-active .detail-top,
+        body.cinema-active .detail-poster,
+        body.cinema-active .detail-title,
+        body.cinema-active .detail-sub,
+        body.cinema-active .meta-3,
+        body.cinema-active .story-box,
+        body.cinema-active .shots-head,
+        body.cinema-active .shots-list,
+        body.cinema-active .dl-title,
+        body.cinema-active .dl-list,
+        body.cinema-active .dl-note,
+        body.cinema-active .related-section,
+        body.cinema-active .tg-join {
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        body.cinema-active .detail-modal {
+            background: rgba(0, 0, 0, 0.99);
+        }
+
+        body.cinema-active .detail-sheet {
+            background: #05070a;
+            border-color: rgba(6, 182, 212, 0.45);
+        }
+
+        body.cinema-active .watch-box {
+            position: relative;
+            z-index: 2500;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
         }
 
         /* Top Bar */
@@ -44,14 +85,14 @@
             position: sticky;
             top: 0;
             z-index: 900;
-            background: rgba(13, 17, 24, 0.95);
+            background: rgba(13, 17, 24, 0.96);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--line);
-            padding: 12px 4%;
+            padding: 11px 4%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
@@ -60,7 +101,7 @@
             align-items: center;
             gap: 10px;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 800;
         }
 
@@ -80,11 +121,37 @@
             color: #ef4444;
         }
 
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .top-mini-btn {
+            background: var(--bg-panel);
+            color: #fff;
+            border: 1px solid var(--line);
+            padding: 7px 11px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-mini-btn:hover, .top-mini-btn.active {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
         .tg-btn {
             text-decoration: none;
             background: #229ed9;
             color: #fff;
-            padding: 7px 13px;
+            padding: 7px 12px;
             border-radius: 8px;
             font-size: 12px;
             font-weight: 700;
@@ -96,7 +163,79 @@
         .wrap {
             max-width: 1180px;
             margin: 0 auto;
-            padding: 14px 4% 60px;
+            padding: 14px 4% 40px;
+        }
+
+        /* Trending Strip */
+        .trending-strip {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.16), rgba(6, 182, 212, 0.12));
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 14px;
+        }
+
+        .trending-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .trending-scroll {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: minmax(145px, 1fr);
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: thin;
+        }
+
+        .trend-card {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .trend-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .trend-rank {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            z-index: 2;
+            background: var(--red-hover);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        .trend-card img {
+            width: 100%;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            display: block;
+        }
+
+        .trend-title {
+            padding: 7px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Category Pills */
@@ -157,36 +296,50 @@
         .ott-chip {
             background: var(--bg-card);
             border: 1px solid var(--line);
-            border-radius: 10px;
-            padding: 9px 5px;
+            border-radius: 12px;
+            padding: 9px 4px;
             text-align: center;
             cursor: pointer;
             transition: 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .ott-chip:hover, .ott-chip.active {
             border-color: var(--cyan);
             background: #20293a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.22);
         }
 
-        .ott-circle {
-            width: 42px;
-            height: 42px;
-            margin: 0 auto 5px;
-            border-radius: 50%;
-            background: #0f141e;
-            border: 1px solid var(--line);
+        .ott-logo-wrap {
+            width: 46px;
+            height: 46px;
+            margin: 0 auto 6px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.14);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 10px;
-            color: #fff;
+            background: #0f141e;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .ott-logo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .ott-name {
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
+            color: #f3f4f6;
+            line-height: 1.2;
         }
 
         /* All OTT Directory Panel */
@@ -213,17 +366,33 @@
         .ott-platform-card {
             background: var(--bg-panel);
             border: 1px solid var(--line);
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 11px;
+            padding: 10px;
             cursor: pointer;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .ott-platform-card:hover, .ott-platform-card.active {
             border-color: var(--cyan);
+            background: #242e42;
         }
 
-        /* Search Box (Movie + Actor/Actress) */
+        .ott-platform-card .ott-logo-wrap {
+            margin: 0;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+        }
+
+        /* Search Box + Smart Live Suggestions */
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
         .search-box {
             display: flex;
             align-items: stretch;
@@ -231,7 +400,6 @@
             border: 1px solid rgba(6, 182, 212, 0.5);
             border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 14px;
         }
 
         .search-brand-tag {
@@ -267,6 +435,107 @@
             cursor: pointer;
         }
 
+        .suggest-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            z-index: 950;
+            background: var(--bg-panel);
+            border: 1px solid rgba(6, 182, 212, 0.45);
+            border-radius: 10px;
+            max-height: 310px;
+            overflow-y: auto;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
+        }
+
+        .suggest-dropdown.open {
+            display: block;
+        }
+
+        .suggest-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 11px;
+            border-bottom: 1px solid var(--line);
+            cursor: pointer;
+        }
+
+        .suggest-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggest-item:hover {
+            background: #273247;
+        }
+
+        .suggest-item img {
+            width: 36px;
+            height: 52px;
+            object-fit: cover;
+            border-radius: 5px;
+            background: #111622;
+            flex-shrink: 0;
+        }
+
+        /* Combo Filter Bar (Genre + Year + Language + Quality) */
+        .combo-filter-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .filter-sel {
+            background: var(--bg-panel);
+            color: #fff;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            padding: 8px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .filter-reset-btn {
+            grid-column: 1 / -1;
+            background: #273142;
+            color: var(--cyan);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            border-radius: 7px;
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* User Lists Panel (Watchlist & Continue Watching) */
+        .user-lists-panel {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 12px;
+            padding: 13px;
+            margin-bottom: 14px;
+        }
+
+        .user-lists-panel.open {
+            display: block;
+        }
+
+        .mini-cards-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+            gap: 9px;
+            margin-top: 9px;
+        }
+
         /* Colored Zones */
         .zone-grid {
             display: grid;
@@ -293,6 +562,8 @@
         .z-pink { background: var(--pink); }
         .z-blue { background: var(--blue); }
         .z-teal { background: var(--teal); }
+        .z-gold { background: #b45309; }
+        .z-green { background: #047857; }
 
         .zone-badge {
             background: rgba(0, 0, 0, 0.3);
@@ -568,7 +839,7 @@
             position: fixed;
             inset: 0;
             z-index: 2000;
-            background: rgba(9, 12, 18, 0.96);
+            background: rgba(9, 12, 18, 0.97);
             overflow-y: auto;
             padding: 12px;
         }
@@ -578,8 +849,8 @@
         }
 
         .detail-sheet {
-            max-width: 720px;
-            margin: 0 auto 40px;
+            max-width: 760px;
+            margin: 0 auto 45px;
             background: var(--bg-card);
             border: 1px solid var(--line);
             border-radius: 12px;
@@ -593,6 +864,8 @@
             margin-bottom: 12px;
             padding-bottom: 10px;
             border-bottom: 1px solid var(--line);
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .back-btn {
@@ -604,10 +877,13 @@
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .detail-poster {
-            max-width: 250px;
+            max-width: 240px;
             margin: 0 auto 12px;
             border-radius: 10px;
             overflow: hidden;
@@ -631,7 +907,41 @@
             color: var(--gold);
             font-size: 12px;
             font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .action-row-btns {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
             margin-bottom: 12px;
+        }
+
+        .act-pill-btn {
+            background: var(--bg-panel);
+            color: #fff;
+            border: 1px solid var(--line);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .act-pill-btn.saved {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .act-pill-btn.trailer {
+            background: rgba(220, 38, 38, 0.2);
+            border-color: #ef4444;
+            color: #fca5a5;
         }
 
         .meta-3 {
@@ -657,7 +967,7 @@
             background: var(--bg-panel);
             border-radius: 8px;
             padding: 12px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .story-box h4 {
@@ -672,7 +982,74 @@
             line-height: 1.5;
         }
 
-        /* Player + Side Rotate / Landscape Controls */
+        /* Cast Strip */
+        .cast-box {
+            background: var(--bg-panel);
+            border-radius: 8px;
+            padding: 11px;
+            margin-bottom: 12px;
+        }
+
+        .cast-list {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: minmax(92px, 1fr);
+            gap: 8px;
+            overflow-x: auto;
+            margin-top: 8px;
+        }
+
+        .cast-card {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .cast-card:hover {
+            border-color: var(--cyan);
+        }
+
+        .cast-card img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 5px;
+            display: block;
+            background: #222a3a;
+        }
+
+        .cast-name {
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        /* Dynamic TV Season & Episode Selector */
+        .tv-picker-box {
+            display: none;
+            background: var(--bg-panel);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            border-radius: 10px;
+            padding: 11px;
+            margin-bottom: 12px;
+        }
+
+        .tv-picker-box.open {
+            display: block;
+        }
+
+        .tv-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        /* Player + Landscape + Cinema Controls */
         .watch-box {
             background: var(--bg-panel);
             border: 1px solid var(--line);
@@ -690,18 +1067,38 @@
             flex-wrap: wrap;
         }
 
+        .watch-btns {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
         .rotate-side-btn {
             background: var(--blue);
             color: #fff;
             border: none;
-            padding: 7px 12px;
+            padding: 7px 11px;
             border-radius: 7px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+        }
+
+        .cinema-toggle-btn {
+            background: #374151;
+            color: #fff;
+            border: none;
+            padding: 7px 11px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .player-stage {
@@ -716,7 +1113,6 @@
         }
 
         .player-stage.rotated-view {
-            aspect-ratio: 16 / 9;
             border: 2px solid var(--cyan);
         }
 
@@ -821,6 +1217,20 @@
             margin-bottom: 10px;
         }
 
+        /* Related Movies */
+        .related-section {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 9px;
+            margin-top: 9px;
+        }
+
         .tg-join {
             display: flex;
             align-items: center;
@@ -834,7 +1244,80 @@
             border-radius: 9px;
             font-size: 14px;
             font-weight: 800;
-            margin-top: 6px;
+            margin-top: 12px;
+        }
+
+        /* Request Modal */
+        .req-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 2600;
+            background: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .req-modal.open {
+            display: flex;
+        }
+
+        .req-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .req-card input, .req-card textarea {
+            width: 100%;
+            background: var(--bg-panel);
+            border: 1px solid var(--line);
+            color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 8px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        /* Mobile Bottom Nav */
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 980;
+            background: rgba(13, 17, 24, 0.97);
+            border-top: 1px solid var(--line);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            padding: 6px 4px;
+        }
+
+        .m-nav-btn {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            text-decoration: none;
+        }
+
+        .m-nav-btn i {
+            font-size: 15px;
+        }
+
+        .m-nav-btn.active, .m-nav-btn:hover {
+            color: var(--cyan);
         }
 
         .status-msg {
@@ -857,6 +1340,9 @@
             .zone-grid { grid-template-columns: repeat(3, 1fr); }
             .all-ott-grid { grid-template-columns: repeat(4, 1fr); }
             .cards-grid { grid-template-columns: repeat(4, 1fr); }
+            .combo-filter-bar { grid-template-columns: repeat(5, 1fr); }
+            .filter-reset-btn { grid-column: auto; }
+            .related-grid { grid-template-columns: repeat(4, 1fr); }
         }
     </style>
 </head>
@@ -868,12 +1354,46 @@
             <div>Zero <span>Movie Box</span></div>
         </div>
 
-        <a href="#" target="_blank" rel="noopener noreferrer" class="tg-btn" id="topTgBtn">
-            <i class="fa-brands fa-telegram"></i> Join For Telegram
-        </a>
+        <div class="top-actions">
+            <button type="button" class="top-mini-btn" onclick="toggleUserLists('watchlist')">
+                <i class="fa-solid fa-bookmark"></i> Saved (<span id="savedCount">0</span>)
+            </button>
+            <button type="button" class="top-mini-btn" onclick="toggleUserLists('history')">
+                <i class="fa-solid fa-clock-rotate-left"></i> History
+            </button>
+            <button type="button" class="top-mini-btn" onclick="openRequestModal()">
+                <i class="fa-solid fa-paper-plane"></i> Request
+            </button>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="tg-btn" id="topTgBtn">
+                <i class="fa-brands fa-telegram"></i> Telegram
+            </a>
+        </div>
     </div>
 
     <div class="wrap">
+        <!-- Trending Now Strip -->
+        <div class="trending-strip">
+            <div class="trending-head">
+                <span style="font-size: 13px; font-weight: 800; color: var(--gold);">
+                    <i class="fa-solid fa-fire-flame-curved"></i> TRENDING NOW (আজকের সেরা ট্রেন্ডিং)
+                </span>
+                <button type="button" class="all-ott-trigger" onclick="selectCategory('live_trending', 'TRENDING NOW', null)">See All →</button>
+            </div>
+            <div class="trending-scroll" id="trendingRow"></div>
+        </div>
+
+        <!-- Saved / Continue Watching Panel -->
+        <div class="user-lists-panel" id="userListsPanel">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="srv-btn active" id="tabSavedList" onclick="switchUserListTab('watchlist')">Saved Watchlist</button>
+                    <button type="button" class="srv-btn" id="tabHistoryList" onclick="switchUserListTab('history')">Continue Watching</button>
+                </div>
+                <button type="button" class="back-btn" onclick="document.getElementById('userListsPanel').classList.remove('open')">Close</button>
+            </div>
+            <div class="mini-cards-row" id="userListsGrid"></div>
+        </div>
+
         <!-- Category Grid -->
         <div class="cat-grid">
             <button class="cat-pill" onclick="selectCategory('live_trending', 'LIVE & TRENDING NOW', this)"><i class="fa-solid fa-fire"></i> LIVENOW / TRENDING</button>
@@ -900,27 +1420,27 @@
 
         <div class="ott-row">
             <div class="ott-chip" onclick="pickOtt('Netflix', '8', this)">
-                <div class="ott-circle">Netflix</div>
+                <div class="ott-logo-wrap"><img id="logoNetflix" alt="Netflix"></div>
                 <div class="ott-name">Netflix</div>
             </div>
             <div class="ott-chip" onclick="pickOtt('Amazon Prime', '9', this)">
-                <div class="ott-circle">Prime</div>
-                <div class="ott-name">Prime</div>
+                <div class="ott-logo-wrap"><img id="logoPrime" alt="Amazon Prime"></div>
+                <div class="ott-name">Amazon Prime</div>
             </div>
             <div class="ott-chip" onclick="pickOtt('JioHotstar', '122', this)">
-                <div class="ott-circle">Hotstar</div>
+                <div class="ott-logo-wrap"><img id="logoHotstar" alt="JioHotstar"></div>
                 <div class="ott-name">JioHotstar</div>
             </div>
             <div class="ott-chip" onclick="pickOtt('SonyLiv', '237', this)">
-                <div class="ott-circle">SonyLiv</div>
+                <div class="ott-logo-wrap"><img id="logoSonyLiv" alt="SonyLiv"></div>
                 <div class="ott-name">SonyLiv</div>
             </div>
             <div class="ott-chip" onclick="pickOtt('Zee5', '232', this)">
-                <div class="ott-circle">ZEE5</div>
+                <div class="ott-logo-wrap"><img id="logoZee5" alt="Zee5"></div>
                 <div class="ott-name">Zee5</div>
             </div>
             <div class="ott-chip" onclick="pickOtt('Hoichoi', '315', this)">
-                <div class="ott-circle">Hoichoi</div>
+                <div class="ott-logo-wrap"><img id="logoHoichoi" alt="Hoichoi"></div>
                 <div class="ott-name">Hoichoi</div>
             </div>
         </div>
@@ -934,12 +1454,61 @@
             <div class="all-ott-grid" id="allOttGrid"></div>
         </div>
 
-        <!-- Search Box (Movie + Actor / Actress) -->
-        <form class="search-box" onsubmit="runSearch(event)">
-            <div class="search-brand-tag"><i class="fa-solid fa-play"></i> Zero Movie Box</div>
-            <input type="text" id="searchInput" placeholder="Movie, Series বা Actor/Actress-এর নাম লিখুন...">
-            <button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>
+        <!-- Search Box + Smart Suggestions -->
+        <div class="search-wrapper">
+            <form class="search-box" onsubmit="runSearch(event)">
+                <div class="search-brand-tag"><i class="fa-solid fa-play"></i> Zero Movie Box</div>
+                <input type="text" id="searchInput" autocomplete="off" placeholder="Movie, Series বা Actor/Actress-এর নাম লিখুন..." oninput="handleLiveSuggest(this.value)">
+                <button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <div class="suggest-dropdown" id="suggestDropdown"></div>
+        </div>
+
+        <!-- Combo Filter Bar (Genre + Year + Language + Quality) -->
+        <div class="combo-filter-bar">
+            <select class="filter-sel" id="filterGenre" onchange="applyComboFilters()">
+                <option value="">All Genres (সব জনরা)</option>
+                <option value="28">Action</option>
+                <option value="35">Comedy</option>
+                <option value="18">Drama</option>
+                <option value="27">Horror</option>
+                <option value="10749">Romance</option>
+                <option value="878">Sci-Fi</option>
+                <option value="53">Thriller</option>
+                <option value="16">Animation</option>
+            </select>
+
+            <select class="filter-sel" id="filterYear" onchange="applyComboFilters()">
+                <option value="">All Years (সব সাল)</option>
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+            </select>
+
+            <select class="filter-sel" id="filterLang" onchange="applyComboFilters()">
+                <option value="">All Languages</option>
+                <option value="bn">Bangla (BN)</option>
+                <option value="hi">Hindi (HI)</option>
+                <option value="en">English (EN)</option>
+                <option value="ta">Tamil (TA)</option>
+                <option value="te">Telugu (TE)</option>
+                <option value="ko">Korean (KO)</option>
+                <option value="ja">Japanese (JA)</option>
+            </select>
+
+            <select class="filter-sel" id="filterQual" onchange="renderCards()">
+                <option value="">All Quality</option>
+                <option value="4K WEB-DL">4K WEB-DL</option>
+                <option value="WEB-DL">WEB-DL</option>
+                <option value="HD">HD</option>
+            </select>
+
+            <button type="button" class="filter-reset-btn" onclick="resetComboFilters()">
+                <i class="fa-solid fa-rotate-left"></i> Reset Filters
+            </button>
+        </div>
 
         <!-- Colored Special Zones -->
         <div class="zone-grid">
@@ -958,6 +1527,14 @@
             <button class="zone-btn z-teal" onclick="selectCategory('south', 'SOUTH INDIAN', this)">
                 <span><i class="fa-solid fa-fire-flame-curved"></i> SOUTH INDIAN</span>
                 <span class="zone-badge">BEST</span>
+            </button>
+            <button class="zone-btn z-gold" onclick="selectCategory('top_rated', 'TOP RATED MOVIES', this)">
+                <span><i class="fa-solid fa-star"></i> TOP RATED</span>
+                <span class="zone-badge">★ 8+</span>
+            </button>
+            <button class="zone-btn z-green" onclick="selectCategory('upcoming', 'UPCOMING RELEASES', this)">
+                <span><i class="fa-solid fa-calendar-days"></i> UPCOMING</span>
+                <span class="zone-badge">SOON</span>
             </button>
             <button class="zone-btn z-purple" onclick="openCartoonHub('cid', this)">
                 <span><i class="fa-solid fa-shield"></i> CID BANGLA / SERIES</span>
@@ -1027,7 +1604,7 @@
         </div>
     </div>
 
-    <!-- Detail + Player + Rotate/Landscape + Downloads Modal -->
+    <!-- Detail + Player + Season/Episode + Cast + Related + Downloads Modal -->
     <div class="detail-modal" id="detailModal">
         <div class="detail-sheet">
             <div class="detail-top">
@@ -1042,6 +1619,18 @@
             <h2 class="detail-title" id="dTitle">Title</h2>
             <div class="detail-sub" id="dSub">WEB-DL • HD</div>
 
+            <div class="action-row-btns">
+                <button type="button" class="act-pill-btn" id="saveWatchlistBtn" onclick="toggleCurrentWatchlist()">
+                    <i class="fa-regular fa-bookmark"></i> Save Watchlist
+                </button>
+                <button type="button" class="act-pill-btn trailer" id="trailerBtn" onclick="playOfficialTrailer()">
+                    <i class="fa-brands fa-youtube"></i> Trailer
+                </button>
+                <button type="button" class="act-pill-btn" onclick="shareDirectMovieLink()">
+                    <i class="fa-solid fa-share-nodes"></i> Copy Link
+                </button>
+            </div>
+
             <div class="meta-3">
                 <div><strong>Type</strong><span id="mType">Movie</span></div>
                 <div><strong>Language</strong><span id="mLang">EN</span></div>
@@ -1053,15 +1642,35 @@
                 <p id="dStory">Storyline...</p>
             </div>
 
-            <!-- Player Box with Side Rotate / Landscape Button -->
+            <!-- Cast Strip -->
+            <div class="cast-box" id="castBox">
+                <strong style="font-size: 12px; color: var(--cyan);"><i class="fa-solid fa-users"></i> Cast (কাস্টের ছবিতে ক্লিক করে সব মুভি দেখুন)</strong>
+                <div class="cast-list" id="castList"></div>
+            </div>
+
+            <!-- Dynamic TV Series Season & Episode Picker -->
+            <div class="tv-picker-box" id="tvPickerBox">
+                <strong style="font-size: 12px; color: var(--gold);"><i class="fa-solid fa-list-ol"></i> Select Season & Episode</strong>
+                <div class="tv-controls">
+                    <select class="season-select" id="tvSeasonSelect" onchange="loadTvSeasonEpisodes()"></select>
+                    <select class="season-select" id="tvEpisodeSelect" onchange="playSelectedTvEpisode()"></select>
+                </div>
+            </div>
+
+            <!-- Player Box with Rotate + Cinema Mode -->
             <div class="watch-box">
                 <div class="watch-header">
                     <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">
                         <i class="fa-solid fa-play-circle"></i> WATCH ONLINE (<span id="srvLabel">Server 1</span>)
                     </span>
-                    <button type="button" class="rotate-side-btn" onclick="rotateLandscapePlayer()">
-                        <i class="fa-solid fa-rotate"></i> Landscape / Rotate
-                    </button>
+                    <div class="watch-btns">
+                        <button type="button" class="cinema-toggle-btn" onclick="toggleCinemaMode()">
+                            <i class="fa-solid fa-lightbulb"></i> Cinema Mode
+                        </button>
+                        <button type="button" class="rotate-side-btn" onclick="rotateLandscapePlayer()">
+                            <i class="fa-solid fa-rotate"></i> Landscape / Rotate
+                        </button>
+                    </div>
                 </div>
 
                 <div class="player-stage" id="playerStage">
@@ -1106,11 +1715,44 @@
 
             <div class="dl-note" id="dlNote"></div>
 
+            <!-- You May Also Like / Similar Movies -->
+            <div class="related-section">
+                <strong style="font-size: 13px; color: var(--cyan);"><i class="fa-solid fa-clapperboard"></i> You May Also Like (আরও দেখুন)</strong>
+                <div class="related-grid" id="relatedGrid"></div>
+            </div>
+
             <a href="#" target="_blank" rel="noopener noreferrer" class="tg-join" id="modalTgBtn">
                 <i class="fa-brands fa-telegram"></i> Join For Telegram
             </a>
         </div>
     </div>
+
+    <!-- Movie Request Modal -->
+    <div class="req-modal" id="reqModal">
+        <div class="req-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="font-size: 15px; color: var(--cyan);">Request a Movie / Series</strong>
+                <button type="button" class="back-btn" onclick="closeRequestModal()">X</button>
+            </div>
+            <form onsubmit="submitMovieRequest(event)">
+                <input type="text" id="reqName" required placeholder="মুভি বা সিরিজের নাম ও সাল...">
+                <textarea id="reqNote" rows="3" placeholder="ভাষা বা কোয়ালিটি নোট (ঐচ্ছিক)..."></textarea>
+                <button type="submit" class="tg-join" style="border: none; cursor: pointer;">
+                    <i class="fa-solid fa-paper-plane"></i> Send Request
+                </button>
+            </form>
+            <div id="reqStatus" style="margin-top: 8px; font-size: 12px; color: var(--green);"></div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+        <button type="button" class="m-nav-btn active" onclick="resetHome()"><i class="fa-solid fa-house"></i><span>Home</span></button>
+        <button type="button" class="m-nav-btn" onclick="selectCategory('live_trending', 'TRENDING NOW', null)"><i class="fa-solid fa-fire"></i><span>Trending</span></button>
+        <button type="button" class="m-nav-btn" onclick="selectCategory('tv_drama', 'WEB SERIES & DRAMA', null)"><i class="fa-solid fa-tv"></i><span>Series</span></button>
+        <button type="button" class="m-nav-btn" onclick="toggleUserLists('watchlist')"><i class="fa-solid fa-bookmark"></i><span>Saved</span></button>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="m-nav-btn" id="bottomTgBtn"><i class="fa-brands fa-telegram"></i><span>Telegram</span></a>
+    </nav>
 
     <footer>
         <p>&copy; 2026 <strong>Zero Movie Box</strong>. All Rights Reserved.</p>
@@ -1134,23 +1776,58 @@
             "best": SMARTLINK_URL
         };
 
-        // সব OTT প্ল্যাটফর্মের তালিকা
-        const OTT_PLATFORMS = [
-            { name: "Netflix", providerId: "8", badge: "N" },
-            { name: "Amazon Prime", providerId: "9", badge: "Prime" },
-            { name: "JioHotstar", providerId: "122", badge: "Hotstar" },
-            { name: "SonyLiv", providerId: "237", badge: "SonyLiv" },
-            { name: "Zee5", providerId: "232", badge: "ZEE5" },
-            { name: "Hoichoi", providerId: "315", badge: "Hoichoi" },
-            { name: "MX Player", providerId: "528", badge: "MX" },
-            { name: "Crunchyroll", providerId: "283", badge: "Anime" },
-            { name: "Disney+", providerId: "337", badge: "D+" },
-            { name: "Apple TV+", providerId: "350", badge: "TV+" },
-            { name: "Paramount+", providerId: "531", badge: "P+" },
-            { name: "Hulu", providerId: "15", badge: "Hulu" }
+        // অ্যাডমিন হিসেবে নিজের কালেক্ট করা কাস্টম পোস্ট এখানে যোগ করতে পারবেন
+        const CUSTOM_POSTS = [
+            // উদাহরণ:
+            // {
+            //     id: "custom-1",
+            //     type: "Movie",
+            //     mediaKind: "movie",
+            //     title: "Custom Demo Release",
+            //     lang: "BN",
+            //     quality: "4K WEB-DL",
+            //     rating: "8.8",
+            //     date: "2026",
+            //     overview: "এখানে আপনার কালেক্ট করা কনটেন্টের বিবরণ লিখুন।",
+            //     poster: "",
+            //     backdrop: "",
+            //     videoUrl: "",
+            //     sizes: { "480p": "750 MB", "720p": "1.6 GB", "1080p": "3.2 GB", "best": "5.5 GB" },
+            //     dl: { "480p": SMARTLINK_URL, "720p": SMARTLINK_URL, "1080p": SMARTLINK_URL, "best": SMARTLINK_URL }
+            // }
         ];
 
-        // CID, গোপাল ভাঁড় ও মোটু পাতলু সিজন ও এপিসোড
+        function makeOttLogo(bg1, bg2, text, subText, accent) {
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+                <defs>
+                    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="${bg1}"/>
+                        <stop offset="100%" stop-color="${bg2}"/>
+                    </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="24" fill="url(#g)"/>
+                <circle cx="96" cy="24" r="26" fill="${accent}" fill-opacity="0.18"/>
+                <text x="60" y="${subText ? '58' : '68'}" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-weight="900" font-size="${text.length > 5 ? '22' : '32'}">${text}</text>
+                ${subText ? `<text x="60" y="84" text-anchor="middle" fill="${accent}" font-family="Arial, sans-serif" font-weight="800" font-size="14">${subText}</text>` : ''}
+            </svg>`;
+            return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+        }
+
+        const OTT_PLATFORMS = [
+            { name: "Netflix", providerId: "8", logo: makeOttLogo("#141414", "#450a0a", "N", "NETFLIX", "#ef4444") },
+            { name: "Amazon Prime", providerId: "9", logo: makeOttLogo("#0f172a", "#0369a1", "prime", "VIDEO", "#38bdf8") },
+            { name: "JioHotstar", providerId: "122", logo: makeOttLogo("#0c1445", "#1d4ed8", "Jio", "HOTSTAR", "#facc15") },
+            { name: "SonyLiv", providerId: "237", logo: makeOttLogo("#1e1b4b", "#4338ca", "SONY", "LIV", "#fbbf24") },
+            { name: "Zee5", providerId: "232", logo: makeOttLogo("#18181b", "#581c87", "ZEE5", "OTT", "#c084fc") },
+            { name: "Hoichoi", providerId: "315", logo: makeOttLogo("#7f1d1d", "#dc2626", "hoichoi", "BANGLA", "#fde047") },
+            { name: "MX Player", providerId: "528", logo: makeOttLogo("#0f172a", "#2563eb", "MX", "PLAYER", "#60a5fa") },
+            { name: "Crunchyroll", providerId: "283", logo: makeOttLogo("#7c2d12", "#ea580c", "CR", "ANIME", "#fed7aa") },
+            { name: "Disney+", providerId: "337", logo: makeOttLogo("#0f172a", "#1e3a8a", "Disney+", "ORIGINALS", "#38bdf8") },
+            { name: "Apple TV+", providerId: "350", logo: makeOttLogo("#09090b", "#27272a", "tv+", "APPLE", "#e4e4e7") },
+            { name: "Paramount+", providerId: "531", logo: makeOttLogo("#0c4a6e", "#0284c7", "P+", "PARAMOUNT", "#bae6fd") },
+            { name: "Hulu", providerId: "15", logo: makeOttLogo("#064e3b", "#059669", "hulu", "STREAM", "#6ee7b7") }
+        ];
+
         const SHOWS_DATA = {
             cid: {
                 title: "CID (Sony Aath Bangla / Hindi)",
@@ -1213,12 +1890,51 @@
             items: [],
             activeSeries: "cid",
             currentItem: null,
-            rotated: false
+            selectedSeason: 1,
+            selectedEpisode: 1,
+            trailerKey: "",
+            rotated: false,
+            cinemaMode: false,
+            activeUserListTab: "watchlist",
+            suggestTimer: null
         };
 
+        function getSavedList(key) {
+            try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch (e) { return []; }
+        }
+
+        function setSavedList(key, arr) {
+            try { localStorage.setItem(key, JSON.stringify(arr.slice(0, 24))); } catch (e) {}
+            updateSavedCounter();
+        }
+
+        function updateSavedCounter() {
+            const list = getSavedList("zmb_watchlist");
+            const el = document.getElementById("savedCount");
+            if (el) el.textContent = list.length;
+        }
+
         function initTelegram() {
-            document.getElementById("topTgBtn").href = TELEGRAM_URL;
-            document.getElementById("modalTgBtn").href = TELEGRAM_URL;
+            ["topTgBtn", "modalTgBtn", "bottomTgBtn"].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.href = TELEGRAM_URL;
+            });
+        }
+
+        function initOttRowLogos() {
+            const topMap = {
+                logoNetflix: "Netflix",
+                logoPrime: "Amazon Prime",
+                logoHotstar: "JioHotstar",
+                logoSonyLiv: "SonyLiv",
+                logoZee5: "Zee5",
+                logoHoichoi: "Hoichoi"
+            };
+            Object.entries(topMap).forEach(([elId, name]) => {
+                const found = OTT_PLATFORMS.find(p => p.name === name);
+                const img = document.getElementById(elId);
+                if (found && img) img.src = found.logo;
+            });
         }
 
         function buildAllOttDirectory() {
@@ -1232,8 +1948,11 @@
                     document.getElementById("allOttPanel").classList.remove("open");
                 };
                 card.innerHTML = `
-                    <div style="font-size: 14px; font-weight: 800; color: #fff;">${esc(p.name)}</div>
-                    <div style="font-size: 11px; color: var(--cyan); margin-top: 3px;">All Movies & Series →</div>
+                    <div class="ott-logo-wrap"><img src="${p.logo}" alt="${esc(p.name)}"></div>
+                    <div>
+                        <div style="font-size: 13px; font-weight: 800; color: #fff;">${esc(p.name)}</div>
+                        <div style="font-size: 11px; color: var(--cyan); margin-top: 2px;">All Movies & Series →</div>
+                    </div>
                 `;
                 grid.appendChild(card);
             });
@@ -1249,13 +1968,68 @@
             return "HD";
         }
 
+        function normalizeTmdbItem(m, fallbackKind) {
+            const title = m.title || m.name;
+            const mediaKind = (m.media_type === "tv" || fallbackKind === "tv_drama" || fallbackKind === "anime") ? "tv" : "movie";
+            const date = m.release_date || m.first_air_date || "2026";
+            const vote = m.vote_average ? m.vote_average.toFixed(1) : "7.4";
+            const lang = (m.original_language || "en").toUpperCase();
+            const quality = getQuality(m.vote_average || 7.4);
+            const poster = m.poster_path ? (IMG_500 + m.poster_path) : "";
+            const backdrop = m.backdrop_path ? (IMG_780 + m.backdrop_path) : poster;
+
+            return {
+                id: m.id,
+                type: mediaKind === "tv" ? "Series / Drama" : "Movie",
+                mediaKind,
+                title,
+                lang,
+                quality,
+                rating: vote,
+                date,
+                overview: m.overview || "Storyline details are available on the stream.",
+                poster,
+                backdrop,
+                videoUrl: "",
+                sizes: { "480p": "780 MB", "720p": "1.8 GB", "1080p": "3.8 GB", "best": "6.4 GB" },
+                dl: {}
+            };
+        }
+
+        async function loadTrendingStrip() {
+            const box = document.getElementById("trendingRow");
+            try {
+                const res = await fetch(`${API_BASE}/trending/all/day?api_key=${TMDB_API_KEY}&page=1`);
+                const data = await res.json();
+                const list = (data.results || []).filter(x => x.title || x.name).slice(0, 10);
+                box.innerHTML = "";
+                list.forEach((m, i) => {
+                    const item = normalizeTmdbItem(m, state.mode);
+                    const card = document.createElement("div");
+                    card.className = "trend-card";
+                    card.onclick = () => openDetail(item);
+                    card.innerHTML = `
+                        <span class="trend-rank">#${i + 1}</span>
+                        <img src="${item.poster || 'https://via.placeholder.com/300x450/161c28/9ca3af?text=ZMB'}" alt="${esc(item.title)}" loading="lazy">
+                        <div class="trend-title">${esc(item.title)}</div>
+                    `;
+                    box.appendChild(card);
+                });
+            } catch (e) {}
+        }
+
         function buildEndpoint(overridePage) {
             const pg = overridePage || state.page;
             const { mode, query, providerId } = state;
+            const cGenre = document.getElementById("filterGenre")?.value || "";
+            const cYear = document.getElementById("filterYear")?.value || "";
+            const cLang = document.getElementById("filterLang")?.value || "";
 
             if (query) {
                 return `${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&page=${pg}`;
             }
+            if (mode === "top_rated") return `${API_BASE}/movie/top_rated?api_key=${TMDB_API_KEY}&page=${pg}`;
+            if (mode === "upcoming") return `${API_BASE}/movie/upcoming?api_key=${TMDB_API_KEY}&page=${pg}`;
             if (mode === "ott" && providerId) {
                 return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_watch_providers=${providerId}&watch_region=IN&sort_by=popularity.desc&page=${pg}`;
             }
@@ -1273,10 +2047,18 @@
             if (mode === "anime") return `${API_BASE}/discover/tv?api_key=${TMDB_API_KEY}&with_genres=16&with_original_language=ja&sort_by=popularity.desc&page=${pg}`;
             if (mode === "south") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=te|ta|ml|kn&sort_by=popularity.desc&page=${pg}`;
             if (mode === "adult") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&include_adult=true&sort_by=popularity.desc&page=${pg}`;
+
+            if (cGenre || cYear || cLang) {
+                let url = `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&sort_by=popularity.desc&page=${pg}`;
+                if (cGenre) url += `&with_genres=${cGenre}`;
+                if (cYear) url += `&primary_release_year=${cYear}`;
+                if (cLang) url += `&with_original_language=${cLang}`;
+                return url;
+            }
+
             return `${API_BASE}/movie/popular?api_key=${TMDB_API_KEY}&page=${pg}`;
         }
 
-        // অভিনেতা/অভিনেত্রী সার্চ করলে তার অভিনীত সব মুভি/শো নিয়ে আসা
         async function searchActorOrQuery(q) {
             const res = await fetch(`${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(q)}&page=${state.page}`);
             const data = await res.json();
@@ -1293,7 +2075,6 @@
                     fetch(`${API_BASE}/person/${personId}/movie_credits?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ cast: [] })),
                     fetch(`${API_BASE}/person/${personId}/tv_credits?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ cast: [] }))
                 ]);
-
                 const mCast = (movieCredits.cast || []).map(x => ({ ...x, media_type: "movie" }));
                 const tCast = (tvCredits.cast || []).map(x => ({ ...x, media_type: "tv" }));
                 castMedia = [...mCast, ...tCast]
@@ -1331,27 +2112,31 @@
 
                 if (state.query) {
                     const out = await searchActorOrQuery(state.query);
-                    list = out.results;
+                    list = out.results.map(x => normalizeTmdbItem(x, state.mode));
                     pages = out.totalPages;
                 } else {
                     const res = await fetch(buildEndpoint(state.page));
                     const data = await res.json();
-                    list = (data.results || []).filter(x => x.title || x.name);
+                    list = (data.results || []).filter(x => x.title || x.name).map(x => normalizeTmdbItem(x, state.mode));
                     pages = Math.min(data.total_pages || 1, 500);
 
                     if (state.mode === "ott" && list.length < 8) {
                         const ottTitle = state.heading.replace(" OTT", "");
                         const extraRes = await fetch(`${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(ottTitle)}&page=1`);
                         const extraData = await extraRes.json();
-                        const extraItems = (extraData.results || []).filter(x => x.title || x.name);
+                        const extraItems = (extraData.results || []).filter(x => x.title || x.name).map(x => normalizeTmdbItem(x, state.mode));
                         list = [...list, ...extraItems];
                     }
+                }
+
+                if (state.page === 1 && !state.query && CUSTOM_POSTS.length) {
+                    list = [...CUSTOM_POSTS, ...list];
                 }
 
                 if (!list.length) {
                     const fbRes = await fetch(`${API_BASE}/movie/popular?api_key=${TMDB_API_KEY}&page=1`);
                     const fbData = await fbRes.json();
-                    list = (fbData.results || []).filter(x => x.title || x.name);
+                    list = (fbData.results || []).filter(x => x.title || x.name).map(x => normalizeTmdbItem(x, state.mode));
                 }
 
                 state.totalPages = pages;
@@ -1372,65 +2157,112 @@
         function renderCards() {
             const grid = document.getElementById("cardsGrid");
             const status = document.getElementById("statusMsg");
-            grid.innerHTML = "";
+            const qFilter = document.getElementById("filterQual")?.value || "";
+            const yFilter = document.getElementById("filterYear")?.value || "";
+            const lFilter = document.getElementById("filterLang")?.value.toUpperCase() || "";
 
-            if (!state.items.length) {
+            let filtered = [...state.items];
+            if (qFilter) filtered = filtered.filter(it => it.quality === qFilter);
+            if (yFilter) filtered = filtered.filter(it => (it.date || "").startsWith(yFilter));
+            if (lFilter) filtered = filtered.filter(it => it.lang === lFilter);
+
+            grid.innerHTML = "";
+            if (!filtered.length) {
                 status.style.display = "block";
-                status.textContent = "কোনো আইটেম পাওয়া যায়নি।";
+                status.textContent = "এই ফিল্টারে কোনো আইটেম পাওয়া যায়নি।";
                 return;
             }
 
             status.style.display = "none";
 
-            state.items.forEach((m, idx) => {
-                const title = m.title || m.name;
-                const mediaKind = (m.media_type === "tv" || state.mode === "tv_drama" || state.mode === "anime") ? "tv" : "movie";
-                const date = m.release_date || m.first_air_date || "2026";
-                const year = date.slice(0, 4);
-                const vote = m.vote_average ? m.vote_average.toFixed(1) : "7.4";
-                const lang = (m.original_language || "en").toUpperCase();
-                const quality = getQuality(m.vote_average || 7.4);
-                const poster = m.poster_path ? (IMG_500 + m.poster_path) : "";
-                const backdrop = m.backdrop_path ? (IMG_780 + m.backdrop_path) : poster;
-
+            filtered.forEach((item, idx) => {
+                const year = (item.date || "2026").slice(0, 4);
                 const card = document.createElement("div");
                 card.className = "m-card";
-                card.onclick = () => openDetail({
-                    id: m.id,
-                    type: mediaKind === "tv" ? "Series / Drama" : "Movie",
-                    mediaKind,
-                    title,
-                    lang,
-                    quality,
-                    rating: vote,
-                    date,
-                    overview: m.overview || "Storyline details are available on the stream.",
-                    poster,
-                    backdrop,
-                    videoUrl: "",
-                    sizes: { "480p": "780 MB", "720p": "1.8 GB", "1080p": "3.8 GB", "best": "6.4 GB" },
-                    dl: {}
-                });
+                card.onclick = () => openDetail(item);
 
                 card.innerHTML = `
                     <div class="m-poster">
-                        ${idx < 2 ? `<span class="b-tl">PINNED</span>` : ""}
-                        <span class="b-tr">${quality}</span>
-                        <span class="b-bl">${lang}</span>
-                        <span class="b-br">${mediaKind === "tv" ? "SERIES" : "MOVIE"}</span>
-                        ${poster ? `<img src="${poster}" alt="${esc(title)}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ""}
-                        <div class="m-alt" style="${poster ? "" : "display:flex;"}">
+                        ${idx < 2 ? `<span class="b-tl">${idx === 0 ? "TRENDING" : "PINNED"}</span>` : ""}
+                        <span class="b-tr">${item.quality}</span>
+                        <span class="b-bl">${item.lang}</span>
+                        <span class="b-br">${item.mediaKind === "tv" ? "SERIES" : "MOVIE"}</span>
+                        ${item.poster ? `<img src="${item.poster}" alt="${esc(item.title)}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ""}
+                        <div class="m-alt" style="${item.poster ? "" : "display:flex;"}">
                             <i class="fa-solid fa-film" style="font-size: 26px; color: var(--muted);"></i>
-                            <span>${esc(title)}</span>
+                            <span>${esc(item.title)}</span>
                         </div>
                     </div>
                     <div class="m-body">
-                        <div class="m-title">${esc(title)}</div>
-                        <div class="m-sub">${year} • ★ ${vote}</div>
+                        <div class="m-title">${esc(item.title)}</div>
+                        <div class="m-sub">${year} • ★ ${item.rating}</div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
+        }
+
+        function handleLiveSuggest(val) {
+            clearTimeout(state.suggestTimer);
+            const drop = document.getElementById("suggestDropdown");
+            const q = val.trim();
+            if (q.length < 2) {
+                drop.classList.remove("open");
+                return;
+            }
+            state.suggestTimer = setTimeout(async () => {
+                try {
+                    const res = await fetch(`${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(q)}&page=1`);
+                    const data = await res.json();
+                    const matches = (data.results || []).filter(r => (r.media_type === "movie" || r.media_type === "tv") && (r.title || r.name)).slice(0, 6);
+                    if (!matches.length) {
+                        drop.classList.remove("open");
+                        return;
+                    }
+                    drop.innerHTML = "";
+                    matches.forEach(m => {
+                        const norm = normalizeTmdbItem(m, state.mode);
+                        const row = document.createElement("div");
+                        row.className = "suggest-item";
+                        row.onclick = () => {
+                            drop.classList.remove("open");
+                            openDetail(norm);
+                        };
+                        row.innerHTML = `
+                            <img src="${norm.poster || 'https://via.placeholder.com/80x110/161c28/9ca3af?text=ZMB'}" alt="${esc(norm.title)}">
+                            <div>
+                                <div style="font-size: 13px; font-weight: 700;">${esc(norm.title)}</div>
+                                <div style="font-size: 11px; color: var(--muted);">${(norm.date || '').slice(0, 4)} • ${norm.mediaKind.toUpperCase()} • ★ ${norm.rating}</div>
+                            </div>
+                        `;
+                        drop.appendChild(row);
+                    });
+                    drop.classList.add("open");
+                } catch (e) {}
+            }, 260);
+        }
+
+        document.addEventListener("click", (e) => {
+            if (!e.target.closest(".search-wrapper")) {
+                document.getElementById("suggestDropdown")?.classList.remove("open");
+            }
+        });
+
+        function applyComboFilters() {
+            state.query = "";
+            state.providerId = "";
+            state.mode = "all_movies";
+            state.heading = "FILTERED CATALOG";
+            state.page = 1;
+            loadCatalog(true);
+        }
+
+        function resetComboFilters() {
+            ["filterGenre", "filterYear", "filterLang", "filterQual"].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = "";
+            });
+            resetHome();
         }
 
         function selectCategory(mode, label, btnEl) {
@@ -1459,6 +2291,7 @@
 
         function runSearch(e) {
             e.preventDefault();
+            document.getElementById("suggestDropdown").classList.remove("open");
             const q = document.getElementById("searchInput").value.trim();
             if (!q) return;
             state.query = q;
@@ -1474,6 +2307,7 @@
             state.mode = "all_movies";
             state.heading = "RECENTLY UPDATED";
             state.page = 1;
+            history.replaceState(null, "", window.location.pathname + window.location.search);
             document.getElementById("searchInput").value = "";
             document.getElementById("seriesHub").classList.remove("open");
             document.getElementById("allOttPanel").classList.remove("open");
@@ -1547,28 +2381,107 @@
             document.getElementById("nextBtn").disabled = state.page >= state.totalPages;
         }
 
-        // ৬টি সার্ভারের ব্যাকআপ লিস্ট (একটিতে সমস্যা হলে অন্যটিতে দ্রুত স্যুইচ করা যায়)
-        function getServerUrl(num, item) {
-            if (item.mediaKind === "episode") return item.videoUrl || "";
+        // Watchlist & Continue Watching
+        function toggleUserLists(tabName) {
+            state.activeUserListTab = tabName;
+            const panel = document.getElementById("userListsPanel");
+            panel.classList.add("open");
+            switchUserListTab(tabName);
+            panel.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function switchUserListTab(tabName) {
+            state.activeUserListTab = tabName;
+            document.getElementById("tabSavedList").classList.toggle("active", tabName === "watchlist");
+            document.getElementById("tabHistoryList").classList.toggle("active", tabName === "history");
+
+            const storageKey = tabName === "watchlist" ? "zmb_watchlist" : "zmb_history";
+            const items = getSavedList(storageKey);
+            const grid = document.getElementById("userListsGrid");
+            grid.innerHTML = "";
+
+            if (!items.length) {
+                grid.innerHTML = `<p style="font-size: 12px; color: var(--muted); padding: 8px;">এখনো কোনো আইটেম নেই।</p>`;
+                return;
+            }
+
+            items.forEach(it => {
+                const card = document.createElement("div");
+                card.className = "m-card";
+                card.onclick = () => openDetail(it);
+                card.innerHTML = `
+                    <div class="m-poster">
+                        ${it.poster ? `<img src="${it.poster}" alt="${esc(it.title)}">` : `<div class="m-alt" style="display:flex;"><span>${esc(it.title)}</span></div>`}
+                    </div>
+                    <div class="m-body"><div class="m-title">${esc(it.title)}</div></div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function addToHistory(item) {
+            if (!item || !item.id) return;
+            const hist = getSavedList("zmb_history").filter(x => String(x.id) !== String(item.id));
+            hist.unshift(item);
+            setSavedList("zmb_history", hist);
+        }
+
+        function syncWatchlistButton() {
+            const btn = document.getElementById("saveWatchlistBtn");
+            if (!state.currentItem || !btn) return;
+            const exists = getSavedList("zmb_watchlist").some(x => String(x.id) === String(state.currentItem.id));
+            btn.classList.toggle("saved", exists);
+            btn.innerHTML = exists
+                ? `<i class="fa-solid fa-bookmark"></i> Saved`
+                : `<i class="fa-regular fa-bookmark"></i> Save Watchlist`;
+        }
+
+        function toggleCurrentWatchlist() {
+            if (!state.currentItem) return;
+            let list = getSavedList("zmb_watchlist");
+            const exists = list.some(x => String(x.id) === String(state.currentItem.id));
+            if (exists) {
+                list = list.filter(x => String(x.id) !== String(state.currentItem.id));
+            } else {
+                list.unshift(state.currentItem);
+            }
+            setSavedList("zmb_watchlist", list);
+            syncWatchlistButton();
+        }
+
+        // ৬টি ব্যাকআপ সার্ভার
+        function getServerUrl(num, item, sNum = 1, eNum = 1) {
+            if (item.videoUrl) return item.videoUrl;
+            if (item.mediaKind === "episode") return "";
             const kind = item.mediaKind === "tv" ? "tv" : "movie";
-            const path = kind === "tv" ? `${item.id}/1/1` : `${item.id}`;
+            const path = kind === "tv" ? `${item.id}/${sNum}/${eNum}` : `${item.id}`;
             if (num === 1) return `https://vidsrc.xyz/embed/${kind}/${path}`;
             if (num === 2) return `https://vidsrc.to/embed/${kind}/${path}`;
             if (num === 3) return `https://vidsrc.pro/embed/${kind}/${path}`;
-            if (num === 4) return `https://multiembed.mov/?video_id=${item.id}&tmdb=1${kind === "tv" ? "&s=1&e=1" : ""}`;
+            if (num === 4) return `https://multiembed.mov/?video_id=${item.id}&tmdb=1${kind === "tv" ? `&s=${sNum}&e=${eNum}` : ""}`;
             if (num === 5) return `https://vidsrc.me/embed/${kind}/${path}`;
-            return `https://www.2embed.cc/embed${kind === "tv" ? "tv" : ""}/${kind === "tv" ? `${item.id}&s=1&e=1` : item.id}`;
+            return `https://www.2embed.cc/embed${kind === "tv" ? "tv" : ""}/${kind === "tv" ? `${item.id}&s=${sNum}&e=${eNum}` : item.id}`;
         }
 
-        function openDetail(item) {
+        async function openDetail(item) {
             state.currentItem = item;
+            state.selectedSeason = 1;
+            state.selectedEpisode = 1;
+            state.trailerKey = "";
             state.rotated = false;
             document.getElementById("playerStage").classList.remove("rotated-view");
             document.getElementById("dlNote").style.display = "none";
 
+            if (typeof item.id === "number") {
+                history.replaceState(null, "", `#${item.mediaKind}-${item.id}`);
+            }
+
+            addToHistory(item);
+            syncWatchlistButton();
+
             document.getElementById("dPoster").src = item.poster || "https://via.placeholder.com/400x600/161c28/9ca3af?text=Zero+Movie+Box";
             document.getElementById("dTitle").textContent = item.title;
-            document.getElementById("dSub").textContent = `${item.lang} • ${item.quality}`;
+            document.getElementById("dSub").textContent = `${item.lang} • ${item.quality} • ★ ${item.rating}`;
             document.getElementById("mType").textContent = item.type;
             document.getElementById("mLang").textContent = item.lang;
             document.getElementById("mQual").textContent = item.quality;
@@ -1592,6 +2505,9 @@
             }
 
             const srvRow = document.getElementById("srvRow");
+            const tvBox = document.getElementById("tvPickerBox");
+            tvBox.classList.remove("open");
+
             if (item.mediaKind === "episode") {
                 srvRow.style.display = "none";
                 mountStream(item.videoUrl, "Episode Player");
@@ -1603,6 +2519,133 @@
             document.getElementById("detailModal").classList.add("open");
             document.getElementById("detailModal").scrollTop = 0;
             document.body.style.overflow = "hidden";
+
+            if (typeof item.id === "number") {
+                enrichTmdbDetails(item);
+            } else {
+                document.getElementById("castList").innerHTML = "";
+                document.getElementById("relatedGrid").innerHTML = "";
+            }
+        }
+
+        async function enrichTmdbDetails(item) {
+            const kind = item.mediaKind === "tv" ? "tv" : "movie";
+            try {
+                const [details, credits, videos, similar] = await Promise.all([
+                    fetch(`${API_BASE}/${kind}/${item.id}?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({})),
+                    fetch(`${API_BASE}/${kind}/${item.id}/credits?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ cast: [] })),
+                    fetch(`${API_BASE}/${kind}/${item.id}/videos?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ results: [] })),
+                    fetch(`${API_BASE}/${kind}/${item.id}/similar?api_key=${TMDB_API_KEY}&page=1`).then(r => r.json()).catch(() => ({ results: [] }))
+                ]);
+
+                const yt = (videos.results || []).find(v => v.site === "YouTube" && (v.type === "Trailer" || v.type === "Teaser")) || (videos.results || []).find(v => v.site === "YouTube");
+                state.trailerKey = yt ? yt.key : "";
+
+                // Cast Strip
+                const castList = document.getElementById("castList");
+                castList.innerHTML = "";
+                (credits.cast || []).slice(0, 10).forEach(person => {
+                    const cCard = document.createElement("div");
+                    cCard.className = "cast-card";
+                    cCard.onclick = () => {
+                        closeDetail();
+                        document.getElementById("searchInput").value = person.name;
+                        state.query = person.name;
+                        state.providerId = "";
+                        state.heading = `Cast: ${person.name}`;
+                        state.page = 1;
+                        loadCatalog(true);
+                    };
+                    const pImg = person.profile_path ? (IMG_500 + person.profile_path) : "https://via.placeholder.com/120x120/222a3a/9ca3af?text=Actor";
+                    cCard.innerHTML = `<img src="${pImg}" alt="${esc(person.name)}" loading="lazy"><div class="cast-name">${esc(person.name)}</div>`;
+                    castList.appendChild(cCard);
+                });
+
+                // Dynamic TV Season & Episode Picker
+                if (kind === "tv" && Array.isArray(details.seasons)) {
+                    const validSeasons = details.seasons.filter(s => s.season_number >= 1);
+                    if (validSeasons.length) {
+                        const tvBox = document.getElementById("tvPickerBox");
+                        const sSel = document.getElementById("tvSeasonSelect");
+                        sSel.innerHTML = "";
+                        validSeasons.forEach(s => {
+                            const opt = document.createElement("option");
+                            opt.value = s.season_number;
+                            opt.textContent = `Season ${s.season_number} (${s.episode_count || "?"} Ep)`;
+                            sSel.appendChild(opt);
+                        });
+                        tvBox.classList.add("open");
+                        loadTvSeasonEpisodes();
+                    }
+                }
+
+                // Similar Movies / Shows
+                const relGrid = document.getElementById("relatedGrid");
+                relGrid.innerHTML = "";
+                (similar.results || []).filter(x => x.title || x.name).slice(0, 8).forEach(rel => {
+                    const relItem = normalizeTmdbItem({ ...rel, media_type: kind }, state.mode);
+                    const rCard = document.createElement("div");
+                    rCard.className = "m-card";
+                    rCard.onclick = () => openDetail(relItem);
+                    rCard.innerHTML = `
+                        <div class="m-poster">
+                            ${relItem.poster ? `<img src="${relItem.poster}" alt="${esc(relItem.title)}" loading="lazy">` : `<div class="m-alt" style="display:flex;"><span>${esc(relItem.title)}</span></div>`}
+                        </div>
+                        <div class="m-body"><div class="m-title">${esc(relItem.title)}</div></div>
+                    `;
+                    relGrid.appendChild(rCard);
+                });
+            } catch (e) {}
+        }
+
+        async function loadTvSeasonEpisodes() {
+            if (!state.currentItem || state.currentItem.mediaKind !== "tv") return;
+            const sNum = Number(document.getElementById("tvSeasonSelect").value || 1);
+            state.selectedSeason = sNum;
+            const epSel = document.getElementById("tvEpisodeSelect");
+            epSel.innerHTML = `<option value="1">Episode 1</option>`;
+            try {
+                const sData = await fetch(`${API_BASE}/tv/${state.currentItem.id}/season/${sNum}?api_key=${TMDB_API_KEY}`).then(r => r.json());
+                const eps = sData.episodes || [];
+                if (eps.length) {
+                    epSel.innerHTML = "";
+                    eps.forEach(ep => {
+                        const opt = document.createElement("option");
+                        opt.value = ep.episode_number;
+                        opt.textContent = `Ep ${ep.episode_number}: ${ep.name || ""}`;
+                        epSel.appendChild(opt);
+                    });
+                }
+            } catch (e) {}
+            playSelectedTvEpisode();
+        }
+
+        function playSelectedTvEpisode() {
+            if (!state.currentItem) return;
+            const sNum = Number(document.getElementById("tvSeasonSelect").value || 1);
+            const eNum = Number(document.getElementById("tvEpisodeSelect").value || 1);
+            state.selectedSeason = sNum;
+            state.selectedEpisode = eNum;
+            mountStream(getServerUrl(1, state.currentItem, sNum, eNum), `S${sNum} E${eNum} • Server 1`);
+        }
+
+        function playOfficialTrailer() {
+            if (!state.trailerKey) {
+                const note = document.getElementById("dlNote");
+                note.style.display = "block";
+                note.textContent = "এই কনটেন্টের অফিশিয়াল YouTube Trailer পাওয়া যায়নি।";
+                return;
+            }
+            mountStream(`https://www.youtube.com/embed/${state.trailerKey}?autoplay=1`, "YouTube Trailer");
+        }
+
+        function shareDirectMovieLink() {
+            if (!state.currentItem || typeof state.currentItem.id !== "number") return;
+            const shareUrl = `${window.location.origin}${window.location.pathname}#${state.currentItem.mediaKind}-${state.currentItem.id}`;
+            navigator.clipboard?.writeText(shareUrl).catch(() => {});
+            const note = document.getElementById("dlNote");
+            note.style.display = "block";
+            note.innerHTML = `সরাসরি শেয়ার লিংক কপি হয়েছে: <strong>${esc(shareUrl)}</strong>`;
         }
 
         function mountStream(url, label) {
@@ -1633,7 +2676,12 @@
                 const btn = document.getElementById(`s${i}`);
                 if (btn) btn.classList.toggle("active", i === num);
             }
-            mountStream(getServerUrl(num, state.currentItem), `Server ${num}`);
+            mountStream(getServerUrl(num, state.currentItem, state.selectedSeason, state.selectedEpisode), `Server ${num}`);
+        }
+
+        function toggleCinemaMode() {
+            state.cinemaMode = !state.cinemaMode;
+            document.body.classList.toggle("cinema-active", state.cinemaMode);
         }
 
         async function rotateLandscapePlayer() {
@@ -1650,9 +2698,7 @@
                 if (screen.orientation && screen.orientation.lock) {
                     await screen.orientation.lock(state.rotated ? "landscape" : "portrait");
                 }
-            } catch (e) {
-                // ব্রাউজার অটো-লক না করলে ওয়াইড ল্যান্ডস্কেপ স্টেজ সক্রিয় থাকবে
-            }
+            } catch (e) {}
         }
 
         function runDownload(qKey) {
@@ -1680,6 +2726,8 @@
         }
 
         function closeDetail() {
+            state.cinemaMode = false;
+            document.body.classList.remove("cinema-active");
             document.getElementById("detailModal").classList.remove("open");
             document.getElementById("playerFrame").src = "";
             const vid = document.getElementById("videoTag");
@@ -1691,16 +2739,56 @@
             }
         }
 
+        function openRequestModal() {
+            document.getElementById("reqStatus").textContent = "";
+            document.getElementById("reqModal").classList.add("open");
+        }
+
+        function closeRequestModal() {
+            document.getElementById("reqModal").classList.remove("open");
+        }
+
+        function submitMovieRequest(e) {
+            e.preventDefault();
+            const title = document.getElementById("reqName").value.trim();
+            const note = document.getElementById("reqNote").value.trim();
+            if (!title) return;
+            const reqs = getSavedList("zmb_requests");
+            reqs.unshift({ title, note, time: new Date().toLocaleString() });
+            setSavedList("zmb_requests", reqs);
+            document.getElementById("reqStatus").textContent = `"${title}" রিকোয়েস্ট সংরক্ষণ করা হয়েছে!`;
+            document.getElementById("reqName").value = "";
+            document.getElementById("reqNote").value = "";
+        }
+
+        async function checkDirectHashOpen() {
+            const h = window.location.hash || "";
+            const match = h.match(/^#(movie|tv)-(\d+)$/);
+            if (!match) return;
+            const kind = match[1];
+            const id = match[2];
+            try {
+                const data = await fetch(`${API_BASE}/${kind}/${id}?api_key=${TMDB_API_KEY}`).then(r => r.json());
+                if (data && (data.title || data.name)) {
+                    openDetail(normalizeTmdbItem({ ...data, media_type: kind }, state.mode));
+                }
+            } catch (e) {}
+        }
+
         function esc(s = "") {
-            return s.replace(/[&<>"']/g, c => ({
+            return String(s).replace(/[&<>"']/g, c => ({
                 "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
             }[c]));
         }
 
         window.addEventListener("DOMContentLoaded", () => {
             initTelegram();
+            updateSavedCounter();
+            initOttRowLogos();
             buildAllOttDirectory();
+            loadTrendingStrip();
             loadCatalog(false);
+            checkDirectHashOpen();
         });
     </script>
 
