@@ -31,14 +31,21 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: auto;
+            overscroll-behavior-y: none;
         }
 
         body {
-            background: radial-gradient(circle at top, #131c2e 0%, #0b0f17 55%, #070a10 100%);
+            background: #0b0f17;
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
             padding-bottom: 78px;
+            touch-action: pan-y;
         }
 
         /* Cinema Mode */
@@ -67,7 +74,7 @@
         }
 
         body.cinema-active .detail-modal {
-            background: rgba(0, 0, 0, 0.99);
+            background: #000000;
         }
 
         body.cinema-active .detail-sheet {
@@ -78,9 +85,8 @@
         body.cinema-active .watch-box {
             position: relative;
             z-index: 2500;
-            opacity: 1 !important;
-            pointer-events: auto !important;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* Top Bar */
@@ -88,8 +94,7 @@
             position: sticky;
             top: 0;
             z-index: 900;
-            background: rgba(11, 15, 23, 0.96);
-            backdrop-filter: blur(12px);
+            background: #0b0f17;
             border-bottom: 1px solid var(--line);
             padding: 11px 4%;
             display: flex;
@@ -97,6 +102,7 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+            transform: translateZ(0);
         }
 
         .site-brand {
@@ -194,7 +200,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(11, 15, 23, 0.12) 0%, rgba(11, 15, 23, 0.88) 76%, rgba(11, 15, 23, 0.98) 100%);
+            background: linear-gradient(180deg, rgba(11, 15, 23, 0.14) 0%, rgba(11, 15, 23, 0.88) 76%, rgba(11, 15, 23, 0.98) 100%);
         }
 
         .hero-content {
@@ -250,7 +256,7 @@
         }
 
         .hero-btn-alt {
-            background: rgba(29, 38, 56, 0.92);
+            background: #1d2638;
             color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 8px 14px;
@@ -292,6 +298,7 @@
             display: flex;
             gap: 8px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             padding-bottom: 6px;
             margin-bottom: 12px;
             scrollbar-width: thin;
@@ -319,14 +326,14 @@
         }
 
         .vibe-chip.surprise {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(6, 182, 212, 0.25));
+            background: #2b1d4a;
             border-color: rgba(6, 182, 212, 0.5);
             color: #fff;
         }
 
         /* Trending Strip */
         .trending-strip {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.16), rgba(6, 182, 212, 0.12));
+            background: #141c2c;
             border: 1px solid rgba(255, 255, 255, 0.11);
             border-radius: 12px;
             padding: 12px;
@@ -348,6 +355,7 @@
             grid-auto-columns: minmax(145px, 1fr);
             gap: 10px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             padding-bottom: 4px;
             scrollbar-width: thin;
         }
@@ -358,13 +366,11 @@
             border-radius: 9px;
             overflow: hidden;
             cursor: pointer;
-            transition: 0.2s;
             position: relative;
         }
 
         .trend-card:hover {
             border-color: var(--gold);
-            transform: translateY(-2px);
         }
 
         .trend-rank {
@@ -417,12 +423,10 @@
             align-items: center;
             justify-content: center;
             gap: 7px;
-            transition: 0.2s ease;
         }
 
         .cat-pill:hover, .cat-pill.active {
             background: var(--red-hover);
-            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
         }
 
         /* OTT Row */
@@ -458,7 +462,6 @@
             padding: 9px 4px;
             text-align: center;
             cursor: pointer;
-            transition: 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -468,8 +471,6 @@
         .ott-chip:hover, .ott-chip.active {
             border-color: var(--cyan);
             background: #20293a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.22);
         }
 
         .ott-logo-wrap {
@@ -483,7 +484,6 @@
             align-items: center;
             justify-content: center;
             background: #0f141e;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
         }
 
         .ott-logo-wrap img {
@@ -527,7 +527,6 @@
             border-radius: 11px;
             padding: 10px;
             cursor: pointer;
-            transition: 0.2s;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -548,12 +547,11 @@
         /* Inside OTT Platform Hub */
         .ott-hub-box {
             display: none;
-            background: linear-gradient(145deg, #162033, #111724);
+            background: #151f31;
             border: 1px solid rgba(6, 182, 212, 0.45);
             border-radius: 14px;
             padding: 14px;
             margin-bottom: 16px;
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
         }
 
         .ott-hub-box.open {
@@ -618,6 +616,7 @@
             display: flex;
             gap: 7px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             padding-bottom: 4px;
             scrollbar-width: thin;
         }
@@ -640,7 +639,7 @@
             color: #fff;
         }
 
-        /* Global Search Box + Magnifying Glass Search Icon + Smart Live Suggestions */
+        /* Global Search Box */
         .search-wrapper {
             position: relative;
             margin-bottom: 12px;
@@ -653,7 +652,6 @@
             border: 1px solid rgba(6, 182, 212, 0.6);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
         }
 
         .search-brand-tag {
@@ -693,7 +691,7 @@
         }
 
         .search-submit {
-            background: linear-gradient(135deg, #06b6d4, #0284c7);
+            background: #0284c7;
             color: #ffffff;
             border: none;
             padding: 0 18px;
@@ -709,7 +707,7 @@
         }
 
         .search-submit:hover {
-            background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+            background: #0ea5e9;
         }
 
         .suggest-dropdown {
@@ -724,7 +722,6 @@
             border-radius: 10px;
             max-height: 310px;
             overflow-y: auto;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
         }
 
         .suggest-dropdown.open {
@@ -973,12 +970,10 @@
             border-radius: 10px;
             overflow: hidden;
             cursor: pointer;
-            transition: 0.2s ease;
         }
 
         .m-card:hover {
             border-color: rgba(255, 255, 255, 0.28);
-            transform: translateY(-2px);
         }
 
         .m-poster {
@@ -1120,14 +1115,17 @@
             cursor: not-allowed;
         }
 
-        /* Detail & Player Modal */
+        /* Detail & Player Modal - Smooth Scroll & Swipe */
         .detail-modal {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 2000;
-            background: rgba(9, 12, 18, 0.97);
+            background: #090c12;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            touch-action: pan-y;
             padding: 12px;
         }
 
@@ -1142,6 +1140,7 @@
             border: 1px solid var(--line);
             border-radius: 12px;
             padding: 15px;
+            transform: translateZ(0);
         }
 
         .detail-top {
@@ -1220,19 +1219,19 @@
         }
 
         .act-pill-btn.saved {
-            background: rgba(245, 158, 11, 0.2);
+            background: #33270d;
             border-color: var(--gold);
             color: var(--gold);
         }
 
         .act-pill-btn.trailer {
-            background: rgba(220, 38, 38, 0.2);
+            background: #37151a;
             border-color: #ef4444;
             color: #fca5a5;
         }
 
         .act-pill-btn.resume {
-            background: rgba(16, 185, 129, 0.2);
+            background: #103227;
             border-color: var(--green);
             color: #6ee7b7;
         }
@@ -1299,6 +1298,7 @@
             grid-auto-columns: minmax(94px, 1fr);
             gap: 8px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             margin-top: 8px;
         }
 
@@ -1376,6 +1376,7 @@
             border-radius: 10px;
             padding: 12px;
             margin-bottom: 14px;
+            touch-action: pan-y;
         }
 
         .watch-header {
@@ -1388,7 +1389,7 @@
         }
 
         .ad-guard-pill {
-            background: rgba(16, 185, 129, 0.16);
+            background: #103227;
             color: #6ee7b7;
             border: 1px solid rgba(16, 185, 129, 0.35);
             padding: 4px 9px;
@@ -1456,6 +1457,7 @@
             display: flex;
             gap: 7px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             padding-bottom: 2px;
             scrollbar-width: thin;
         }
@@ -1473,7 +1475,6 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: 0.18s ease;
         }
 
         .lang-choice-btn:hover {
@@ -1482,7 +1483,7 @@
         }
 
         .lang-choice-btn.active {
-            background: linear-gradient(135deg, #06b6d4, #0284c7);
+            background: #0284c7;
             border-color: #22d3ee;
             color: #ffffff;
         }
@@ -1495,7 +1496,9 @@
             border-radius: 8px;
             overflow: hidden;
             margin-bottom: 10px;
-            transition: transform 0.25s ease;
+            touch-action: manipulation;
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         .player-stage.rotated-view {
@@ -1507,6 +1510,7 @@
             height: 100%;
             border: none;
             display: block;
+            background: #000;
         }
 
         .srv-row {
@@ -1595,7 +1599,7 @@
 
         .dl-note {
             display: none;
-            background: rgba(245, 158, 11, 0.14);
+            background: #2f2612;
             border: 1px solid rgba(245, 158, 11, 0.45);
             color: #fde68a;
             padding: 10px 12px;
@@ -1640,7 +1644,7 @@
             position: fixed;
             inset: 0;
             z-index: 2600;
-            background: rgba(0, 0, 0, 0.85);
+            background: #05070c;
             align-items: center;
             justify-content: center;
             padding: 14px;
@@ -1678,11 +1682,12 @@
             left: 0;
             right: 0;
             z-index: 980;
-            background: rgba(11, 15, 23, 0.97);
+            background: #0b0f17;
             border-top: 1px solid var(--line);
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             padding: 6px 4px;
+            transform: translateZ(0);
         }
 
         .m-nav-btn {
@@ -1735,16 +1740,17 @@
         }
     </style>
 
-    <!-- Strict Anti-Popunder & Player Clean Guard: ভিডিও চলাকালে, রোটেট বা কন্ট্রোলে চাপ দিলে কোনো পপআপ বা অবাঞ্ছিত রিডাইরেক্ট খুলবে না -->
+    <!-- Zero-Redirect & Smooth Player Guard: প্লেয়ার/স্ক্রল/সোয়াইপ চলাকালে কোনো বাইরের ট্যাব বা ওভারলে রিডাইরেক্ট হবে না -->
     <script>
         (function () {
             const origOpen = window.open;
             window.open = function (url, target, features) {
                 const activeEl = document.activeElement;
-                const insideDetailOrPlayer = Boolean(
-                    activeEl && activeEl.closest && activeEl.closest(".detail-modal, .watch-box, .player-stage, .lang-top-bar")
+                const modalOpen = Boolean(document.getElementById("detailModal")?.classList.contains("open"));
+                const insidePlayer = Boolean(
+                    modalOpen || (activeEl && activeEl.closest && activeEl.closest(".detail-modal, .watch-box, .player-stage, .lang-top-bar"))
                 );
-                if (insideDetailOrPlayer) {
+                if (insidePlayer) {
                     return null;
                 }
                 return origOpen.call(window, url, target, features);
@@ -2133,14 +2139,14 @@
                 </div>
             </div>
 
-            <!-- Player Box with Top Language Selector Bar + Clean Watch Mode -->
+            <!-- Player Box with Top Language Selector Bar + Lag-Free Scroll & Swipe -->
             <div class="watch-box" id="watchBox">
                 <div class="watch-header">
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                         <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">
                             <i class="fa-solid fa-play-circle"></i> WATCH ONLINE (<span id="srvLabel">Server 1</span>)
                         </span>
-                        <span class="ad-guard-pill"><i class="fa-solid fa-shield-check"></i> Ad-Free Player Mode</span>
+                        <span class="ad-guard-pill"><i class="fa-solid fa-shield-check"></i> Lag-Free & Ad-Free Player</span>
                     </div>
                     <div class="watch-btns">
                         <button type="button" class="cinema-toggle-btn" onclick="toggleCinemaMode()">
@@ -2163,7 +2169,7 @@
 
                 <div class="player-stage" id="playerStage">
                     <iframe id="playerFrame" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
-                    <video id="videoTag" controls playsinline style="display: none;"></video>
+                    <video id="videoTag" controls playsinline preload="metadata" style="display: none;"></video>
                 </div>
 
                 <div class="srv-row" id="srvRow">
@@ -2255,7 +2261,7 @@
         // টেলিগ্রাম চ্যানেল লিংক
         const TELEGRAM_URL = "https://t.me/your_channel_username";
 
-        // নির্দিষ্ট ডাউনলোড লিংক থাকলে এখানে দিন (না দিলে সরাসরি প্লেয়ার/লিংক দেখাবে)
+        // নির্দিষ্ট ডাউনলোড লিংক থাকলে এখানে দিন
         const DOWNLOAD_CONFIG = {
             "480p": "",
             "720p": "",
@@ -2498,7 +2504,7 @@
                 clearInterval(state.heroTimer);
                 state.heroTimer = setInterval(() => {
                     renderHeroSlide((state.heroIdx + 1) % state.heroList.length);
-                }, 5500);
+                }, 6500);
             } catch (e) {}
         }
 
@@ -2601,7 +2607,7 @@
             const hub = document.getElementById("ottHubBox");
             hub.classList.add("open");
             loadCatalog(false);
-            hub.scrollIntoView({ behavior: "smooth", block: "start" });
+            hub.scrollIntoView({ behavior: "auto", block: "start" });
         }
 
         function closeOttHub(reloadAll = true) {
@@ -2808,7 +2814,7 @@
                 updatePager();
 
                 if (shouldScroll) {
-                    document.getElementById("catalogAnchor").scrollIntoView({ behavior: "smooth", block: "start" });
+                    document.getElementById("catalogAnchor").scrollIntoView({ behavior: "auto", block: "start" });
                 }
             } catch (e) {
                 status.style.display = "block";
@@ -2908,7 +2914,7 @@
                     });
                     drop.classList.add("open");
                 } catch (e) {}
-            }, 220);
+            }, 240);
         }
 
         function clearSearchInput() {
@@ -3002,7 +3008,7 @@
             const hub = document.getElementById("seriesHub");
             hub.classList.add("open");
             pickSeriesTab(key);
-            hub.scrollIntoView({ behavior: "smooth", block: "start" });
+            hub.scrollIntoView({ behavior: "auto", block: "start" });
         }
 
         function pickSeriesTab(key) {
@@ -3068,7 +3074,7 @@
             const panel = document.getElementById("userListsPanel");
             panel.classList.add("open");
             switchUserListTab(tabName);
-            panel.scrollIntoView({ behavior: "smooth", block: "start" });
+            panel.scrollIntoView({ behavior: "auto", block: "start" });
         }
 
         function switchUserListTab(tabName) {
@@ -3168,7 +3174,6 @@
             p.style.display = p.style.display === "none" ? "block" : "none";
         }
 
-        // প্লেয়ারের ওপরে Language Selector Bar তৈরি ও ভাষা পরিবর্তনে প্লেয়ার আপডেট
         function renderLanguageBar(item, spokenLanguages = []) {
             const listEl = document.getElementById("langPillList");
             const badgeEl = document.getElementById("activeLangBadge");
@@ -3311,8 +3316,9 @@
                 switchServer(1);
             }
 
-            document.getElementById("detailModal").classList.add("open");
-            document.getElementById("detailModal").scrollTop = 0;
+            const modal = document.getElementById("detailModal");
+            modal.classList.add("open");
+            modal.scrollTop = 0;
             document.body.style.overflow = "hidden";
 
             if (typeof item.id === "number") {
@@ -3587,7 +3593,7 @@
                 e.preventDefault();
                 const inp = document.getElementById("searchInput");
                 inp?.focus();
-                inp?.scrollIntoView({ behavior: "smooth", block: "center" });
+                inp?.scrollIntoView({ behavior: "auto", block: "center" });
             }
         });
 
