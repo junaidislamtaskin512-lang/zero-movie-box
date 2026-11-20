@@ -1488,6 +1488,13 @@
             color: #ffffff;
         }
 
+        .lang-status-note {
+            margin-top: 7px;
+            font-size: 11px;
+            color: #fde68a;
+            line-height: 1.4;
+        }
+
         .player-stage {
             position: relative;
             width: 100%;
@@ -2111,7 +2118,7 @@
 
             <div class="meta-3">
                 <div><strong>Type</strong><span id="mType">Movie</span></div>
-                <div><strong>Language</strong><span id="mLang">EN</span></div>
+                <div><strong>Released Languages</strong><span id="mLang">EN</span></div>
                 <div><strong>Quality</strong><span id="mQual">WEB-DL</span></div>
             </div>
 
@@ -2139,7 +2146,7 @@
                 </div>
             </div>
 
-            <!-- Player Box with Top Language Selector Bar + Lag-Free Scroll & Swipe -->
+            <!-- Player Box with Release-Aware Language Selector Bar + Lag-Free Scroll & Swipe -->
             <div class="watch-box" id="watchBox">
                 <div class="watch-header">
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
@@ -2158,13 +2165,14 @@
                     </div>
                 </div>
 
-                <!-- প্লেয়ারের ঠিক ওপরে Language Selector Bar (Hindi, Bangla, Tamil, Telugu, English ইত্যাদি) -->
+                <!-- প্লেয়ারের ঠিক ওপরে রিলিজ/এভেইলেবল ভাষা বার -->
                 <div class="lang-top-bar" id="langTopBar">
                     <div class="lang-bar-head">
-                        <span><i class="fa-solid fa-language"></i> ভাষা নির্বাচন করুন (Available Languages)</span>
+                        <span><i class="fa-solid fa-language"></i> রিলিজড / এভেইলেবল ভাষা (Available Release Languages)</span>
                         <span id="activeLangBadge" style="font-size: 11px; color: var(--gold);">English (EN)</span>
                     </div>
                     <div class="lang-pill-list" id="langPillList"></div>
+                    <div class="lang-status-note" id="langStatusNote"></div>
                 </div>
 
                 <div class="player-stage" id="playerStage">
@@ -2269,14 +2277,28 @@
             "best": ""
         };
 
-        const LANGUAGE_CATALOG = [
-            { code: "hi", label: "Hindi", icon: "fa-film", serverHint: 1 },
-            { code: "bn", label: "Bangla", icon: "fa-microphone-lines", serverHint: 2 },
-            { code: "ta", label: "Tamil", icon: "fa-clapperboard", serverHint: 3 },
-            { code: "te", label: "Telugu", icon: "fa-bolt", serverHint: 4 },
-            { code: "en", label: "English", icon: "fa-globe", serverHint: 5 }
-        ];
+        // পরিচিত ভাষার লেবেল ও আইকন
+        const LANG_META = {
+            hi: { label: "Hindi", icon: "fa-film" },
+            bn: { label: "Bangla", icon: "fa-microphone-lines" },
+            ta: { label: "Tamil", icon: "fa-clapperboard" },
+            te: { label: "Telugu", icon: "fa-bolt" },
+            en: { label: "English", icon: "fa-globe" },
+            ml: { label: "Malayalam", icon: "fa-closed-captioning" },
+            kn: { label: "Kannada", icon: "fa-closed-captioning" },
+            ko: { label: "Korean", icon: "fa-tv" },
+            ja: { label: "Japanese", icon: "fa-dragon" },
+            es: { label: "Spanish", icon: "fa-language" },
+            fr: { label: "French", icon: "fa-language" },
+            ar: { label: "Arabic", icon: "fa-language" },
+            tr: { label: "Turkish", icon: "fa-tv" }
+        };
 
+        /*
+         * কাস্টম মুভি/ড্রামা/নাটক/এপিসোড থাকলে এখানে দিতে পারেন।
+         * প্রতিটি ভাষার জন্য আলাদা ভিডিও/অডিও স্ট্রিম থাকলে `streams: { hi: "লিংক", bn: "লিংক", ta: "লিংক", te: "লিংক", en: "লিংক" }`
+         * এবং কোন কোন ভাষায় রিলিজ হয়েছে তা `languages: ["bn", "hi"]` আকারে দিন।
+         */
         const CUSTOM_POSTS = [];
 
         function makeOttLogo(bg1, bg2, text, subText, accent) {
@@ -2312,51 +2334,54 @@
 
         const SHOWS_DATA = {
             cid: {
-                title: "CID (Sony Aath Bangla / Hindi)",
+                title: "CID (Bangla / Hindi)",
+                languages: ["bn", "hi"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "CID Bangla — রহস্যময় খুন (পর্ব ০১)", sizes: { "480p": "420 MB", "720p": "980 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, videoUrl: "", dl: {} },
-                        { ep: "Ep 02", name: "CID Bangla — অন্ধকার রাতের তদন্ত (পর্ব ০২)", sizes: { "480p": "410 MB", "720p": "950 MB", "1080p": "1.8 GB", "best": "3.0 GB" }, videoUrl: "", dl: {} },
-                        { ep: "Ep 03", name: "CID Bangla — অচেনা সাক্ষী (পর্ব ০৩)", sizes: { "480p": "435 MB", "720p": "1.0 GB", "1080p": "2.0 GB", "best": "3.2 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "CID — রহস্যময় খুন (পর্ব ০১)", sizes: { "480p": "420 MB", "720p": "980 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, videoUrl: "", streams: {}, dl: {} },
+                        { ep: "Ep 02", name: "CID — অন্ধকার রাতের তদন্ত (পর্ব ০২)", sizes: { "480p": "410 MB", "720p": "950 MB", "1080p": "1.8 GB", "best": "3.0 GB" }, videoUrl: "", streams: {}, dl: {} },
+                        { ep: "Ep 03", name: "CID — অচেনা সাক্ষী (পর্ব ০৩)", sizes: { "480p": "435 MB", "720p": "1.0 GB", "1080p": "2.0 GB", "best": "3.2 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "CID Bangla — সিজন ২ পর্ব ০১", sizes: { "480p": "425 MB", "720p": "990 MB", "1080p": "1.95 GB", "best": "3.15 GB" }, videoUrl: "", dl: {} },
-                        { ep: "Ep 02", name: "CID Bangla — সিজন ২ পর্ব ০২", sizes: { "480p": "418 MB", "720p": "960 MB", "1080p": "1.85 GB", "best": "3.05 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "CID — সিজন ২ পর্ব ০১", sizes: { "480p": "425 MB", "720p": "990 MB", "1080p": "1.95 GB", "best": "3.15 GB" }, videoUrl: "", streams: {}, dl: {} },
+                        { ep: "Ep 02", name: "CID — সিজন ২ পর্ব ০২", sizes: { "480p": "418 MB", "720p": "960 MB", "1080p": "1.85 GB", "best": "3.05 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "CID Bangla — সিজন ৩ পর্ব ০১", sizes: { "480p": "440 MB", "720p": "1.05 GB", "1080p": "2.1 GB", "best": "3.3 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "CID — সিজন ৩ পর্ব ০১", sizes: { "480p": "440 MB", "720p": "1.05 GB", "1080p": "2.1 GB", "best": "3.3 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ]
                 }
             },
             gopal: {
                 title: "গোপাল ভাঁড় — বাংলা এপিসোড",
+                languages: ["bn"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — রাজদরবারের কাণ্ড (পর্ব ০১)", sizes: { "480p": "120 MB", "720p": "280 MB", "1080p": "620 MB", "best": "1.1 GB" }, videoUrl: "", dl: {} },
-                        { ep: "Ep 02", name: "গোপাল ভাঁড় — বুদ্ধির খেলা (পর্ব ০২)", sizes: { "480p": "115 MB", "720p": "270 MB", "1080p": "590 MB", "best": "1.0 GB" }, videoUrl: "", dl: {} },
-                        { ep: "Ep 03", name: "গোপাল ভাঁড় — মন্ত্রীমশাইয়ের বিপদ (পর্ব ০৩)", sizes: { "480p": "125 MB", "720p": "290 MB", "1080p": "640 MB", "best": "1.1 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — রাজদরবারের কাণ্ড (পর্ব ০১)", sizes: { "480p": "120 MB", "720p": "280 MB", "1080p": "620 MB", "best": "1.1 GB" }, videoUrl: "", streams: {}, dl: {} },
+                        { ep: "Ep 02", name: "গোপাল ভাঁড় — বুদ্ধির খেলা (পর্ব ০২)", sizes: { "480p": "115 MB", "720p": "270 MB", "1080p": "590 MB", "best": "1.0 GB" }, videoUrl: "", streams: {}, dl: {} },
+                        { ep: "Ep 03", name: "গোপাল ভাঁড় — মন্ত্রীমশাইয়ের বিপদ (পর্ব ০৩)", sizes: { "480p": "125 MB", "720p": "290 MB", "1080p": "640 MB", "best": "1.1 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ২ পর্ব ০১", sizes: { "480p": "118 MB", "720p": "275 MB", "1080p": "600 MB", "best": "1.05 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ২ পর্ব ০১", sizes: { "480p": "118 MB", "720p": "275 MB", "1080p": "600 MB", "best": "1.05 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ৩ পর্ব ০১", sizes: { "480p": "122 MB", "720p": "285 MB", "1080p": "615 MB", "best": "1.08 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ৩ পর্ব ০১", sizes: { "480p": "122 MB", "720p": "285 MB", "1080p": "615 MB", "best": "1.08 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ]
                 }
             },
             motu: {
                 title: "মোটু পাতলু — সিজন ও এপিসোড",
+                languages: ["bn", "hi"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — ফুরফুরি নগরের গল্প (পর্ব ০১)", sizes: { "480p": "135 MB", "720p": "310 MB", "1080p": "680 MB", "best": "1.2 GB" }, videoUrl: "", dl: {} },
-                        { ep: "Ep 02", name: "মোটু পাতলু — সিঙ্গারার কাণ্ড (পর্ব ০২)", sizes: { "480p": "130 MB", "720p": "295 MB", "1080p": "650 MB", "best": "1.15 GB" }, videoUrl: "", dl: {} },
-                        { ep: "Ep 03", name: "মোটু পাতলু — নতুন অভিযান (পর্ব ০৩)", sizes: { "480p": "140 MB", "720p": "320 MB", "1080p": "700 MB", "best": "1.25 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — ফুরফুরি নগরের গল্প (পর্ব ০১)", sizes: { "480p": "135 MB", "720p": "310 MB", "1080p": "680 MB", "best": "1.2 GB" }, videoUrl: "", streams: {}, dl: {} },
+                        { ep: "Ep 02", name: "মোটু পাতলু — সিঙ্গারার কাণ্ড (পর্ব ০২)", sizes: { "480p": "130 MB", "720p": "295 MB", "1080p": "650 MB", "best": "1.15 GB" }, videoUrl: "", streams: {}, dl: {} },
+                        { ep: "Ep 03", name: "মোটু পাতলু — নতুন অভিযান (পর্ব ০৩)", sizes: { "480p": "140 MB", "720p": "320 MB", "1080p": "700 MB", "best": "1.25 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ২ পর্ব ০১", sizes: { "480p": "138 MB", "720p": "315 MB", "1080p": "690 MB", "best": "1.2 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ২ পর্ব ০১", sizes: { "480p": "138 MB", "720p": "315 MB", "1080p": "690 MB", "best": "1.2 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ৩ পর্ব ০১", sizes: { "480p": "142 MB", "720p": "325 MB", "1080p": "710 MB", "best": "1.28 GB" }, videoUrl: "", dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ৩ পর্ব ০১", sizes: { "480p": "142 MB", "720p": "325 MB", "1080p": "710 MB", "best": "1.28 GB" }, videoUrl: "", streams: {}, dl: {} }
                     ]
                 }
             }
@@ -2464,12 +2489,22 @@
             return `Why Watch: ${title} (${lang} • ${quality}) — Rated ★ ${rating} with engaging scenes & twists.`;
         }
 
+        function getLangInfo(code) {
+            const c = String(code || "en").toLowerCase();
+            const known = LANG_META[c];
+            if (known) return { code: c, label: known.label, icon: known.icon };
+            return { code: c, label: c.toUpperCase(), icon: "fa-closed-captioning" };
+        }
+
         function normalizeTmdbItem(m, fallbackKind) {
             const title = m.title || m.name;
             const mediaKind = (m.media_type === "tv" || fallbackKind === "tv_drama" || fallbackKind === "anime" || fallbackKind === "series" || fallbackKind === "drama" || fallbackKind === "cartoon") ? "tv" : "movie";
             const date = m.release_date || m.first_air_date || "2026";
             const vote = m.vote_average ? m.vote_average.toFixed(1) : "7.4";
-            const lang = (m.original_language || "en").toUpperCase();
+            const origLang = (m.original_language || "en").toLowerCase();
+            const releasedLangs = Array.isArray(m.languages) && m.languages.length
+                ? m.languages.map(x => String(x).toLowerCase())
+                : [origLang];
             const quality = getQuality(m.vote_average || 7.4);
             const poster = m.poster_path ? (IMG_500 + m.poster_path) : "";
             const backdrop = m.backdrop_path ? (IMG_780 + m.backdrop_path) : poster;
@@ -2479,7 +2514,8 @@
                 type: mediaKind === "tv" ? "Series / Drama / Show" : "Movie",
                 mediaKind,
                 title,
-                lang,
+                lang: origLang.toUpperCase(),
+                releasedLangs,
                 quality,
                 rating: vote,
                 date,
@@ -2487,9 +2523,10 @@
                 overview: m.overview || "Storyline details are available on the stream.",
                 poster,
                 backdrop,
-                videoUrl: "",
-                sizes: { "480p": "780 MB", "720p": "1.8 GB", "1080p": "3.8 GB", "best": "6.4 GB" },
-                dl: {}
+                videoUrl: m.videoUrl || "",
+                streams: m.streams || {},
+                sizes: m.sizes || { "480p": "780 MB", "720p": "1.8 GB", "1080p": "3.8 GB", "best": "6.4 GB" },
+                dl: m.dl || {}
             };
         }
 
@@ -3036,7 +3073,8 @@
                     type: "Episode",
                     mediaKind: "episode",
                     title: `${ep.name} (Season ${sNum})`,
-                    lang: "BN",
+                    lang: (sData.languages?.[0] || "bn").toUpperCase(),
+                    releasedLangs: sData.languages || ["bn"],
                     quality: "WEB-DL",
                     rating: "8.4",
                     date: `Season ${sNum}`,
@@ -3044,6 +3082,7 @@
                     poster: "",
                     backdrop: "",
                     videoUrl: ep.videoUrl || "",
+                    streams: ep.streams || {},
                     sizes: ep.sizes,
                     dl: ep.dl || {}
                 });
@@ -3174,36 +3213,60 @@
             p.style.display = p.style.display === "none" ? "block" : "none";
         }
 
-        function renderLanguageBar(item, spokenLanguages = []) {
-            const listEl = document.getElementById("langPillList");
-            const badgeEl = document.getElementById("activeLangBadge");
-            if (!listEl) return;
-
-            const availableCodes = new Set(LANGUAGE_CATALOG.map(l => l.code));
+        /*
+         * রিলিজড / এভেইলেবল ভাষা সংগ্রহ:
+         * মুভি/ড্রামা/নাটক যে কয়টা ভাষায় রিলিজ/এভেইলেবল আছে (TMDb spoken_languages, original_language,
+         * বা কাস্টম আইটেমের releasedLangs / streams), ঠিক সেগুলোই ল্যাঙ্গুয়েজ বারে দেখানো হয়।
+         */
+        function collectReleasedLanguages(item, spokenLanguages = []) {
+            const codeSet = new Set();
             const origCode = (item.lang || "en").toLowerCase();
-            if (origCode && !availableCodes.has(origCode)) {
-                availableCodes.add(origCode);
+            if (origCode) codeSet.add(origCode);
+
+            if (Array.isArray(item.releasedLangs)) {
+                item.releasedLangs.forEach(c => {
+                    if (c) codeSet.add(String(c).toLowerCase());
+                });
+            }
+
+            if (item.streams && typeof item.streams === "object") {
+                Object.keys(item.streams).forEach(c => {
+                    if (c && item.streams[c]) codeSet.add(String(c).toLowerCase());
+                });
             }
 
             (spokenLanguages || []).forEach(sp => {
                 const iso = (sp.iso_639_1 || "").toLowerCase();
-                if (iso) availableCodes.add(iso);
+                if (iso) codeSet.add(iso);
             });
 
-            const langList = Array.from(availableCodes).map(code => {
-                const known = LANGUAGE_CATALOG.find(l => l.code === code);
-                if (known) return known;
+            return Array.from(codeSet).map(code => {
+                const info = getLangInfo(code);
+                const tmdbSpoken = (spokenLanguages || []).find(s => (s.iso_639_1 || "").toLowerCase() === code);
+                const label = (tmdbSpoken && tmdbSpoken.english_name) ? tmdbSpoken.english_name : info.label;
                 return {
-                    code,
-                    label: code.toUpperCase(),
-                    icon: "fa-closed-captioning",
-                    serverHint: 1
+                    code: info.code,
+                    label,
+                    icon: info.icon
                 };
             });
+        }
 
+        function renderLanguageBar(item, spokenLanguages = []) {
+            const listEl = document.getElementById("langPillList");
+            const badgeEl = document.getElementById("activeLangBadge");
+            const noteEl = document.getElementById("langStatusNote");
+            const metaLangEl = document.getElementById("mLang");
+            if (!listEl) return;
+
+            const langList = collectReleasedLanguages(item, spokenLanguages);
             state.availableLangs = langList;
-            const defaultCode = langList.some(l => l.code === origCode) ? origCode : (langList[0]?.code || "en");
-            const defaultObj = langList.find(l => l.code === defaultCode) || langList[0];
+
+            const labelsSummary = langList.map(l => `${l.label} (${l.code.toUpperCase()})`).join(", ");
+            if (metaLangEl) metaLangEl.textContent = labelsSummary || item.lang;
+
+            const origCode = (item.lang || "en").toLowerCase();
+            const defaultObj = langList.find(l => l.code === origCode) || langList[0] || getLangInfo("en");
 
             state.selectedLangCode = defaultObj.code;
             state.selectedLangLabel = defaultObj.label;
@@ -3219,6 +3282,45 @@
                 btn.onclick = () => selectPlayerLanguage(langObj);
                 listEl.appendChild(btn);
             });
+
+            if (noteEl) {
+                noteEl.textContent = `এই কনটেন্টে রিলিজড/লভ্য ভাষা: ${labelsSummary}। নিজস্ব স্ট্রিম লিংক থাকলে নির্বাচিত ভাষার ভার্সনেই প্লে হবে; এম্বেড সার্ভারে ভাষা সমর্থন না করলে সার্ভার পরিবর্তন করে দেখুন।`;
+            }
+        }
+
+        function resolveStreamForLanguage(item, langCode, srvNum, sNum, eNum) {
+            const code = String(langCode || "en").toLowerCase();
+            const customStreams = item.streams && typeof item.streams === "object" ? item.streams : null;
+
+            if (customStreams && customStreams[code]) {
+                return {
+                    url: customStreams[code],
+                    isCustomLangStream: true
+                };
+            }
+
+            if (item.videoUrl) {
+                return {
+                    url: item.videoUrl,
+                    isCustomLangStream: true
+                };
+            }
+
+            if (item.mediaKind === "episode") {
+                return {
+                    url: "",
+                    isCustomLangStream: false
+                };
+            }
+
+            const kind = item.mediaKind === "tv" ? "tv" : "movie";
+            const path = kind === "tv" ? `${item.id}/${sNum}/${eNum}` : `${item.id}`;
+            if (srvNum === 1) return { url: `https://vidsrc.xyz/embed/${kind}/${path}?ds_lang=${encodeURIComponent(code)}`, isCustomLangStream: false };
+            if (srvNum === 2) return { url: `https://vidsrc.to/embed/${kind}/${path}`, isCustomLangStream: false };
+            if (srvNum === 3) return { url: `https://vidsrc.pro/embed/${kind}/${path}`, isCustomLangStream: false };
+            if (srvNum === 4) return { url: `https://multiembed.mov/?video_id=${item.id}&tmdb=1${kind === "tv" ? `&s=${sNum}&e=${eNum}` : ""}`, isCustomLangStream: false };
+            if (srvNum === 5) return { url: `https://vidsrc.me/embed/${kind}/${path}`, isCustomLangStream: false };
+            return { url: `https://www.2embed.cc/embed${kind === "tv" ? "tv" : ""}/${kind === "tv" ? `${item.id}&s=${sNum}&e=${eNum}` : item.id}`, isCustomLangStream: false };
         }
 
         function selectPlayerLanguage(langObj) {
@@ -3233,29 +3335,29 @@
             const badgeEl = document.getElementById("activeLangBadge");
             if (badgeEl) badgeEl.textContent = `${langObj.label} (${langObj.code.toUpperCase()})`;
 
-            const srvNum = langObj.serverHint || 1;
-            for (let i = 1; i <= 6; i++) {
-                const sBtn = document.getElementById(`s${i}`);
-                if (sBtn) sBtn.classList.toggle("active", i === srvNum);
+            const activeSrv = Number(document.querySelector(".srv-btn.active")?.id?.replace("s", "") || 1);
+            const resolved = resolveStreamForLanguage(
+                state.currentItem,
+                langObj.code,
+                activeSrv,
+                state.selectedSeason,
+                state.selectedEpisode
+            );
+
+            const noteEl = document.getElementById("langStatusNote");
+            if (noteEl) {
+                if (resolved.isCustomLangStream) {
+                    noteEl.textContent = `${langObj.label} (${langObj.code.toUpperCase()}) ভাষার স্ট্রিম লোড হচ্ছে।`;
+                } else {
+                    noteEl.textContent = `${langObj.label} (${langObj.code.toUpperCase()}) সিলেক্ট করা হয়েছে। এম্বেড সার্ভারে এই ভাষার অডিও না থাকলে অন্য সার্ভার চেষ্টা করুন অথবা নিজস্ব ${langObj.label} ভিডিও লিংক যুক্ত করুন।`;
+                }
             }
 
-            mountStream(
-                getServerUrl(srvNum, state.currentItem, state.selectedSeason, state.selectedEpisode),
-                `${langObj.label} • Server ${srvNum}`
-            );
+            mountStream(resolved.url, `${langObj.label} • Server ${activeSrv}`);
         }
 
         function getServerUrl(num, item, sNum = 1, eNum = 1) {
-            if (item.videoUrl) return item.videoUrl;
-            if (item.mediaKind === "episode") return "";
-            const kind = item.mediaKind === "tv" ? "tv" : "movie";
-            const path = kind === "tv" ? `${item.id}/${sNum}/${eNum}` : `${item.id}`;
-            if (num === 1) return `https://vidsrc.xyz/embed/${kind}/${path}`;
-            if (num === 2) return `https://vidsrc.to/embed/${kind}/${path}`;
-            if (num === 3) return `https://vidsrc.pro/embed/${kind}/${path}`;
-            if (num === 4) return `https://multiembed.mov/?video_id=${item.id}&tmdb=1${kind === "tv" ? `&s=${sNum}&e=${eNum}` : ""}`;
-            if (num === 5) return `https://vidsrc.me/embed/${kind}/${path}`;
-            return `https://www.2embed.cc/embed${kind === "tv" ? "tv" : ""}/${kind === "tv" ? `${item.id}&s=${sNum}&e=${eNum}` : item.id}`;
+            return resolveStreamForLanguage(item, state.selectedLangCode, num, sNum, eNum).url;
         }
 
         async function openDetail(item) {
@@ -3281,7 +3383,6 @@
             document.getElementById("dTitle").textContent = item.title;
             document.getElementById("dSub").textContent = `${item.lang} • ${item.quality} • ★ ${item.rating}`;
             document.getElementById("mType").textContent = item.type;
-            document.getElementById("mLang").textContent = item.lang;
             document.getElementById("mQual").textContent = item.quality;
             document.getElementById("dHook").textContent = buildHookLine(item.title, item.quality, item.lang, item.rating);
             document.getElementById("dStory").textContent = item.overview;
@@ -3310,7 +3411,8 @@
 
             if (item.mediaKind === "episode") {
                 srvRow.style.display = "none";
-                mountStream(item.videoUrl, "Episode Player");
+                const epStream = resolveStreamForLanguage(item, state.selectedLangCode, 1, 1, 1).url;
+                mountStream(epStream, `${state.selectedLangLabel} • Episode`);
             } else {
                 srvRow.style.display = "flex";
                 switchServer(1);
@@ -3438,7 +3540,7 @@
             const eNum = Number(document.getElementById("tvEpisodeSelect").value || 1);
             state.selectedSeason = sNum;
             state.selectedEpisode = eNum;
-            mountStream(getServerUrl(1, state.currentItem, sNum, eNum), `S${sNum} E${eNum} • Server 1`);
+            mountStream(getServerUrl(1, state.currentItem, sNum, eNum), `${state.selectedLangLabel} • S${sNum} E${eNum} • Server 1`);
         }
 
         function playOfficialTrailer() {
