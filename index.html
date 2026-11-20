@@ -308,7 +308,7 @@
             border-left: 4px solid #10b981;
             border-radius: 8px;
             padding: 11px 14px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             text-align: center;
         }
 
@@ -321,6 +321,16 @@
             padding: 2px 8px;
             border-radius: 999px;
             margin-bottom: 4px;
+        }
+
+        /* Banner Ad Slot */
+        .banner-slot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 12px auto 16px;
+            min-height: 50px;
+            overflow-x: auto;
         }
 
         /* Series Hub (CID, গোপাল ভাঁড়, মোটু পাতলু) */
@@ -965,6 +975,20 @@
             <div style="font-size: 13px; font-weight: 700;">Zero Movie Box আগেও ফ্রি ছিল, সবসময় ফ্রি থাকবে</div>
         </div>
 
+        <!-- Banner Ad (300x250) -->
+        <div class="banner-slot">
+            <script>
+              atOptions = {
+                'key' : '7ea7651eba2b371ef422cd04fdee6ebe',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+              };
+            </script>
+            <script src="https://bancadeltempoidea.org/22/7ea7651eba2b371ef422cd04fdee6ebe"></script>
+        </div>
+
         <!-- CID, গোপাল ভাঁড়, মোটু পাতলু Season/Episode Hub -->
         <div class="series-hub" id="seriesHub">
             <div class="series-head">
@@ -1050,6 +1074,8 @@
                     <button type="button" class="srv-btn" id="s2" onclick="switchServer(2)">Server 2</button>
                     <button type="button" class="srv-btn" id="s3" onclick="switchServer(3)">Server 3</button>
                     <button type="button" class="srv-btn" id="s4" onclick="switchServer(4)">Server 4</button>
+                    <button type="button" class="srv-btn" id="s5" onclick="switchServer(5)">Server 5</button>
+                    <button type="button" class="srv-btn" id="s6" onclick="switchServer(6)">Server 6</button>
                 </div>
             </div>
 
@@ -1099,12 +1125,13 @@
         // টেলিগ্রাম চ্যানেল লিংক
         const TELEGRAM_URL = "https://t.me/your_channel_username";
 
-        // আপনার ডাউনলোড লিংক (প্রয়োজন অনুযায়ী বসালে ক্লিক করলে সরাসরি ডাউনলোড/ওপেন হবে)
+        // আপনার Adsterra SmartLink ডাউনলোড বাটনগুলোতে যুক্ত করা হয়েছে
+        const SMARTLINK_URL = "https://directyp.org/4/74eeb78b8b270869e86ae9597b52efc4";
         const DOWNLOAD_CONFIG = {
-            "480p": "",
-            "720p": "",
-            "1080p": "",
-            "best": ""
+            "480p": SMARTLINK_URL,
+            "720p": SMARTLINK_URL,
+            "1080p": SMARTLINK_URL,
+            "best": SMARTLINK_URL
         };
 
         // সব OTT প্ল্যাটফর্মের তালিকা
@@ -1312,7 +1339,6 @@
                     list = (data.results || []).filter(x => x.title || x.name);
                     pages = Math.min(data.total_pages || 1, 500);
 
-                    // OTT ফিল্টারে রেজাল্ট কম থাকলে সেই OTT নামের সার্চ/পপুলার দিয়ে পূর্ণ করা
                     if (state.mode === "ott" && list.length < 8) {
                         const ottTitle = state.heading.replace(" OTT", "");
                         const extraRes = await fetch(`${API_BASE}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(ottTitle)}&page=1`);
@@ -1322,7 +1348,6 @@
                     }
                 }
 
-                // কোনো রেজাল্ট না থাকলে পপুলার মুভি দিয়ে পূর্ণ করা (যাতে খালি না থাকে)
                 if (!list.length) {
                     const fbRes = await fetch(`${API_BASE}/movie/popular?api_key=${TMDB_API_KEY}&page=1`);
                     const fbData = await fbRes.json();
@@ -1522,14 +1547,17 @@
             document.getElementById("nextBtn").disabled = state.page >= state.totalPages;
         }
 
+        // ৬টি সার্ভারের ব্যাকআপ লিস্ট (একটিতে সমস্যা হলে অন্যটিতে দ্রুত স্যুইচ করা যায়)
         function getServerUrl(num, item) {
             if (item.mediaKind === "episode") return item.videoUrl || "";
             const kind = item.mediaKind === "tv" ? "tv" : "movie";
             const path = kind === "tv" ? `${item.id}/1/1` : `${item.id}`;
             if (num === 1) return `https://vidsrc.xyz/embed/${kind}/${path}`;
-            if (num === 2) return `https://vidsrc.pro/embed/${kind}/${path}`;
-            if (num === 3) return `https://multiembed.mov/?video_id=${item.id}&tmdb=1${kind === "tv" ? "&s=1&e=1" : ""}`;
-            return `https://vidsrc.me/embed/${kind}/${path}`;
+            if (num === 2) return `https://vidsrc.to/embed/${kind}/${path}`;
+            if (num === 3) return `https://vidsrc.pro/embed/${kind}/${path}`;
+            if (num === 4) return `https://multiembed.mov/?video_id=${item.id}&tmdb=1${kind === "tv" ? "&s=1&e=1" : ""}`;
+            if (num === 5) return `https://vidsrc.me/embed/${kind}/${path}`;
+            return `https://www.2embed.cc/embed${kind === "tv" ? "tv" : ""}/${kind === "tv" ? `${item.id}&s=1&e=1` : item.id}`;
         }
 
         function openDetail(item) {
@@ -1601,8 +1629,9 @@
 
         function switchServer(num) {
             if (!state.currentItem || state.currentItem.mediaKind === "episode") return;
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById(`s${i}`).classList.toggle("active", i === num);
+            for (let i = 1; i <= 6; i++) {
+                const btn = document.getElementById(`s${i}`);
+                if (btn) btn.classList.toggle("active", i === num);
             }
             mountStream(getServerUrl(num, state.currentItem), `Server ${num}`);
         }
@@ -1633,7 +1662,7 @@
 
             if (!targetUrl) {
                 note.style.display = "block";
-                note.innerHTML = `<strong>${qKey.toUpperCase()} (${state.currentItem.sizes?.[qKey] || ""})</strong> ডাউনলোড লিংক এখনো যুক্ত করা হয়নি। কোডের <code>DOWNLOAD_CONFIG</code> বা <code>SHOWS_DATA</code> অংশে আপনার ডাইরেক্ট ফাইল/ডাউনলোড লিংক বসালে ক্লিক করলেই ডাউনলোড শুরু হবে।`;
+                note.innerHTML = `<strong>${qKey.toUpperCase()} (${state.currentItem.sizes?.[qKey] || ""})</strong> ডাউনলোড লিংক এখনো যুক্ত করা হয়নি।`;
                 return;
             }
 
@@ -1674,5 +1703,9 @@
             loadCatalog(false);
         });
     </script>
+
+    <!-- Popunder & Social Bar -->
+    <script data-cfasync="false" src="https://aarems.org/1/e6c92a3c6376affaeb033900ecf16c02"></script>
+    <script data-cfasync="false" src="https://bancadeltempoidea.org/14/f1bcb032a9238fcb972e8293a24be25a"></script>
 </body>
 </html>
