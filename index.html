@@ -62,7 +62,6 @@
         body.cinema-active .meta-3,
         body.cinema-active .story-box,
         body.cinema-active .cast-box,
-        body.cinema-active .tv-picker-box,
         body.cinema-active .shots-head,
         body.cinema-active .shots-list,
         body.cinema-active .dl-title,
@@ -1032,9 +1031,9 @@
             z-index: 2;
         }
 
-        .b-tl.new-release-badge {
+        .b-tl.new-badge {
             background: #10b981;
-            color: #05150f;
+            color: #05140e;
         }
 
         .b-tr {
@@ -1154,7 +1153,7 @@
         }
 
         .detail-sheet {
-            max-width: 760px;
+            max-width: 820px;
             margin: 0 auto 45px;
             background: var(--bg-card);
             border: 1px solid var(--line);
@@ -1442,58 +1441,7 @@
             line-height: 1.25;
         }
 
-        /* Dynamic TV Series Season & Episode Picker */
-        .tv-picker-box {
-            display: none;
-            background: var(--bg-panel);
-            border: 1px solid rgba(6, 182, 212, 0.35);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 12px;
-        }
-
-        .tv-picker-box.open {
-            display: block;
-        }
-
-        .tv-controls {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-
-        .ep-quick-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 7px;
-            margin-top: 10px;
-            max-height: 190px;
-            overflow-y: auto;
-        }
-
-        .ep-pill-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--line);
-            color: #f3f4f6;
-            border-radius: 7px;
-            padding: 7px 9px;
-            font-size: 11px;
-            font-weight: 700;
-            text-align: left;
-            cursor: pointer;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .ep-pill-btn:hover, .ep-pill-btn.active {
-            background: #0284c7;
-            border-color: #38bdf8;
-            color: #fff;
-        }
-
-        /* Player + 6 Servers + Seek 10s + Rotate + Cinema Controls */
+        /* Watch Box + Series Seasons & Episodes */
         .watch-box {
             background: var(--bg-panel);
             border: 1px solid rgba(16, 185, 129, 0.35);
@@ -1526,25 +1474,6 @@
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
-        }
-
-        .seek-btn {
-            background: #1e293b;
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            padding: 7px 10px;
-            border-radius: 7px;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .seek-btn:hover {
-            background: #0284c7;
-            color: #fff;
         }
 
         .rotate-side-btn {
@@ -1602,6 +1531,40 @@
             background: #000;
         }
 
+        /* -10s ও +10s বাটন ভিডিও স্ক্রিনের ভেতরে (ওভারলে) */
+        .in-screen-seek-controls {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            right: 10px;
+            transform: translateY(-50%);
+            z-index: 15;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .in-screen-seek-btn {
+            pointer-events: auto;
+            background: rgba(11, 15, 23, 0.78);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.55);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .in-screen-seek-btn:hover {
+            background: #0284c7;
+            color: #fff;
+        }
+
         .srv-row {
             display: flex;
             flex-wrap: wrap;
@@ -1625,11 +1588,87 @@
             border-color: var(--red-hover);
         }
 
-        .srv-status-note {
-            margin-top: 8px;
-            font-size: 11px;
-            color: #a7f3d0;
-            line-height: 1.4;
+        /* Series Seasons & Episodes Panel Inside Detail */
+        .series-episodes-panel {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--line);
+        }
+
+        .series-episodes-panel.open {
+            display: block;
+        }
+
+        .season-tabs-bar {
+            display: flex;
+            gap: 7px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+        }
+
+        .season-pill-btn {
+            background: var(--bg-card);
+            color: #f3f4f6;
+            border: 1px solid var(--line);
+            padding: 6px 12px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .season-pill-btn.active {
+            background: #0284c7;
+            border-color: #38bdf8;
+            color: #fff;
+        }
+
+        .episodes-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 8px;
+        }
+
+        .episode-select-card {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 9px 10px;
+            cursor: pointer;
+            text-align: left;
+            color: #fff;
+        }
+
+        .episode-select-card:hover {
+            border-color: var(--cyan);
+        }
+
+        .episode-select-card.active {
+            background: #172842;
+            border-color: var(--cyan);
+        }
+
+        .ep-badge-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .ep-new-tag {
+            background: #10b981;
+            color: #05150f;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 900;
         }
 
         /* Screenshots */
@@ -1884,7 +1923,7 @@
         <div class="hero-slider" id="heroSlider">
             <div class="hero-slide" id="heroSlide">
                 <div class="hero-content">
-                    <span class="hero-badge" id="heroBadge">NEW RELEASE</span>
+                    <span class="hero-badge" id="heroBadge">NEW</span>
                     <h1 class="hero-title" id="heroTitle">Loading Featured Movie...</h1>
                     <div class="hero-meta" id="heroMeta">★ 8.0 • WEB-DL</div>
                     <div class="hero-btns">
@@ -1905,8 +1944,8 @@
             <button type="button" class="vibe-chip surprise" onclick="surpriseMePick()">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> Surprise Me
             </button>
-            <button type="button" class="vibe-chip" onclick="pickVibe('recently_added', 'NEW & RECENTLY RELEASED', this)">
-                <i class="fa-solid fa-sparkles"></i> New Releases
+            <button type="button" class="vibe-chip" onclick="pickVibe('recently_added', 'NEW & TODAY RELEASES', this)">
+                <i class="fa-solid fa-sparkles"></i> New / Today Releases
             </button>
             <button type="button" class="vibe-chip" onclick="pickVibe('weekend_chill', 'WEEKEND CHILL (COMEDY & FAMILY)', this)">
                 <i class="fa-solid fa-face-laugh-beam"></i> Weekend Chill
@@ -2176,7 +2215,7 @@
         </div>
     </div>
 
-    <!-- Detail + Reactions + Player + 6 Servers + Season/Episode Picker + 10s Seek + Rotate Modal -->
+    <!-- Detail + Reactions + Player (-10s/+10s Inside Screen) + 6 Servers + All Seasons & Episodes Modal -->
     <div class="detail-modal" id="detailModal">
         <div class="detail-sheet">
             <div class="detail-top">
@@ -2228,7 +2267,7 @@
 
             <div class="meta-3">
                 <div><strong>Type</strong><span id="mType">Movie</span></div>
-                <div><strong>Language / Season</strong><span id="mLang">BN</span></div>
+                <div><strong>Season / Episode</strong><span id="mSeasonEp">Movie</span></div>
                 <div><strong>Real-Time Update</strong><span id="mUpdated">Just now</span></div>
             </div>
 
@@ -2247,37 +2286,16 @@
                 <div class="cast-list" id="castList"></div>
             </div>
 
-            <!-- Dynamic TV Series / Web Series Season & Episode Picker -->
-            <div class="tv-picker-box" id="tvPickerBox">
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <strong style="font-size: 12px; color: var(--gold);">
-                        <i class="fa-solid fa-list-ol"></i> Select Season & Episode (<span id="seasonEpSummary">Season 1</span>)
-                    </strong>
-                    <span id="activeEpBadge" style="font-size: 11px; font-weight: 800; color: var(--cyan);">Season 1 • Episode 1</span>
-                </div>
-                <div class="tv-controls">
-                    <select class="season-select" id="tvSeasonSelect" onchange="loadTvSeasonEpisodes()"></select>
-                    <select class="season-select" id="tvEpisodeSelect" onchange="playSelectedTvEpisode()"></select>
-                </div>
-                <div class="ep-quick-list" id="epQuickList"></div>
-            </div>
-
-            <!-- Player Box: ৬টি সার্ভার + Seek 10s + Rotate + Cinema Controls -->
+            <!-- Player Box: -10s / +10s ভিডিও স্ক্রিনের ভেতরে + ৬টি সার্ভার + সব সিজন ও এপিসোড লিস্ট -->
             <div class="watch-box" id="watchBox">
                 <div class="watch-header">
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                         <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">
                             <i class="fa-solid fa-play-circle"></i> WATCH ONLINE (<span id="srvLabel">Server 1</span>)
                         </span>
-                        <span class="ad-guard-pill"><i class="fa-solid fa-server"></i> 6 Servers Ready</span>
+                        <span class="ad-guard-pill"><i class="fa-solid fa-server"></i> 6 Servers</span>
                     </div>
                     <div class="watch-btns">
-                        <button type="button" class="seek-btn" onclick="seekPlayerSeconds(-10)" title="10 Seconds Backward">
-                            <i class="fa-solid fa-rotate-left"></i> -10s
-                        </button>
-                        <button type="button" class="seek-btn" onclick="seekPlayerSeconds(10)" title="10 Seconds Forward">
-                            +10s <i class="fa-solid fa-rotate-right"></i>
-                        </button>
                         <button type="button" class="cinema-toggle-btn" onclick="toggleCinemaMode()">
                             <i class="fa-solid fa-lightbulb"></i> Cinema Mode
                         </button>
@@ -2288,6 +2306,15 @@
                 </div>
 
                 <div class="player-stage" id="playerStage">
+                    <!-- -10s এবং +10s বাটন ভিডিও স্ক্রিনের ভেতরে -->
+                    <div class="in-screen-seek-controls">
+                        <button type="button" class="in-screen-seek-btn" onclick="seekPlayerSeconds(-10)" title="10 Seconds Backward">
+                            <i class="fa-solid fa-rotate-left"></i> -10s
+                        </button>
+                        <button type="button" class="in-screen-seek-btn" onclick="seekPlayerSeconds(10)" title="10 Seconds Forward">
+                            +10s <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
                     <iframe id="playerFrame" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
                     <video id="videoTag" controls playsinline preload="metadata" style="display: none;"></video>
                 </div>
@@ -2301,8 +2328,18 @@
                     <button type="button" class="srv-btn" id="s5" onclick="switchServer(5)">Server 5</button>
                     <button type="button" class="srv-btn" id="s6" onclick="switchServer(6)">Server 6</button>
                 </div>
-                <div class="srv-status-note" id="srvStatusNote">
-                    ৬টি সার্ভারের যেকোনোটিতে চাপ দিয়ে দেখতে পারেন। কোনো সার্ভারে লোডিং সমস্যা হলে সাথে সাথে অন্য সার্ভারে বদলে নিন।
+
+                <!-- প্রতিটি ওয়েব সিরিজের সব সিজন ও সব এপিসোড -->
+                <div class="series-episodes-panel" id="seriesEpisodesPanel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                        <strong style="font-size: 13px; color: var(--gold);">
+                            <i class="fa-solid fa-tv"></i> সিজন ও এপিসোড তালিকা (<span id="seriesSeasonsCountLabel">Seasons</span>)
+                        </strong>
+                        <span id="currentPlayingEpLabel" style="font-size: 11px; font-weight: 800; color: var(--cyan);">Season 1 • Episode 1</span>
+                    </div>
+
+                    <div class="season-tabs-bar" id="seasonTabsBar"></div>
+                    <div class="episodes-list-grid" id="episodesListGrid"></div>
                 </div>
             </div>
 
@@ -2395,15 +2432,15 @@
 
         const NOW_MS = Date.now();
 
-        // আজকের / এইমাত্র রিলিজ বা আপডেট হওয়া আইটেম (সবচেয়ে সামনে ও NEW ব্যাজসহ দেখানোর জন্য)
+        // আজকের / নতুন যুক্ত হওয়া আইটেম (যেগুলো রিলিজ হলে সামনে NEW ব্যাজসহ যুক্ত হবে)
         const CUSTOM_POSTS = [
             {
                 id: "today-new-1",
                 type: "New Release",
                 mediaKind: "movie",
-                isNewToday: true,
-                updatedAtMs: NOW_MS - 3 * 60 * 1000,
-                title: "Today New Release — Shadow Strike (2026)",
+                isNewItem: true,
+                updatedAtMs: NOW_MS - 2 * 60 * 1000,
+                title: "Shadow Strike — আজকের নতুন রিলিজ (2026)",
                 original_language: "hi",
                 quality: "4K WEB-DL",
                 rating: "8.8",
@@ -2419,12 +2456,12 @@
                 id: "today-series-2",
                 type: "Web Series",
                 mediaKind: "tv",
-                isNewToday: true,
-                updatedAtMs: NOW_MS - 12 * 60 * 1000,
-                title: "Dhaka Files Web Series (Season 1–2)",
+                isNewItem: true,
+                updatedAtMs: NOW_MS - 8 * 60 * 1000,
+                title: "Dhaka Mystery Series (Season 1–2)",
                 original_language: "bn",
                 quality: "WEB-DL",
-                rating: "8.5",
+                rating: "8.6",
                 first_air_date: "2026-11-21",
                 overview: "সিজন ও এপিসোড অনুযায়ী প্রতিটা পর্ব আলাদাভাবে নির্বাচন করে দেখুন।",
                 poster: "https://via.placeholder.com/400x600/1e293b/f59e0b?text=WEB+SERIES+NEW",
@@ -2441,6 +2478,7 @@
                 type: "18+ Movie",
                 mediaKind: "movie",
                 isAdultCustom: true,
+                isNewItem: true,
                 updatedAtMs: NOW_MS - 15 * 60 * 1000,
                 title: "Midnight Desire 18+ (Hindi / English)",
                 original_language: "hi",
@@ -2510,16 +2548,16 @@
                 title: "CID (Bangla / Hindi)",
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "CID — রহস্যময় খুন (Season 1 • Episode 01)", updatedAtMs: NOW_MS - 14 * 60 * 1000, sizes: { "480p": "420 MB", "720p": "980 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, url: "", dl: {} },
-                        { ep: "Ep 02", name: "CID — অন্ধকার রাতের তদন্ত (Season 1 • Episode 02)", updatedAtMs: NOW_MS - 40 * 60 * 1000, sizes: { "480p": "410 MB", "720p": "950 MB", "1080p": "1.8 GB", "best": "3.0 GB" }, url: "", dl: {} },
-                        { ep: "Ep 03", name: "CID — অচেনা সাক্ষী (Season 1 • Episode 03)", updatedAtMs: NOW_MS - 2 * 3600 * 1000, sizes: { "480p": "435 MB", "720p": "1.0 GB", "1080p": "2.0 GB", "best": "3.2 GB" }, url: "", dl: {} }
+                        { ep: "Ep 01", name: "CID — রহস্যময় খুন (পর্ব ০১)", isNewEp: true, updatedAtMs: NOW_MS - 10 * 60 * 1000, sizes: { "480p": "420 MB", "720p": "980 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, url: "", dl: {} },
+                        { ep: "Ep 02", name: "CID — অন্ধকার রাতের তদন্ত (পর্ব ০২)", updatedAtMs: NOW_MS - 40 * 60 * 1000, sizes: { "480p": "410 MB", "720p": "950 MB", "1080p": "1.8 GB", "best": "3.0 GB" }, url: "", dl: {} },
+                        { ep: "Ep 03", name: "CID — অচেনা সাক্ষী (পর্ব ০৩)", updatedAtMs: NOW_MS - 2 * 3600 * 1000, sizes: { "480p": "435 MB", "720p": "1.0 GB", "1080p": "2.0 GB", "best": "3.2 GB" }, url: "", dl: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "CID — সিজন ২ পর্ব ০১ (Season 2 • Episode 01)", updatedAtMs: NOW_MS - 55 * 60 * 1000, sizes: { "480p": "425 MB", "720p": "990 MB", "1080p": "1.95 GB", "best": "3.15 GB" }, url: "", dl: {} },
-                        { ep: "Ep 02", name: "CID — সিজন ২ পর্ব ০২ (Season 2 • Episode 02)", updatedAtMs: NOW_MS - 75 * 60 * 1000, sizes: { "480p": "430 MB", "720p": "970 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, url: "", dl: {} }
+                        { ep: "Ep 01", name: "CID — সিজন ২ পর্ব ০১", isNewEp: true, updatedAtMs: NOW_MS - 25 * 60 * 1000, sizes: { "480p": "425 MB", "720p": "990 MB", "1080p": "1.95 GB", "best": "3.15 GB" }, url: "", dl: {} },
+                        { ep: "Ep 02", name: "CID — সিজন ২ পর্ব ০২", updatedAtMs: NOW_MS - 75 * 60 * 1000, sizes: { "480p": "430 MB", "720p": "970 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, url: "", dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "CID — সিজন ৩ পর্ব ০১ (Season 3 • Episode 01)", updatedAtMs: NOW_MS - 30 * 60 * 1000, sizes: { "480p": "440 MB", "720p": "1.05 GB", "1080p": "2.1 GB", "best": "3.3 GB" }, url: "", dl: {} }
+                        { ep: "Ep 01", name: "CID — সিজন ৩ পর্ব ০১", isNewEp: true, updatedAtMs: NOW_MS - 30 * 60 * 1000, sizes: { "480p": "440 MB", "720p": "1.05 GB", "1080p": "2.1 GB", "best": "3.3 GB" }, url: "", dl: {} }
                     ]
                 }
             },
@@ -2527,14 +2565,14 @@
                 title: "গোপাল ভাঁড় — বাংলা এপিসোড",
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — রাজদরবারের কাণ্ড (Season 1 • Episode 01)", updatedAtMs: NOW_MS - 10 * 60 * 1000, sizes: { "480p": "120 MB", "720p": "280 MB", "1080p": "620 MB", "best": "1.1 GB" }, url: "", dl: {} },
-                        { ep: "Ep 02", name: "গোপাল ভাঁড় — বুদ্ধির খেলা (Season 1 • Episode 02)", updatedAtMs: NOW_MS - 35 * 60 * 1000, sizes: { "480p": "115 MB", "720p": "270 MB", "1080p": "590 MB", "best": "1.0 GB" }, url: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — রাজদরবারের কাণ্ড (পর্ব ০১)", isNewEp: true, updatedAtMs: NOW_MS - 6 * 60 * 1000, sizes: { "480p": "120 MB", "720p": "280 MB", "1080p": "620 MB", "best": "1.1 GB" }, url: "", dl: {} },
+                        { ep: "Ep 02", name: "গোপাল ভাঁড় — বুদ্ধির খেলা (পর্ব ০২)", updatedAtMs: NOW_MS - 35 * 60 * 1000, sizes: { "480p": "115 MB", "720p": "270 MB", "1080p": "590 MB", "best": "1.0 GB" }, url: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ২ পর্ব ০১ (Season 2 • Episode 01)", updatedAtMs: NOW_MS - 90 * 60 * 1000, sizes: { "480p": "118 MB", "720p": "275 MB", "1080p": "600 MB", "best": "1.05 GB" }, url: "", dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ২ পর্ব ০১", updatedAtMs: NOW_MS - 90 * 60 * 1000, sizes: { "480p": "118 MB", "720p": "275 MB", "1080p": "600 MB", "best": "1.05 GB" }, url: "", dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ৩ পর্ব ০১ (Season 3 • Episode 01)", updatedAtMs: NOW_MS - 120 * 60 * 1000, sizes: { "480p": "122 MB", "720p": "285 MB", "1080p": "615 MB", "best": "1.08 GB" }, url: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ৩ পর্ব ০১", updatedAtMs: NOW_MS - 120 * 60 * 1000, sizes: { "480p": "122 MB", "720p": "285 MB", "1080p": "615 MB", "best": "1.08 GB" }, url: "", dl: {} }
                     ]
                 }
             },
@@ -2542,14 +2580,14 @@
                 title: "মোটু পাতলু — সিজন ও এপিসোড",
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — ফুরফুরি নগরের গল্প (Season 1 • Episode 01)", updatedAtMs: NOW_MS - 18 * 60 * 1000, sizes: { "480p": "135 MB", "720p": "310 MB", "1080p": "680 MB", "best": "1.2 GB" }, url: "", dl: {} },
-                        { ep: "Ep 02", name: "মোটু পাতলু — সিঙ্গারার কাণ্ড (Season 1 • Episode 02)", updatedAtMs: NOW_MS - 50 * 60 * 1000, sizes: { "480p": "130 MB", "720p": "295 MB", "1080p": "650 MB", "best": "1.15 GB" }, url: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — ফুরফুরি নগরের গল্প (পর্ব ০১)", isNewEp: true, updatedAtMs: NOW_MS - 14 * 60 * 1000, sizes: { "480p": "135 MB", "720p": "310 MB", "1080p": "680 MB", "best": "1.2 GB" }, url: "", dl: {} },
+                        { ep: "Ep 02", name: "মোটু পাতলু — সিঙ্গারার কাণ্ড (পর্ব ০২)", updatedAtMs: NOW_MS - 50 * 60 * 1000, sizes: { "480p": "130 MB", "720p": "295 MB", "1080p": "650 MB", "best": "1.15 GB" }, url: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ২ পর্ব ০১ (Season 2 • Episode 01)", updatedAtMs: NOW_MS - 3 * 3600 * 1000, sizes: { "480p": "138 MB", "720p": "315 MB", "1080p": "690 MB", "best": "1.2 GB" }, url: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ২ পর্ব ০১", updatedAtMs: NOW_MS - 3 * 3600 * 1000, sizes: { "480p": "138 MB", "720p": "315 MB", "1080p": "690 MB", "best": "1.2 GB" }, url: "", dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ৩ পর্ব ০১ (Season 3 • Episode 01)", updatedAtMs: NOW_MS - 4 * 3600 * 1000, sizes: { "480p": "142 MB", "720p": "325 MB", "1080p": "710 MB", "best": "1.28 GB" }, url: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ৩ পর্ব ০১", updatedAtMs: NOW_MS - 4 * 3600 * 1000, sizes: { "480p": "142 MB", "720p": "325 MB", "1080p": "710 MB", "best": "1.28 GB" }, url: {} }
                     ]
                 }
             }
@@ -2575,7 +2613,8 @@
             activeServerNum: 1,
             selectedSeason: 1,
             selectedEpisode: 1,
-            seasonEpisodesCache: [],
+            seriesSeasonsMeta: [],
+            currentSeasonEpisodes: [],
             trailerKey: "",
             rotated: false,
             cinemaMode: false,
@@ -2664,11 +2703,11 @@
             return `Updated ${diffDay}d ago`;
         }
 
-        function isReleasedToday(item) {
-            if (item.isNewToday) return true;
+        function isNewReleaseItem(item) {
+            if (!item) return false;
+            if (item.isNewItem) return true;
             const todayStr = new Date().toISOString().slice(0, 10);
-            const dStr = String(item.date || "");
-            if (dStr === todayStr) return true;
+            if (String(item.date || "") === todayStr) return true;
             if (item.updatedAtMs && (Date.now() - item.updatedAtMs) <= 24 * 3600 * 1000) return true;
             return false;
         }
@@ -2762,9 +2801,7 @@
             const quality = m.quality || getQuality(Number(vote) || 7.5);
             const poster = m.poster ? m.poster : (m.poster_path ? (IMG_500 + m.poster_path) : "");
             const backdrop = m.backdrop ? m.backdrop : (m.backdrop_path ? (IMG_780 + m.backdrop_path) : poster);
-
-            // নতুন / সাম্প্রতিক রিলিজগুলো শুরুতে রিয়েল-টাইম (কয়েক মিনিট/ঘণ্টা আগে) হিসেবে সাজানো
-            const updatedAtMs = m.updatedAtMs || (NOW_MS - (idx + 1) * 18 * 60 * 1000);
+            const updatedAtMs = m.updatedAtMs || (NOW_MS - (idx + 1) * 16 * 60 * 1000);
 
             return {
                 id: m.id,
@@ -2776,7 +2813,7 @@
                 rating: vote,
                 date,
                 updatedAtMs,
-                isNewToday: Boolean(m.isNewToday || idx < 3),
+                isNewItem: Boolean(m.isNewItem || idx < 3),
                 overview: m.overview || "Storyline details are available on the stream.",
                 poster,
                 backdrop,
@@ -2808,7 +2845,7 @@
             const slide = document.getElementById("heroSlide");
             const bg = item.backdrop || item.poster;
             slide.style.backgroundImage = bg ? `url('${bg}')` : "none";
-            document.getElementById("heroBadge").textContent = idx === 0 ? "NEW RELEASE" : `FEATURED #${idx + 1}`;
+            document.getElementById("heroBadge").textContent = idx === 0 ? "NEW" : `FEATURED #${idx + 1}`;
             document.getElementById("heroTitle").textContent = item.title;
             document.getElementById("heroMeta").textContent = `★ ${item.rating} • ${item.lang} • ${item.quality} • ${formatRealTimeAgo(item.updatedAtMs)}`;
             document.getElementById("heroPlayBtn").onclick = () => openDetail(item, idx);
@@ -3099,10 +3136,9 @@
                     list = [...newNorm, ...list];
                 }
 
-                // আজকের / সাম্প্রতিক রিলিজগুলো সবচেয়ে সামনে রাখার জন্য সর্টিং
                 list.sort((a, b) => {
-                    const todayDiff = (isReleasedToday(b) ? 1 : 0) - (isReleasedToday(a) ? 1 : 0);
-                    if (todayDiff !== 0) return todayDiff;
+                    const newDiff = (isNewReleaseItem(b) ? 1 : 0) - (isNewReleaseItem(a) ? 1 : 0);
+                    if (newDiff !== 0) return newDiff;
                     return (b.updatedAtMs || 0) - (a.updatedAtMs || 0);
                 });
 
@@ -3145,10 +3181,10 @@
             filtered.forEach((item, idx) => {
                 const year = (item.date || "2026").slice(0, 4);
                 const agoText = formatRealTimeAgo(item.updatedAtMs);
-                const showNew = isReleasedToday(item) && !state.query;
+                const showNew = isNewReleaseItem(item) && !state.query;
 
                 const topLeftBadge = showNew
-                    ? `<span class="b-tl new-release-badge">NEW</span>`
+                    ? `<span class="b-tl new-badge">NEW</span>`
                     : (idx < 3 && !state.query ? `<span class="b-tl">TRENDING</span>` : "");
 
                 const card = document.createElement("div");
@@ -3341,6 +3377,7 @@
                     rating: "8.4",
                     date: `Season ${sNum}`,
                     updatedAtMs: ep.updatedAtMs || (NOW_MS - 25 * 60 * 1000),
+                    isNewItem: Boolean(ep.isNewEp),
                     overview: `${sData.title} — Season ${sNum}, ${ep.ep}।`,
                     poster: "",
                     backdrop: "",
@@ -3351,7 +3388,10 @@
 
                 const epTime = ep.updatedAtMs || (NOW_MS - 25 * 60 * 1000);
                 card.innerHTML = `
-                    <div style="font-size: 11px; font-weight: 800; color: var(--gold);">Season ${sNum} • ${ep.ep}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size: 11px; font-weight: 800; color: var(--gold);">Season ${sNum} • ${ep.ep}</span>
+                        ${ep.isNewEp ? `<span class="ep-new-tag">NEW</span>` : ""}
+                    </div>
                     <div style="font-size: 13px; font-weight: 700; margin: 4px 0;">${esc(ep.name)}</div>
                     <div style="font-size: 11px; color: var(--cyan);" data-updated-ms="${epTime}">${formatRealTimeAgo(epTime)}</div>
                 `;
@@ -3476,15 +3516,6 @@
             p.style.display = p.style.display === "none" ? "block" : "none";
         }
 
-        /*
-         * ৬টি সার্ভারই সম্পূর্ণ সক্রিয় ও কভারেজসহ তৈরি:
-         * Server 1: vidsrc.to
-         * Server 2: vidsrc.me
-         * Server 3: vidsrc.in
-         * Server 4: 2embed.cc
-         * Server 5: autoembed.cc
-         * Server 6: moviesapi.club
-         */
         function getServerUrl(num, item, sNum = 1, eNum = 1) {
             if (item.videoUrl) return item.videoUrl;
             if (item.mediaKind === "episode") return "";
@@ -3506,7 +3537,8 @@
             state.activeServerNum = 1;
             state.selectedSeason = 1;
             state.selectedEpisode = 1;
-            state.seasonEpisodesCache = [];
+            state.seriesSeasonsMeta = [];
+            state.currentSeasonEpisodes = [];
             state.trailerKey = "";
             state.rotated = false;
             document.getElementById("playerStage").classList.remove("rotated-view");
@@ -3530,7 +3562,7 @@
             document.getElementById("dTitle").textContent = normItem.title;
             document.getElementById("dSub").textContent = `${normItem.lang} • ${normItem.quality} • ★ ${normItem.rating}`;
             document.getElementById("mType").textContent = normItem.type;
-            document.getElementById("mLang").textContent = normItem.mediaKind === "tv" ? `${normItem.lang} • Series` : normItem.lang;
+            document.getElementById("mSeasonEp").textContent = normItem.mediaKind === "tv" ? "S1 • Ep 1" : "Movie";
             document.getElementById("dHook").textContent = buildHookLine(normItem.title, normItem.quality, normItem.lang, normItem.rating, agoText);
             document.getElementById("dStory").textContent = normItem.overview;
 
@@ -3553,8 +3585,8 @@
             }
 
             const srvRow = document.getElementById("srvRow");
-            const tvBox = document.getElementById("tvPickerBox");
-            tvBox.classList.remove("open");
+            const seriesPanel = document.getElementById("seriesEpisodesPanel");
+            seriesPanel.classList.remove("open");
 
             if (normItem.mediaKind === "episode") {
                 srvRow.style.display = "none";
@@ -3615,25 +3647,12 @@
                     castList.appendChild(cCard);
                 });
 
-                if (kind === "tv" && Array.isArray(details.seasons)) {
-                    const validSeasons = details.seasons.filter(s => s.season_number >= 1);
-                    if (validSeasons.length) {
-                        const tvBox = document.getElementById("tvPickerBox");
-                        const sSel = document.getElementById("tvSeasonSelect");
-                        const summaryEl = document.getElementById("seasonEpSummary");
-                        if (summaryEl) {
-                            summaryEl.textContent = `${validSeasons.length} Seasons Available`;
-                        }
-                        sSel.innerHTML = "";
-                        validSeasons.forEach(s => {
-                            const opt = document.createElement("option");
-                            opt.value = s.season_number;
-                            opt.textContent = `Season ${s.season_number} (${s.episode_count || "?"} Episodes)`;
-                            sSel.appendChild(opt);
-                        });
-                        tvBox.classList.add("open");
-                        loadTvSeasonEpisodes();
-                    }
+                if (kind === "tv") {
+                    const seasonsArr = Array.isArray(details.seasons) && details.seasons.filter(s => s.season_number >= 1).length
+                        ? details.seasons.filter(s => s.season_number >= 1)
+                        : [{ season_number: 1, episode_count: 8 }];
+                    state.seriesSeasonsMeta = seasonsArr;
+                    renderAllSeasonsAndEpisodes(seasonsArr, 1);
                 }
 
                 const relGrid = document.getElementById("relatedGrid");
@@ -3658,69 +3677,91 @@
             } catch (e) {}
         }
 
-        function renderEpisodeQuickButtons(episodes, sNum, activeEpNum) {
-            const box = document.getElementById("epQuickList");
-            if (!box) return;
-            box.innerHTML = "";
+        async function renderAllSeasonsAndEpisodes(seasonsArr, activeSeasonNum) {
+            const panel = document.getElementById("seriesEpisodesPanel");
+            const tabsBar = document.getElementById("seasonTabsBar");
+            const countLabel = document.getElementById("seriesSeasonsCountLabel");
+            if (!panel || !tabsBar) return;
 
-            const list = episodes.length
-                ? episodes
-                : Array.from({ length: 10 }, (_, idx) => ({ episode_number: idx + 1, name: `Episode ${idx + 1}` }));
+            panel.classList.add("open");
+            state.selectedSeason = Number(activeSeasonNum || 1);
+            if (countLabel) {
+                countLabel.textContent = `${seasonsArr.length} Seasons`;
+            }
 
-            list.forEach(ep => {
-                const epNum = Number(ep.episode_number || 1);
+            tabsBar.innerHTML = "";
+            seasonsArr.forEach(s => {
+                const sNum = Number(s.season_number);
                 const btn = document.createElement("button");
                 btn.type = "button";
-                btn.className = `ep-pill-btn ${epNum === Number(activeEpNum) ? "active" : ""}`;
-                btn.textContent = `S${sNum} • Ep ${epNum}${ep.name ? `: ${ep.name}` : ""}`;
-                btn.onclick = () => {
-                    document.getElementById("tvEpisodeSelect").value = String(epNum);
-                    playSelectedTvEpisode();
-                };
-                box.appendChild(btn);
+                btn.className = `season-pill-btn ${sNum === state.selectedSeason ? "active" : ""}`;
+                btn.textContent = `Season ${sNum} (${s.episode_count || "?"} Ep)`;
+                btn.onclick = () => renderAllSeasonsAndEpisodes(seasonsArr, sNum);
+                tabsBar.appendChild(btn);
             });
-        }
 
-        async function loadTvSeasonEpisodes() {
-            if (!state.currentItem || state.currentItem.mediaKind !== "tv") return;
-            const sNum = Number(document.getElementById("tvSeasonSelect").value || 1);
-            state.selectedSeason = sNum;
-            const epSel = document.getElementById("tvEpisodeSelect");
-            epSel.innerHTML = `<option value="1">Episode 1</option>`;
-            let eps = [];
+            const fallbackCount = Number(seasonsArr.find(s => Number(s.season_number) === state.selectedSeason)?.episode_count || 6);
+            let eps = Array.from({ length: Math.min(fallbackCount, 30) }, (_, idx) => ({
+                episode_number: idx + 1,
+                name: `Episode ${idx + 1}`,
+                air_date: "",
+                isNewEp: idx === 0
+            }));
+
             try {
-                const sData = await fetch(`${API_BASE}/tv/${state.currentItem.id}/season/${sNum}?api_key=${TMDB_API_KEY}`).then(r => r.json());
-                eps = sData.episodes || [];
-                state.seasonEpisodesCache = eps;
-                if (eps.length) {
-                    epSel.innerHTML = "";
-                    eps.forEach(ep => {
-                        const opt = document.createElement("option");
-                        opt.value = ep.episode_number;
-                        opt.textContent = `Season ${sNum} • Episode ${ep.episode_number}${ep.name ? ` — ${ep.name}` : ""}`;
-                        epSel.appendChild(opt);
-                    });
+                const sData = await fetch(`${API_BASE}/tv/${state.currentItem.id}/season/${state.selectedSeason}?api_key=${TMDB_API_KEY}`).then(r => r.json());
+                if (Array.isArray(sData.episodes) && sData.episodes.length) {
+                    const todayStr = new Date().toISOString().slice(0, 10);
+                    eps = sData.episodes.map((ep, idx) => ({
+                        episode_number: Number(ep.episode_number || idx + 1),
+                        name: ep.name || `Episode ${idx + 1}`,
+                        air_date: ep.air_date || "",
+                        isNewEp: ep.air_date === todayStr || idx === sData.episodes.length - 1
+                    }));
                 }
             } catch (e) {}
 
-            const firstEp = eps.length ? Number(eps[0].episode_number) : 1;
-            renderEpisodeQuickButtons(eps, sNum, firstEp);
-            playSelectedTvEpisode();
+            state.currentSeasonEpisodes = eps;
+            const firstEpNum = eps[0]?.episode_number || 1;
+            selectSeriesEpisode(state.selectedSeason, firstEpNum, false);
         }
 
-        function playSelectedTvEpisode() {
-            if (!state.currentItem) return;
-            const sNum = Number(document.getElementById("tvSeasonSelect").value || 1);
-            const eNum = Number(document.getElementById("tvEpisodeSelect").value || 1);
-            state.selectedSeason = sNum;
-            state.selectedEpisode = eNum;
+        function selectSeriesEpisode(sNum, eNum, shouldMount = true) {
+            state.selectedSeason = Number(sNum);
+            state.selectedEpisode = Number(eNum);
 
-            const badge = document.getElementById("activeEpBadge");
-            if (badge) badge.textContent = `Season ${sNum} • Episode ${eNum}`;
-            document.getElementById("mLang").textContent = `S${sNum} • Ep ${eNum}`;
+            const labelEl = document.getElementById("currentPlayingEpLabel");
+            if (labelEl) labelEl.textContent = `Season ${state.selectedSeason} • Episode ${state.selectedEpisode}`;
+            document.getElementById("mSeasonEp").textContent = `S${state.selectedSeason} • Ep ${state.selectedEpisode}`;
 
-            renderEpisodeQuickButtons(state.seasonEpisodesCache, sNum, eNum);
-            mountStream(getServerUrl(state.activeServerNum || 1, state.currentItem, sNum, eNum), `Server ${state.activeServerNum || 1} (S${sNum} E${eNum})`);
+            const grid = document.getElementById("episodesListGrid");
+            if (grid) {
+                grid.innerHTML = "";
+                state.currentSeasonEpisodes.forEach(ep => {
+                    const epNum = Number(ep.episode_number);
+                    const isSelected = epNum === state.selectedEpisode;
+                    const card = document.createElement("button");
+                    card.type = "button";
+                    card.className = `episode-select-card ${isSelected ? "active" : ""}`;
+                    card.onclick = () => selectSeriesEpisode(state.selectedSeason, epNum, true);
+                    card.innerHTML = `
+                        <div class="ep-badge-row">
+                            <span style="color: var(--gold);">S${state.selectedSeason} • Episode ${epNum}</span>
+                            ${ep.isNewEp ? `<span class="ep-new-tag">NEW</span>` : ""}
+                        </div>
+                        <div style="font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${esc(ep.name)}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            if (shouldMount && state.currentItem) {
+                const srv = state.activeServerNum || 1;
+                mountStream(getServerUrl(srv, state.currentItem, state.selectedSeason, state.selectedEpisode), `Server ${srv} (S${state.selectedSeason} E${state.selectedEpisode})`);
+            } else if (!shouldMount && state.currentItem) {
+                const srv = state.activeServerNum || 1;
+                mountStream(getServerUrl(srv, state.currentItem, state.selectedSeason, state.selectedEpisode), `Server ${srv} (S${state.selectedSeason} E${state.selectedEpisode})`);
+            }
         }
 
         function playOfficialTrailer() {
