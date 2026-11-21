@@ -1032,9 +1032,9 @@
             z-index: 2;
         }
 
-        .b-tl.recent-badge {
+        .b-tl.new-release-badge {
             background: #10b981;
-            color: #06130e;
+            color: #05150f;
         }
 
         .b-tr {
@@ -1448,7 +1448,7 @@
             background: var(--bg-panel);
             border: 1px solid rgba(6, 182, 212, 0.35);
             border-radius: 10px;
-            padding: 11px;
+            padding: 12px;
             margin-bottom: 12px;
         }
 
@@ -1463,7 +1463,37 @@
             margin-top: 8px;
         }
 
-        /* Player + Language Bar + Seek 10s + Rotate + Cinema Controls */
+        .ep-quick-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 7px;
+            margin-top: 10px;
+            max-height: 190px;
+            overflow-y: auto;
+        }
+
+        .ep-pill-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            color: #f3f4f6;
+            border-radius: 7px;
+            padding: 7px 9px;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ep-pill-btn:hover, .ep-pill-btn.active {
+            background: #0284c7;
+            border-color: #38bdf8;
+            color: #fff;
+        }
+
+        /* Player + 6 Servers + Seek 10s + Rotate + Cinema Controls */
         .watch-box {
             background: var(--bg-panel);
             border: 1px solid rgba(16, 185, 129, 0.35);
@@ -1545,69 +1575,6 @@
             gap: 5px;
         }
 
-        /* Released Language Bar Inside Player */
-        .lang-top-bar {
-            background: #121826;
-            border: 1px solid rgba(6, 182, 212, 0.45);
-            border-radius: 9px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .lang-bar-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--cyan);
-        }
-
-        .lang-pill-list {
-            display: flex;
-            gap: 7px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 2px;
-            scrollbar-width: thin;
-        }
-
-        .lang-choice-btn {
-            background: var(--bg-panel);
-            color: #f3f4f6;
-            border: 1px solid var(--line);
-            padding: 7px 12px;
-            border-radius: 7px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .lang-choice-btn:hover {
-            border-color: var(--cyan);
-            color: var(--cyan);
-        }
-
-        .lang-choice-btn.active {
-            background: #0284c7;
-            border-color: #22d3ee;
-            color: #ffffff;
-        }
-
-        .lang-status-note {
-            margin-top: 7px;
-            font-size: 11px;
-            color: #a7f3d0;
-            line-height: 1.4;
-        }
-
         .player-stage {
             position: relative;
             width: 100%;
@@ -1646,7 +1613,7 @@
             background: var(--bg-card);
             color: #fff;
             border: 1px solid var(--line);
-            padding: 6px 12px;
+            padding: 6px 11px;
             border-radius: 6px;
             font-size: 11px;
             font-weight: 700;
@@ -1656,6 +1623,13 @@
         .srv-btn.active {
             background: var(--red-hover);
             border-color: var(--red-hover);
+        }
+
+        .srv-status-note {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #a7f3d0;
+            line-height: 1.4;
         }
 
         /* Screenshots */
@@ -1863,7 +1837,7 @@
         }
     </style>
 
-    <!-- Zero-Redirect & Smooth Player Guard -->
+    <!-- Smooth Player & Modal Guard -->
     <script>
         (function () {
             const origOpen = window.open;
@@ -1871,7 +1845,7 @@
                 const activeEl = document.activeElement;
                 const modalOpen = Boolean(document.getElementById("detailModal")?.classList.contains("open"));
                 const insidePlayer = Boolean(
-                    modalOpen || (activeEl && activeEl.closest && activeEl.closest(".detail-modal, .watch-box, .player-stage, .lang-top-bar"))
+                    modalOpen || (activeEl && activeEl.closest && activeEl.closest(".detail-modal, .watch-box, .player-stage"))
                 );
                 if (insidePlayer) {
                     return null;
@@ -1910,7 +1884,7 @@
         <div class="hero-slider" id="heroSlider">
             <div class="hero-slide" id="heroSlide">
                 <div class="hero-content">
-                    <span class="hero-badge" id="heroBadge">FEATURED</span>
+                    <span class="hero-badge" id="heroBadge">NEW RELEASE</span>
                     <h1 class="hero-title" id="heroTitle">Loading Featured Movie...</h1>
                     <div class="hero-meta" id="heroMeta">★ 8.0 • WEB-DL</div>
                     <div class="hero-btns">
@@ -1931,8 +1905,8 @@
             <button type="button" class="vibe-chip surprise" onclick="surpriseMePick()">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> Surprise Me
             </button>
-            <button type="button" class="vibe-chip" onclick="pickVibe('recently_added', 'RECENTLY ADDED', this)">
-                <i class="fa-solid fa-sparkles"></i> Recently Added
+            <button type="button" class="vibe-chip" onclick="pickVibe('recently_added', 'NEW & RECENTLY RELEASED', this)">
+                <i class="fa-solid fa-sparkles"></i> New Releases
             </button>
             <button type="button" class="vibe-chip" onclick="pickVibe('weekend_chill', 'WEEKEND CHILL (COMEDY & FAMILY)', this)">
                 <i class="fa-solid fa-face-laugh-beam"></i> Weekend Chill
@@ -2126,7 +2100,7 @@
         <div class="zone-grid">
             <button class="zone-btn z-purple" onclick="selectCategory('anime', 'CARTOON & ANIME ZONE', this)">
                 <span><i class="fa-solid fa-dragon"></i> CARTOON & ANIME</span>
-                <span class="zone-badge">FRESH</span>
+                <span class="zone-badge">NEW</span>
             </button>
             <button class="zone-btn z-pink" onclick="selectCategory('adult', '18+ ADULT MOVIES', this)">
                 <span><i class="fa-solid fa-circle-exclamation"></i> 18+ ADULT</span>
@@ -2202,7 +2176,7 @@
         </div>
     </div>
 
-    <!-- Detail + Reactions + Player + Multi-Language Bar + 10s Seek + Rotate Modal -->
+    <!-- Detail + Reactions + Player + 6 Servers + Season/Episode Picker + 10s Seek + Rotate Modal -->
     <div class="detail-modal" id="detailModal">
         <div class="detail-sheet">
             <div class="detail-top">
@@ -2254,8 +2228,8 @@
 
             <div class="meta-3">
                 <div><strong>Type</strong><span id="mType">Movie</span></div>
-                <div><strong>Released Languages</strong><span id="mLang">Loading...</span></div>
-                <div><strong>Last Updated</strong><span id="mUpdated">Just now</span></div>
+                <div><strong>Language / Season</strong><span id="mLang">BN</span></div>
+                <div><strong>Real-Time Update</strong><span id="mUpdated">Just now</span></div>
             </div>
 
             <div class="story-box">
@@ -2273,23 +2247,29 @@
                 <div class="cast-list" id="castList"></div>
             </div>
 
-            <!-- Dynamic TV Series Season & Episode Picker -->
+            <!-- Dynamic TV Series / Web Series Season & Episode Picker -->
             <div class="tv-picker-box" id="tvPickerBox">
-                <strong style="font-size: 12px; color: var(--gold);"><i class="fa-solid fa-list-ol"></i> Select Season & Episode</strong>
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <strong style="font-size: 12px; color: var(--gold);">
+                        <i class="fa-solid fa-list-ol"></i> Select Season & Episode (<span id="seasonEpSummary">Season 1</span>)
+                    </strong>
+                    <span id="activeEpBadge" style="font-size: 11px; font-weight: 800; color: var(--cyan);">Season 1 • Episode 1</span>
+                </div>
                 <div class="tv-controls">
                     <select class="season-select" id="tvSeasonSelect" onchange="loadTvSeasonEpisodes()"></select>
                     <select class="season-select" id="tvEpisodeSelect" onchange="playSelectedTvEpisode()"></select>
                 </div>
+                <div class="ep-quick-list" id="epQuickList"></div>
             </div>
 
-            <!-- Player Box: ১টি ফাস্ট মেইন সার্ভার + ১টি ব্যাকআপ সার্ভার + রিলিজড ভাষা বার -->
+            <!-- Player Box: ৬টি সার্ভার + Seek 10s + Rotate + Cinema Controls -->
             <div class="watch-box" id="watchBox">
                 <div class="watch-header">
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                         <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">
                             <i class="fa-solid fa-play-circle"></i> WATCH ONLINE (<span id="srvLabel">Server 1</span>)
                         </span>
-                        <span class="ad-guard-pill"><i class="fa-solid fa-bolt"></i> Fast & Working Server</span>
+                        <span class="ad-guard-pill"><i class="fa-solid fa-server"></i> 6 Servers Ready</span>
                     </div>
                     <div class="watch-btns">
                         <button type="button" class="seek-btn" onclick="seekPlayerSeconds(-10)" title="10 Seconds Backward">
@@ -2307,24 +2287,22 @@
                     </div>
                 </div>
 
-                <!-- যে মুভি/শো যে কয়টা ভাষায় রিলিজ হয়েছে, সেই ভাষাগুলো এখানে থাকবে -->
-                <div class="lang-top-bar" id="langTopBar">
-                    <div class="lang-bar-head">
-                        <span><i class="fa-solid fa-language"></i> রিলিজড ভাষা (Released Languages)</span>
-                        <span id="activeLangBadge" style="font-size: 11px; color: var(--gold);">Loading...</span>
-                    </div>
-                    <div class="lang-pill-list" id="langPillList"></div>
-                    <div class="lang-status-note" id="langStatusNote"></div>
-                </div>
-
                 <div class="player-stage" id="playerStage">
                     <iframe id="playerFrame" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
                     <video id="videoTag" controls playsinline preload="metadata" style="display: none;"></video>
                 </div>
 
+                <!-- ৬টি সার্ভারই রাখা হয়েছে -->
                 <div class="srv-row" id="srvRow">
-                    <button type="button" class="srv-btn active" id="s1" onclick="switchServer(1)">Server 1 (Main Fast)</button>
-                    <button type="button" class="srv-btn" id="s2" onclick="switchServer(2)">Server 2 (Backup)</button>
+                    <button type="button" class="srv-btn active" id="s1" onclick="switchServer(1)">Server 1</button>
+                    <button type="button" class="srv-btn" id="s2" onclick="switchServer(2)">Server 2</button>
+                    <button type="button" class="srv-btn" id="s3" onclick="switchServer(3)">Server 3</button>
+                    <button type="button" class="srv-btn" id="s4" onclick="switchServer(4)">Server 4</button>
+                    <button type="button" class="srv-btn" id="s5" onclick="switchServer(5)">Server 5</button>
+                    <button type="button" class="srv-btn" id="s6" onclick="switchServer(6)">Server 6</button>
+                </div>
+                <div class="srv-status-note" id="srvStatusNote">
+                    ৬টি সার্ভারের যেকোনোটিতে চাপ দিয়ে দেখতে পারেন। কোনো সার্ভারে লোডিং সমস্যা হলে সাথে সাথে অন্য সার্ভারে বদলে নিন।
                 </div>
             </div>
 
@@ -2415,67 +2393,44 @@
             "best": ""
         };
 
-        const LANG_LABELS = {
-            hi: "Hindi",
-            bn: "Bangla",
-            ta: "Tamil",
-            te: "Telugu",
-            en: "English",
-            ml: "Malayalam",
-            kn: "Kannada",
-            ko: "Korean",
-            ja: "Japanese",
-            es: "Spanish",
-            fr: "French",
-            ar: "Arabic",
-            tr: "Turkish"
-        };
-
         const NOW_MS = Date.now();
 
+        // আজকের / এইমাত্র রিলিজ বা আপডেট হওয়া আইটেম (সবচেয়ে সামনে ও NEW ব্যাজসহ দেখানোর জন্য)
         const CUSTOM_POSTS = [
             {
-                id: "recent-multi-1",
-                type: "Movie",
+                id: "today-new-1",
+                type: "New Release",
                 mediaKind: "movie",
-                recentUpdate: true,
-                updatedAtMs: NOW_MS - 6 * 60 * 1000,
-                title: "Shadow Strike (Hindi • Bangla • Tamil)",
+                isNewToday: true,
+                updatedAtMs: NOW_MS - 3 * 60 * 1000,
+                title: "Today New Release — Shadow Strike (2026)",
                 original_language: "hi",
-                releasedLanguages: ["hi", "bn", "ta"],
                 quality: "4K WEB-DL",
-                rating: "8.7",
-                release_date: "2026-11-20",
-                overview: "এইমাত্র যুক্ত হওয়া মাল্টি-ল্যাঙ্গুয়েজ অ্যাকশন মুভি। যে ভাষায় চাপ দেবেন সেই ভাষার স্ট্রিম চলবে।",
-                poster: "https://via.placeholder.com/400x600/182235/38bdf8?text=Shadow+Strike",
-                backdrop: "https://via.placeholder.com/780x440/182235/38bdf8?text=Shadow+Strike+4K",
-                streams: {
-                    hi: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                    bn: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    ta: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
-                },
+                rating: "8.8",
+                release_date: "2026-11-21",
+                overview: "আজকের নতুন রিলিজ। ৬টি সার্ভারের যেকোনোটিতে চাপ দিয়ে দেখতে পারবেন।",
+                poster: "https://via.placeholder.com/400x600/182235/38bdf8?text=NEW+RELEASE",
+                backdrop: "https://via.placeholder.com/780x440/182235/38bdf8?text=NEW+RELEASE",
+                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
                 sizes: { "480p": "680 MB", "720p": "1.5 GB", "1080p": "3.1 GB", "best": "5.2 GB" },
                 dl: {}
             },
             {
-                id: "recent-drama-2",
-                type: "Drama / Natok",
+                id: "today-series-2",
+                type: "Web Series",
                 mediaKind: "tv",
-                recentUpdate: true,
-                updatedAtMs: NOW_MS - 22 * 60 * 1000,
-                title: "Dhaka Midnight Natok (Bangla)",
+                isNewToday: true,
+                updatedAtMs: NOW_MS - 12 * 60 * 1000,
+                title: "Dhaka Files Web Series (Season 1–2)",
                 original_language: "bn",
-                releasedLanguages: ["bn"],
-                quality: "HD",
-                rating: "8.2",
+                quality: "WEB-DL",
+                rating: "8.5",
                 first_air_date: "2026-11-21",
-                overview: "সদ্য এডিট ও আপলোড হওয়া বাংলা নাটক।",
-                poster: "https://via.placeholder.com/400x600/1e293b/f59e0b?text=Dhaka+Midnight",
-                backdrop: "https://via.placeholder.com/780x440/1e293b/f59e0b?text=Dhaka+Midnight",
-                streams: {
-                    bn: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoy.mp4"
-                },
-                sizes: { "480p": "320 MB", "720p": "720 MB", "1080p": "1.4 GB", "best": "2.2 GB" },
+                overview: "সিজন ও এপিসোড অনুযায়ী প্রতিটা পর্ব আলাদাভাবে নির্বাচন করে দেখুন।",
+                poster: "https://via.placeholder.com/400x600/1e293b/f59e0b?text=WEB+SERIES+NEW",
+                backdrop: "https://via.placeholder.com/780x440/1e293b/f59e0b?text=WEB+SERIES+NEW",
+                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                sizes: { "480p": "350 MB", "720p": "780 MB", "1080p": "1.6 GB", "best": "2.7 GB" },
                 dl: {}
             }
         ];
@@ -2489,17 +2444,13 @@
                 updatedAtMs: NOW_MS - 15 * 60 * 1000,
                 title: "Midnight Desire 18+ (Hindi / English)",
                 original_language: "hi",
-                releasedLanguages: ["hi", "en"],
                 quality: "WEB-DL",
                 rating: "7.5",
-                release_date: "2026-10-12",
+                release_date: "2026-11-21",
                 overview: "18+ ক্যাটাগরির বিশেষ রিলিজ।",
                 poster: "https://via.placeholder.com/400x600/3b0d24/f472b6?text=18%2B+Exclusive+1",
                 backdrop: "https://via.placeholder.com/780x440/3b0d24/f472b6?text=18%2B+Exclusive+1",
-                streams: {
-                    hi: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-                    en: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
-                },
+                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
                 sizes: { "480p": "540 MB", "720p": "1.2 GB", "1080p": "2.4 GB", "best": "4.0 GB" },
                 dl: {}
             },
@@ -2511,17 +2462,13 @@
                 updatedAtMs: NOW_MS - 48 * 60 * 1000,
                 title: "Velvet Nights 18+ (English / Hindi)",
                 original_language: "en",
-                releasedLanguages: ["en", "hi"],
                 quality: "4K WEB-DL",
                 rating: "7.8",
-                release_date: "2026-09-25",
+                release_date: "2026-11-20",
                 overview: "18+ ক্যাটাগরির অতিরিক্ত রিলিজ।",
                 poster: "https://via.placeholder.com/400x600/4a0e2e/fb7185?text=18%2B+Exclusive+2",
                 backdrop: "https://via.placeholder.com/780x440/4a0e2e/fb7185?text=18%2B+Exclusive+2",
-                streams: {
-                    en: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
-                    hi: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
-                },
+                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
                 sizes: { "480p": "610 MB", "720p": "1.4 GB", "1080p": "2.8 GB", "best": "4.6 GB" },
                 dl: {}
             }
@@ -2561,50 +2508,48 @@
         const SHOWS_DATA = {
             cid: {
                 title: "CID (Bangla / Hindi)",
-                releasedLanguages: ["bn", "hi"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "CID — রহস্যময় খুন (পর্ব ০১)", updatedAtMs: NOW_MS - 14 * 60 * 1000, sizes: { "480p": "420 MB", "720p": "980 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, streams: {}, dl: {} },
-                        { ep: "Ep 02", name: "CID — অন্ধকার রাতের তদন্ত (পর্ব ০২)", updatedAtMs: NOW_MS - 40 * 60 * 1000, sizes: { "480p": "410 MB", "720p": "950 MB", "1080p": "1.8 GB", "best": "3.0 GB" }, streams: {}, dl: {} },
-                        { ep: "Ep 03", name: "CID — অচেনা সাক্ষী (পর্ব ০৩)", updatedAtMs: NOW_MS - 2 * 3600 * 1000, sizes: { "480p": "435 MB", "720p": "1.0 GB", "1080p": "2.0 GB", "best": "3.2 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "CID — রহস্যময় খুন (Season 1 • Episode 01)", updatedAtMs: NOW_MS - 14 * 60 * 1000, sizes: { "480p": "420 MB", "720p": "980 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, url: "", dl: {} },
+                        { ep: "Ep 02", name: "CID — অন্ধকার রাতের তদন্ত (Season 1 • Episode 02)", updatedAtMs: NOW_MS - 40 * 60 * 1000, sizes: { "480p": "410 MB", "720p": "950 MB", "1080p": "1.8 GB", "best": "3.0 GB" }, url: "", dl: {} },
+                        { ep: "Ep 03", name: "CID — অচেনা সাক্ষী (Season 1 • Episode 03)", updatedAtMs: NOW_MS - 2 * 3600 * 1000, sizes: { "480p": "435 MB", "720p": "1.0 GB", "1080p": "2.0 GB", "best": "3.2 GB" }, url: "", dl: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "CID — সিজন ২ পর্ব ০১", updatedAtMs: NOW_MS - 55 * 60 * 1000, sizes: { "480p": "425 MB", "720p": "990 MB", "1080p": "1.95 GB", "best": "3.15 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "CID — সিজন ২ পর্ব ০১ (Season 2 • Episode 01)", updatedAtMs: NOW_MS - 55 * 60 * 1000, sizes: { "480p": "425 MB", "720p": "990 MB", "1080p": "1.95 GB", "best": "3.15 GB" }, url: "", dl: {} },
+                        { ep: "Ep 02", name: "CID — সিজন ২ পর্ব ০২ (Season 2 • Episode 02)", updatedAtMs: NOW_MS - 75 * 60 * 1000, sizes: { "480p": "430 MB", "720p": "970 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, url: "", dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "CID — সিজন ৩ পর্ব ০১", updatedAtMs: NOW_MS - 30 * 60 * 1000, sizes: { "480p": "440 MB", "720p": "1.05 GB", "1080p": "2.1 GB", "best": "3.3 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "CID — সিজন ৩ পর্ব ০১ (Season 3 • Episode 01)", updatedAtMs: NOW_MS - 30 * 60 * 1000, sizes: { "480p": "440 MB", "720p": "1.05 GB", "1080p": "2.1 GB", "best": "3.3 GB" }, url: "", dl: {} }
                     ]
                 }
             },
             gopal: {
                 title: "গোপাল ভাঁড় — বাংলা এপিসোড",
-                releasedLanguages: ["bn"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — রাজদরবারের কাণ্ড (পর্ব ০১)", updatedAtMs: NOW_MS - 10 * 60 * 1000, sizes: { "480p": "120 MB", "720p": "280 MB", "1080p": "620 MB", "best": "1.1 GB" }, streams: {}, dl: {} },
-                        { ep: "Ep 02", name: "গোপাল ভাঁড় — বুদ্ধির খেলা (পর্ব ০২)", updatedAtMs: NOW_MS - 35 * 60 * 1000, sizes: { "480p": "115 MB", "720p": "270 MB", "1080p": "590 MB", "best": "1.0 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — রাজদরবারের কাণ্ড (Season 1 • Episode 01)", updatedAtMs: NOW_MS - 10 * 60 * 1000, sizes: { "480p": "120 MB", "720p": "280 MB", "1080p": "620 MB", "best": "1.1 GB" }, url: "", dl: {} },
+                        { ep: "Ep 02", name: "গোপাল ভাঁড় — বুদ্ধির খেলা (Season 1 • Episode 02)", updatedAtMs: NOW_MS - 35 * 60 * 1000, sizes: { "480p": "115 MB", "720p": "270 MB", "1080p": "590 MB", "best": "1.0 GB" }, url: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ২ পর্ব ০১", updatedAtMs: NOW_MS - 90 * 60 * 1000, sizes: { "480p": "118 MB", "720p": "275 MB", "1080p": "600 MB", "best": "1.05 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ২ পর্ব ০১ (Season 2 • Episode 01)", updatedAtMs: NOW_MS - 90 * 60 * 1000, sizes: { "480p": "118 MB", "720p": "275 MB", "1080p": "600 MB", "best": "1.05 GB" }, url: "", dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ৩ পর্ব ০১", updatedAtMs: NOW_MS - 120 * 60 * 1000, sizes: { "480p": "122 MB", "720p": "285 MB", "1080p": "615 MB", "best": "1.08 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ৩ পর্ব ০১ (Season 3 • Episode 01)", updatedAtMs: NOW_MS - 120 * 60 * 1000, sizes: { "480p": "122 MB", "720p": "285 MB", "1080p": "615 MB", "best": "1.08 GB" }, url: {} }
                     ]
                 }
             },
             motu: {
                 title: "মোটু পাতলু — সিজন ও এপিসোড",
-                releasedLanguages: ["bn", "hi"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — ফুরফুরি নগরের গল্প (পর্ব ০১)", updatedAtMs: NOW_MS - 18 * 60 * 1000, sizes: { "480p": "135 MB", "720p": "310 MB", "1080p": "680 MB", "best": "1.2 GB" }, streams: {}, dl: {} },
-                        { ep: "Ep 02", name: "মোটু পাতলু — সিঙ্গারার কাণ্ড (পর্ব ০২)", updatedAtMs: NOW_MS - 50 * 60 * 1000, sizes: { "480p": "130 MB", "720p": "295 MB", "1080p": "650 MB", "best": "1.15 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — ফুরফুরি নগরের গল্প (Season 1 • Episode 01)", updatedAtMs: NOW_MS - 18 * 60 * 1000, sizes: { "480p": "135 MB", "720p": "310 MB", "1080p": "680 MB", "best": "1.2 GB" }, url: "", dl: {} },
+                        { ep: "Ep 02", name: "মোটু পাতলু — সিঙ্গারার কাণ্ড (Season 1 • Episode 02)", updatedAtMs: NOW_MS - 50 * 60 * 1000, sizes: { "480p": "130 MB", "720p": "295 MB", "1080p": "650 MB", "best": "1.15 GB" }, url: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ২ পর্ব ০১", updatedAtMs: NOW_MS - 3 * 3600 * 1000, sizes: { "480p": "138 MB", "720p": "315 MB", "1080p": "690 MB", "best": "1.2 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ২ পর্ব ০১ (Season 2 • Episode 01)", updatedAtMs: NOW_MS - 3 * 3600 * 1000, sizes: { "480p": "138 MB", "720p": "315 MB", "1080p": "690 MB", "best": "1.2 GB" }, url: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ৩ পর্ব ০১", updatedAtMs: NOW_MS - 4 * 3600 * 1000, sizes: { "480p": "142 MB", "720p": "325 MB", "1080p": "710 MB", "best": "1.28 GB" }, streams: {}, dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ৩ পর্ব ০১ (Season 3 • Episode 01)", updatedAtMs: NOW_MS - 4 * 3600 * 1000, sizes: { "480p": "142 MB", "720p": "325 MB", "1080p": "710 MB", "best": "1.28 GB" }, url: {} }
                     ]
                 }
             }
@@ -2630,9 +2575,7 @@
             activeServerNum: 1,
             selectedSeason: 1,
             selectedEpisode: 1,
-            selectedLangCode: "en",
-            selectedLangLabel: "English",
-            availableLangs: [],
+            seasonEpisodesCache: [],
             trailerKey: "",
             rotated: false,
             cinemaMode: false,
@@ -2708,8 +2651,10 @@
             renderReactionPoll(key);
         }
 
-        function formatTimeAgo(ms) {
-            const diffSec = Math.max(10, Math.floor((Date.now() - (ms || Date.now())) / 1000));
+        // রিয়েল-টাইম আপডেট সময় (কত সেকেন্ড / মিনিট / ঘণ্টা / দিন আগে আপডেট হয়েছে)
+        function formatRealTimeAgo(ms) {
+            const targetMs = typeof ms === "number" && !Number.isNaN(ms) ? ms : Date.now();
+            const diffSec = Math.max(5, Math.floor((Date.now() - targetMs) / 1000));
             if (diffSec < 60) return `Updated ${diffSec}s ago`;
             const diffMin = Math.floor(diffSec / 60);
             if (diffMin < 60) return `Updated ${diffMin}m ago`;
@@ -2717,6 +2662,29 @@
             if (diffHr < 24) return `Updated ${diffHr}h ago`;
             const diffDay = Math.floor(diffHr / 24);
             return `Updated ${diffDay}d ago`;
+        }
+
+        function isReleasedToday(item) {
+            if (item.isNewToday) return true;
+            const todayStr = new Date().toISOString().slice(0, 10);
+            const dStr = String(item.date || "");
+            if (dStr === todayStr) return true;
+            if (item.updatedAtMs && (Date.now() - item.updatedAtMs) <= 24 * 3600 * 1000) return true;
+            return false;
+        }
+
+        function refreshAllRealTimeLabels() {
+            document.querySelectorAll("[data-updated-ms]").forEach(el => {
+                const ms = Number(el.getAttribute("data-updated-ms"));
+                if (!Number.isNaN(ms) && ms > 0) {
+                    el.textContent = formatRealTimeAgo(ms);
+                }
+            });
+            if (state.currentItem && document.getElementById("detailModal")?.classList.contains("open")) {
+                const txt = formatRealTimeAgo(state.currentItem.updatedAtMs);
+                document.getElementById("dUpdatedTop").textContent = txt;
+                document.getElementById("mUpdated").textContent = txt;
+            }
         }
 
         function updateSavedCounter() {
@@ -2779,38 +2747,8 @@
             return "HD";
         }
 
-        function buildHookLine(title, quality, langSummary, rating, updatedText) {
-            return `Why Watch: ${title} (${langSummary} • ${quality}) — ★ ${rating} • ${updatedText}`;
-        }
-
-        function getLangLabel(code) {
-            const c = String(code || "en").toLowerCase();
-            return LANG_LABELS[c] || c.toUpperCase();
-        }
-
-        /*
-         * কাস্টম আইটেমে `releasedLanguages` দেওয়া থাকলে সেটি নেয়,
-         * আর TMDb মুভি/শো হলে তার `original_language` এবং ডিটেইল/ট্রান্সলেশন থেকে
-         * পাওয়া রিলিজড/অ্যাভেইলেবল ভাষাগুলো (যেমন hi, bn, ta, te, en ইত্যাদি) সংগ্রহ করে।
-         */
-        function getInitialLangCodes(m) {
-            const rawList = Array.isArray(m.releasedLanguages)
-                ? m.releasedLanguages
-                : (Array.isArray(m.languages) ? m.languages : []);
-
-            const cleaned = rawList
-                .map(c => String(c || "").trim().toLowerCase())
-                .filter(Boolean);
-
-            if (cleaned.length > 0) {
-                return Array.from(new Set(cleaned));
-            }
-
-            const orig = String(m.original_language || m.lang || "en").trim().toLowerCase() || "en";
-            if (orig === "bn") return ["bn", "hi", "en"];
-            if (orig === "hi") return ["hi", "bn", "ta", "te", "en"];
-            if (["ta", "te", "ml", "kn"].includes(orig)) return [orig, "hi", "te", "ta", "en"];
-            return [orig, "hi", "bn", "en"];
+        function buildHookLine(title, quality, lang, rating, updatedText) {
+            return `Why Watch: ${title} (${lang} • ${quality}) — ★ ${rating} • ${updatedText}`;
         }
 
         function normalizeTmdbItem(m, fallbackKind, idx = 0) {
@@ -2818,34 +2756,31 @@
             const mediaKind = (m.media_type === "tv" || fallbackKind === "tv_drama" || fallbackKind === "anime" || fallbackKind === "series" || fallbackKind === "drama" || fallbackKind === "cartoon" || fallbackKind === "episode")
                 ? (fallbackKind === "episode" ? "episode" : "tv")
                 : "movie";
-            const date = m.release_date || m.first_air_date || "2026";
+            const date = m.release_date || m.first_air_date || "2026-11-21";
             const vote = m.vote_average ? Number(m.vote_average).toFixed(1) : (m.rating ? String(m.rating) : "7.5");
-            const releasedCodes = getInitialLangCodes(m);
-            const primaryCode = releasedCodes[0] || "en";
+            const lang = (m.original_language || m.lang || "EN").toUpperCase();
             const quality = m.quality || getQuality(Number(vote) || 7.5);
             const poster = m.poster ? m.poster : (m.poster_path ? (IMG_500 + m.poster_path) : "");
             const backdrop = m.backdrop ? m.backdrop : (m.backdrop_path ? (IMG_780 + m.backdrop_path) : poster);
-            const updatedAtMs = m.updatedAtMs || (Date.now() - (idx + 1) * 14 * 60 * 1000);
+
+            // নতুন / সাম্প্রতিক রিলিজগুলো শুরুতে রিয়েল-টাইম (কয়েক মিনিট/ঘণ্টা আগে) হিসেবে সাজানো
+            const updatedAtMs = m.updatedAtMs || (NOW_MS - (idx + 1) * 18 * 60 * 1000);
 
             return {
                 id: m.id,
-                type: m.type || (mediaKind === "tv" ? "Series / Drama" : (mediaKind === "episode" ? "Episode" : "Movie")),
+                type: m.type || (mediaKind === "tv" ? "Web Series / TV" : (mediaKind === "episode" ? "Episode" : "Movie")),
                 mediaKind,
                 title,
-                lang: primaryCode.toUpperCase(),
-                releasedCodes,
-                hasExplicitCustomLangs: Array.isArray(m.releasedLanguages) && m.releasedLanguages.length > 0,
+                lang,
                 quality,
                 rating: vote,
                 date,
                 updatedAtMs,
-                recentUpdate: Boolean(m.recentUpdate || idx < 4),
+                isNewToday: Boolean(m.isNewToday || idx < 3),
                 overview: m.overview || "Storyline details are available on the stream.",
                 poster,
                 backdrop,
                 videoUrl: m.videoUrl || "",
-                streams: m.streams || {},
-                embedUrls: m.embedUrls || {},
                 sizes: m.sizes || { "480p": "780 MB", "720p": "1.8 GB", "1080p": "3.8 GB", "best": "6.4 GB" },
                 dl: m.dl || {}
             };
@@ -2873,9 +2808,9 @@
             const slide = document.getElementById("heroSlide");
             const bg = item.backdrop || item.poster;
             slide.style.backgroundImage = bg ? `url('${bg}')` : "none";
-            document.getElementById("heroBadge").textContent = `FEATURED #${idx + 1}`;
+            document.getElementById("heroBadge").textContent = idx === 0 ? "NEW RELEASE" : `FEATURED #${idx + 1}`;
             document.getElementById("heroTitle").textContent = item.title;
-            document.getElementById("heroMeta").textContent = `★ ${item.rating} • ${item.lang} • ${item.quality} • ${formatTimeAgo(item.updatedAtMs)}`;
+            document.getElementById("heroMeta").textContent = `★ ${item.rating} • ${item.lang} • ${item.quality} • ${formatRealTimeAgo(item.updatedAtMs)}`;
             document.getElementById("heroPlayBtn").onclick = () => openDetail(item, idx);
 
             const dots = document.getElementById("heroDots");
@@ -2936,7 +2871,7 @@
                         <span class="trend-rank">#${i + 1}</span>
                         <img src="${item.poster || 'https://via.placeholder.com/300x450/161c28/9ca3af?text=ZMB'}" alt="${esc(item.title)}" loading="lazy">
                         <div class="trend-title">${esc(item.title)}</div>
-                        <div class="trend-time">${formatTimeAgo(item.updatedAtMs)}</div>
+                        <div class="trend-time" data-updated-ms="${item.updatedAtMs}">${formatRealTimeAgo(item.updatedAtMs)}</div>
                     `;
                     box.appendChild(card);
                 });
@@ -3160,11 +3095,16 @@
                     const adultNorm = ADULT_CUSTOM_POSTS.map((c, i) => normalizeTmdbItem(c, "movie", i));
                     list = [...adultNorm, ...list];
                 } else if (state.page === 1 && !state.query && state.mode !== "ott" && CUSTOM_POSTS.length) {
-                    const recentNorm = CUSTOM_POSTS.map((c, i) => normalizeTmdbItem(c, "movie", i));
-                    list = [...recentNorm, ...list];
+                    const newNorm = CUSTOM_POSTS.map((c, i) => normalizeTmdbItem(c, c.mediaKind || "movie", i));
+                    list = [...newNorm, ...list];
                 }
 
-                list.sort((a, b) => (b.updatedAtMs || 0) - (a.updatedAtMs || 0));
+                // আজকের / সাম্প্রতিক রিলিজগুলো সবচেয়ে সামনে রাখার জন্য সর্টিং
+                list.sort((a, b) => {
+                    const todayDiff = (isReleasedToday(b) ? 1 : 0) - (isReleasedToday(a) ? 1 : 0);
+                    if (todayDiff !== 0) return todayDiff;
+                    return (b.updatedAtMs || 0) - (a.updatedAtMs || 0);
+                });
 
                 state.totalPages = pages;
                 state.items = list;
@@ -3191,7 +3131,7 @@
             let filtered = [...state.items];
             if (qFilter) filtered = filtered.filter(it => it.quality === qFilter);
             if (!state.query && yFilter) filtered = filtered.filter(it => (it.date || "").startsWith(yFilter));
-            if (!state.query && lFilter) filtered = filtered.filter(it => it.releasedCodes.map(c => c.toUpperCase()).includes(lFilter));
+            if (!state.query && lFilter) filtered = filtered.filter(it => it.lang === lFilter);
 
             grid.innerHTML = "";
             if (!filtered.length) {
@@ -3204,13 +3144,12 @@
 
             filtered.forEach((item, idx) => {
                 const year = (item.date || "2026").slice(0, 4);
-                const agoText = formatTimeAgo(item.updatedAtMs);
-                let topLeftBadge = "";
-                if (idx < 3 && !state.query) {
-                    topLeftBadge = `<span class="b-tl recent-badge">JUST UPDATED</span>`;
-                } else if (idx === 3 && !state.query) {
-                    topLeftBadge = `<span class="b-tl">TRENDING</span>`;
-                }
+                const agoText = formatRealTimeAgo(item.updatedAtMs);
+                const showNew = isReleasedToday(item) && !state.query;
+
+                const topLeftBadge = showNew
+                    ? `<span class="b-tl new-release-badge">NEW</span>`
+                    : (idx < 3 && !state.query ? `<span class="b-tl">TRENDING</span>` : "");
 
                 const card = document.createElement("div");
                 card.className = "m-card";
@@ -3231,7 +3170,7 @@
                     <div class="m-body">
                         <div class="m-title">${esc(item.title)}</div>
                         <div class="m-sub">${year} • ★ ${item.rating}</div>
-                        <div class="m-time-ago"><i class="fa-regular fa-clock"></i> ${agoText}</div>
+                        <div class="m-time-ago" data-updated-ms="${item.updatedAtMs}"><i class="fa-regular fa-clock"></i> ${agoText}</div>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -3389,7 +3328,7 @@
             const box = document.getElementById("epGrid");
             box.innerHTML = "";
 
-            list.forEach(ep => {
+            list.forEach((ep, idx) => {
                 const card = document.createElement("div");
                 card.className = "ep-card";
                 card.onclick = () => openDetail(normalizeTmdbItem({
@@ -3397,24 +3336,24 @@
                     type: "Episode",
                     mediaKind: "episode",
                     title: `${ep.name} (Season ${sNum})`,
-                    releasedLanguages: sData.releasedLanguages || ["bn"],
+                    lang: "BN",
                     quality: "WEB-DL",
                     rating: "8.4",
                     date: `Season ${sNum}`,
-                    updatedAtMs: ep.updatedAtMs || (Date.now() - 25 * 60 * 1000),
-                    overview: `${sData.title} — Season ${sNum}, ${ep.ep}। রিলিজড ভাষা অনুযায়ী স্ট্রিম লিংক যুক্ত করলে সাথে সাথে প্লে হবে।`,
+                    updatedAtMs: ep.updatedAtMs || (NOW_MS - 25 * 60 * 1000),
+                    overview: `${sData.title} — Season ${sNum}, ${ep.ep}।`,
                     poster: "",
                     backdrop: "",
-                    streams: ep.streams || {},
-                    embedUrls: ep.embedUrls || {},
+                    videoUrl: ep.url || "",
                     sizes: ep.sizes,
                     dl: ep.dl || {}
-                }, "episode"), 0);
+                }, "episode"), idx);
 
+                const epTime = ep.updatedAtMs || (NOW_MS - 25 * 60 * 1000);
                 card.innerHTML = `
                     <div style="font-size: 11px; font-weight: 800; color: var(--gold);">Season ${sNum} • ${ep.ep}</div>
                     <div style="font-size: 13px; font-weight: 700; margin: 4px 0;">${esc(ep.name)}</div>
-                    <div style="font-size: 11px; color: var(--cyan);">${formatTimeAgo(ep.updatedAtMs || Date.now() - 25 * 60 * 1000)}</div>
+                    <div style="font-size: 11px; color: var(--cyan);" data-updated-ms="${epTime}">${formatRealTimeAgo(epTime)}</div>
                 `;
                 box.appendChild(card);
             });
@@ -3537,109 +3476,28 @@
             p.style.display = p.style.display === "none" ? "block" : "none";
         }
 
-        function renderReleasedLanguageBar(item, codesOverride = null) {
-            const listEl = document.getElementById("langPillList");
-            const badgeEl = document.getElementById("activeLangBadge");
-            const noteEl = document.getElementById("langStatusNote");
-            const metaLangEl = document.getElementById("mLang");
-            if (!listEl) return;
-
-            const codes = Array.isArray(codesOverride) && codesOverride.length
-                ? Array.from(new Set(codesOverride.map(c => String(c).toLowerCase())))
-                : getInitialLangCodes(item);
-
-            item.releasedCodes = codes;
-            const langs = codes.map(code => ({
-                code,
-                label: getLangLabel(code)
-            }));
-            state.availableLangs = langs;
-
-            const summary = langs.map(l => l.label).join(" • ");
-            if (metaLangEl) metaLangEl.textContent = summary;
-
-            const currentStillExists = langs.find(l => l.code === state.selectedLangCode);
-            const chosen = currentStillExists || langs[0];
-            state.selectedLangCode = chosen.code;
-            state.selectedLangLabel = chosen.label;
-            if (badgeEl) badgeEl.textContent = `${chosen.label} (${chosen.code.toUpperCase()})`;
-
-            listEl.innerHTML = "";
-            langs.forEach(langObj => {
-                const btn = document.createElement("button");
-                btn.type = "button";
-                btn.className = `lang-choice-btn ${langObj.code === state.selectedLangCode ? "active" : ""}`;
-                btn.dataset.langCode = langObj.code;
-                btn.innerHTML = `<i class="fa-solid fa-language"></i> <span>${esc(langObj.label)}</span>`;
-                btn.onclick = () => selectReleasedLanguage(langObj);
-                listEl.appendChild(btn);
-            });
-
-            if (noteEl) {
-                noteEl.textContent = `উপলব্ধ ভাষা (${langs.length}টি): ${summary}। নিজের পছন্দের ভাষায় ক্লিক করুন।`;
-            }
-        }
-
         /*
-         * ১টি ফাস্ট মেইন সার্ভার (Server 1: vidsrc.to) ও ১টি ব্যাকআপ সার্ভার (Server 2: vidsrc.me)
-         * যেকোনো মুভি/সিরিজে "Not Found" বা লোডিং সমস্যা কমাতে কার্যকর লিংক তৈরি করে।
+         * ৬টি সার্ভারই সম্পূর্ণ সক্রিয় ও কভারেজসহ তৈরি:
+         * Server 1: vidsrc.to
+         * Server 2: vidsrc.me
+         * Server 3: vidsrc.in
+         * Server 4: 2embed.cc
+         * Server 5: autoembed.cc
+         * Server 6: moviesapi.club
          */
-        function getStreamForReleasedLang(item, langCode, srvNum, sNum, eNum) {
-            const code = String(langCode || item.releasedCodes?.[0] || "en").toLowerCase();
-
-            if (item.streams && item.streams[code]) {
-                return item.streams[code];
-            }
-            if (item.embedUrls && item.embedUrls[code]) {
-                return item.embedUrls[code];
-            }
-            if (item.videoUrl) {
-                return item.videoUrl;
-            }
-            if (item.mediaKind === "episode") {
-                return "";
-            }
+        function getServerUrl(num, item, sNum = 1, eNum = 1) {
+            if (item.videoUrl) return item.videoUrl;
+            if (item.mediaKind === "episode") return "";
 
             const kind = item.mediaKind === "tv" ? "tv" : "movie";
             const path = kind === "tv" ? `${item.id}/${sNum}/${eNum}` : `${item.id}`;
 
-            if (srvNum === 2) {
-                return `https://vidsrc.me/embed/${kind}/${path}?ds_lang=${encodeURIComponent(code)}`;
-            }
-            return `https://vidsrc.to/embed/${kind}/${path}?ds_lang=${encodeURIComponent(code)}`;
-        }
-
-        function selectReleasedLanguage(langObj) {
-            if (!state.currentItem || !langObj) return;
-            state.selectedLangCode = langObj.code;
-            state.selectedLangLabel = langObj.label;
-
-            document.querySelectorAll(".lang-choice-btn").forEach(b => {
-                b.classList.toggle("active", b.dataset.langCode === langObj.code);
-            });
-
-            const badgeEl = document.getElementById("activeLangBadge");
-            if (badgeEl) badgeEl.textContent = `${langObj.label} (${langObj.code.toUpperCase()})`;
-
-            const srvNum = state.activeServerNum || 1;
-            const url = getStreamForReleasedLang(
-                state.currentItem,
-                langObj.code,
-                srvNum,
-                state.selectedSeason,
-                state.selectedEpisode
-            );
-
-            const noteEl = document.getElementById("langStatusNote");
-            if (noteEl) {
-                noteEl.textContent = `${langObj.label} ভাষায় প্লেয়ার চালু করা হয়েছে।`;
-            }
-
-            mountStream(url, `${langObj.label} • Server ${srvNum}`);
-        }
-
-        function getServerUrl(num, item, sNum = 1, eNum = 1) {
-            return getStreamForReleasedLang(item, state.selectedLangCode, num, sNum, eNum);
+            if (num === 1) return `https://vidsrc.to/embed/${kind}/${path}`;
+            if (num === 2) return `https://vidsrc.me/embed/${kind}/${path}`;
+            if (num === 3) return `https://vidsrc.in/embed/${kind}/${path}`;
+            if (num === 4) return `https://www.2embed.cc/embed${kind === "tv" ? "tv" : ""}/${kind === "tv" ? `${item.id}&s=${sNum}&e=${eNum}` : `${item.id}`}`;
+            if (num === 5) return `https://player.autoembed.cc/embed/${kind}/${path}`;
+            return `https://moviesapi.club/${kind}/${kind === "tv" ? `${item.id}-${sNum}-${eNum}` : `${item.id}`}`;
         }
 
         async function openDetail(item, idx = 0) {
@@ -3648,6 +3506,7 @@
             state.activeServerNum = 1;
             state.selectedSeason = 1;
             state.selectedEpisode = 1;
+            state.seasonEpisodesCache = [];
             state.trailerKey = "";
             state.rotated = false;
             document.getElementById("playerStage").classList.remove("rotated-view");
@@ -3655,7 +3514,7 @@
             document.getElementById("dStory").style.display = "none";
             document.title = `${normItem.title} (${normItem.rating}) — Zero Movie Box`;
 
-            const agoText = formatTimeAgo(normItem.updatedAtMs);
+            const agoText = formatRealTimeAgo(normItem.updatedAtMs);
             document.getElementById("dUpdatedTop").textContent = agoText;
             document.getElementById("mUpdated").textContent = agoText;
 
@@ -3666,13 +3525,13 @@
             addToHistory(normItem);
             syncWatchlistButton();
             renderReactionPoll(normItem.id);
-            renderReleasedLanguageBar(normItem);
 
             document.getElementById("dPoster").src = normItem.poster || "https://via.placeholder.com/400x600/161c28/9ca3af?text=Zero+Movie+Box";
             document.getElementById("dTitle").textContent = normItem.title;
             document.getElementById("dSub").textContent = `${normItem.lang} • ${normItem.quality} • ★ ${normItem.rating}`;
             document.getElementById("mType").textContent = normItem.type;
-            document.getElementById("dHook").textContent = buildHookLine(normItem.title, normItem.quality, normItem.releasedCodes.map(c => getLangLabel(c)).join(", "), normItem.rating, agoText);
+            document.getElementById("mLang").textContent = normItem.mediaKind === "tv" ? `${normItem.lang} • Series` : normItem.lang;
+            document.getElementById("dHook").textContent = buildHookLine(normItem.title, normItem.quality, normItem.lang, normItem.rating, agoText);
             document.getElementById("dStory").textContent = normItem.overview;
 
             document.getElementById("sz480").textContent = normItem.sizes?.["480p"] || "780 MB";
@@ -3699,8 +3558,7 @@
 
             if (normItem.mediaKind === "episode") {
                 srvRow.style.display = "none";
-                const epUrl = getStreamForReleasedLang(normItem, state.selectedLangCode, 1, 1, 1);
-                mountStream(epUrl, `${state.selectedLangLabel} • Episode`);
+                mountStream(normItem.videoUrl || "", "Episode Stream");
             } else {
                 srvRow.style.display = "flex";
                 switchServer(1);
@@ -3722,40 +3580,12 @@
         async function enrichTmdbDetails(item) {
             const kind = item.mediaKind === "tv" ? "tv" : "movie";
             try {
-                const [details, translations, credits, videos, similar] = await Promise.all([
+                const [details, credits, videos, similar] = await Promise.all([
                     fetch(`${API_BASE}/${kind}/${item.id}?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({})),
-                    fetch(`${API_BASE}/${kind}/${item.id}/translations?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ translations: [] })),
                     fetch(`${API_BASE}/${kind}/${item.id}/credits?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ cast: [] })),
                     fetch(`${API_BASE}/${kind}/${item.id}/videos?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ results: [] })),
                     fetch(`${API_BASE}/${kind}/${item.id}/similar?api_key=${TMDB_API_KEY}&page=1`).then(r => r.json()).catch(() => ({ results: [] }))
                 ]);
-
-                // কাস্টম ল্যাঙ্গুয়েজ লিস্ট না থাকলে TMDb-এর আসল ভাষা ও ট্রান্সলেশন থেকে ভাষাগুলো সাজানো
-                if (!item.hasExplicitCustomLangs) {
-                    const collected = [];
-                    if (details.original_language) collected.push(String(details.original_language).toLowerCase());
-                    if (Array.isArray(details.spoken_languages)) {
-                        details.spoken_languages.forEach(sp => {
-                            if (sp.iso_639_1) collected.push(String(sp.iso_639_1).toLowerCase());
-                        });
-                    }
-                    if (Array.isArray(translations.translations)) {
-                        translations.translations.forEach(tr => {
-                            if (tr.iso_639_1) collected.push(String(tr.iso_639_1).toLowerCase());
-                        });
-                    }
-                    const supportedCodes = Array.from(new Set(collected)).filter(c => LANG_LABELS[c] || c === details.original_language);
-                    if (supportedCodes.length) {
-                        renderReleasedLanguageBar(item, supportedCodes);
-                        document.getElementById("dHook").textContent = buildHookLine(
-                            item.title,
-                            item.quality,
-                            supportedCodes.map(c => getLangLabel(c)).join(", "),
-                            item.rating,
-                            formatTimeAgo(item.updatedAtMs)
-                        );
-                    }
-                }
 
                 const yt = (videos.results || []).find(v => v.site === "YouTube" && (v.type === "Trailer" || v.type === "Teaser")) || (videos.results || []).find(v => v.site === "YouTube");
                 state.trailerKey = yt ? yt.key : "";
@@ -3790,11 +3620,15 @@
                     if (validSeasons.length) {
                         const tvBox = document.getElementById("tvPickerBox");
                         const sSel = document.getElementById("tvSeasonSelect");
+                        const summaryEl = document.getElementById("seasonEpSummary");
+                        if (summaryEl) {
+                            summaryEl.textContent = `${validSeasons.length} Seasons Available`;
+                        }
                         sSel.innerHTML = "";
                         validSeasons.forEach(s => {
                             const opt = document.createElement("option");
                             opt.value = s.season_number;
-                            opt.textContent = `Season ${s.season_number} (${s.episode_count || "?"} Ep)`;
+                            opt.textContent = `Season ${s.season_number} (${s.episode_count || "?"} Episodes)`;
                             sSel.appendChild(opt);
                         });
                         tvBox.classList.add("open");
@@ -3824,25 +3658,53 @@
             } catch (e) {}
         }
 
+        function renderEpisodeQuickButtons(episodes, sNum, activeEpNum) {
+            const box = document.getElementById("epQuickList");
+            if (!box) return;
+            box.innerHTML = "";
+
+            const list = episodes.length
+                ? episodes
+                : Array.from({ length: 10 }, (_, idx) => ({ episode_number: idx + 1, name: `Episode ${idx + 1}` }));
+
+            list.forEach(ep => {
+                const epNum = Number(ep.episode_number || 1);
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = `ep-pill-btn ${epNum === Number(activeEpNum) ? "active" : ""}`;
+                btn.textContent = `S${sNum} • Ep ${epNum}${ep.name ? `: ${ep.name}` : ""}`;
+                btn.onclick = () => {
+                    document.getElementById("tvEpisodeSelect").value = String(epNum);
+                    playSelectedTvEpisode();
+                };
+                box.appendChild(btn);
+            });
+        }
+
         async function loadTvSeasonEpisodes() {
             if (!state.currentItem || state.currentItem.mediaKind !== "tv") return;
             const sNum = Number(document.getElementById("tvSeasonSelect").value || 1);
             state.selectedSeason = sNum;
             const epSel = document.getElementById("tvEpisodeSelect");
             epSel.innerHTML = `<option value="1">Episode 1</option>`;
+            let eps = [];
             try {
                 const sData = await fetch(`${API_BASE}/tv/${state.currentItem.id}/season/${sNum}?api_key=${TMDB_API_KEY}`).then(r => r.json());
-                const eps = sData.episodes || [];
+                eps = sData.episodes || [];
+                state.seasonEpisodesCache = eps;
                 if (eps.length) {
                     epSel.innerHTML = "";
                     eps.forEach(ep => {
                         const opt = document.createElement("option");
                         opt.value = ep.episode_number;
-                        opt.textContent = `Ep ${ep.episode_number}: ${ep.name || ""}`;
+                        opt.textContent = `Season ${sNum} • Episode ${ep.episode_number}${ep.name ? ` — ${ep.name}` : ""}`;
                         epSel.appendChild(opt);
                     });
                 }
             } catch (e) {}
+
+            const firstEp = eps.length ? Number(eps[0].episode_number) : 1;
+            renderEpisodeQuickButtons(eps, sNum, firstEp);
             playSelectedTvEpisode();
         }
 
@@ -3852,7 +3714,13 @@
             const eNum = Number(document.getElementById("tvEpisodeSelect").value || 1);
             state.selectedSeason = sNum;
             state.selectedEpisode = eNum;
-            mountStream(getServerUrl(state.activeServerNum || 1, state.currentItem, sNum, eNum), `${state.selectedLangLabel} • S${sNum} E${eNum} • Server ${state.activeServerNum || 1}`);
+
+            const badge = document.getElementById("activeEpBadge");
+            if (badge) badge.textContent = `Season ${sNum} • Episode ${eNum}`;
+            document.getElementById("mLang").textContent = `S${sNum} • Ep ${eNum}`;
+
+            renderEpisodeQuickButtons(state.seasonEpisodesCache, sNum, eNum);
+            mountStream(getServerUrl(state.activeServerNum || 1, state.currentItem, sNum, eNum), `Server ${state.activeServerNum || 1} (S${sNum} E${eNum})`);
         }
 
         function playOfficialTrailer() {
@@ -3924,9 +3792,11 @@
         function switchServer(num) {
             if (!state.currentItem || state.currentItem.mediaKind === "episode") return;
             state.activeServerNum = num;
-            document.getElementById("s1")?.classList.toggle("active", num === 1);
-            document.getElementById("s2")?.classList.toggle("active", num === 2);
-            mountStream(getServerUrl(num, state.currentItem, state.selectedSeason, state.selectedEpisode), `${state.selectedLangLabel} • Server ${num}`);
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`s${i}`)?.classList.toggle("active", i === num);
+            }
+            const epTag = state.currentItem.mediaKind === "tv" ? ` (S${state.selectedSeason} E${state.selectedEpisode})` : "";
+            mountStream(getServerUrl(num, state.currentItem, state.selectedSeason, state.selectedEpisode), `Server ${num}${epTag}`);
         }
 
         function toggleCinemaMode() {
@@ -3965,7 +3835,7 @@
 
             if (!targetUrl) {
                 note.style.display = "block";
-                note.innerHTML = `<strong>${qKey.toUpperCase()} (${state.currentItem.sizes?.[qKey] || ""})</strong> ডাউনলোড লিংক এখনো যুক্ত করা হয়নি। উপরে প্লেয়ারে ভাষা ও সার্ভার নির্বাচন করে সরাসরি দেখতে পারবেন।`;
+                note.innerHTML = `<strong>${qKey.toUpperCase()} (${state.currentItem.sizes?.[qKey] || ""})</strong> ডাউনলোড লিংক এখনো যুক্ত করা হয়নি। উপরে ৬টি সার্ভারের যেকোনোটিতে ক্লিক করে সরাসরি দেখতে পারবেন।`;
                 return;
             }
 
@@ -4072,6 +3942,7 @@
             loadTrendingStrip();
             loadCatalog(false);
             checkDirectHashOpen();
+            setInterval(refreshAllRealTimeLabels, 15000);
         });
     </script>
 </body>
