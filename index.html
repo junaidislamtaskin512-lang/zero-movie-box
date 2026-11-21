@@ -2419,10 +2419,8 @@
         const IMG_500 = "https://image.tmdb.org/t/p/w500";
         const IMG_780 = "https://image.tmdb.org/t/p/w780";
 
-        // টেলিগ্রাম চ্যানেল লিংক
         const TELEGRAM_URL = "https://t.me/your_channel_username";
 
-        // নির্দিষ্ট ডাউনলোড লিংক থাকলে এখানে দিন
         const DOWNLOAD_CONFIG = {
             "480p": "",
             "720p": "",
@@ -2432,7 +2430,6 @@
 
         const NOW_MS = Date.now();
 
-        // আজকের / নতুন যুক্ত হওয়া আইটেম (যেগুলো রিলিজ হলে সামনে NEW ব্যাজসহ যুক্ত হবে)
         const CUSTOM_POSTS = [
             {
                 id: "today-new-1",
@@ -2454,11 +2451,11 @@
             },
             {
                 id: "today-series-2",
-                type: "Web Series",
+                type: "Web Series / TV",
                 mediaKind: "tv",
                 isNewItem: true,
                 updatedAtMs: NOW_MS - 8 * 60 * 1000,
-                title: "Dhaka Mystery Series (Season 1–2)",
+                title: "Dhaka Mystery Series (Season 1–3)",
                 original_language: "bn",
                 quality: "WEB-DL",
                 rating: "8.6",
@@ -2690,7 +2687,6 @@
             renderReactionPoll(key);
         }
 
-        // রিয়েল-টাইম আপডেট সময় (কত সেকেন্ড / মিনিট / ঘণ্টা / দিন আগে আপডেট হয়েছে)
         function formatRealTimeAgo(ms) {
             const targetMs = typeof ms === "number" && !Number.isNaN(ms) ? ms : Date.now();
             const diffSec = Math.max(5, Math.floor((Date.now() - targetMs) / 1000));
@@ -2790,11 +2786,20 @@
             return `Why Watch: ${title} (${lang} • ${quality}) — ★ ${rating} • ${updatedText}`;
         }
 
+        function detectMediaKind(m, fallbackKind) {
+            if (m.mediaKind === "episode" || fallbackKind === "episode") return "episode";
+            if (m.mediaKind === "tv" || m.media_type === "tv" || Boolean(m.first_air_date) || (!m.title && Boolean(m.name))) {
+                return "tv";
+            }
+            if (fallbackKind === "tv_drama" || fallbackKind === "anime" || fallbackKind === "series" || fallbackKind === "drama" || fallbackKind === "cartoon") {
+                return "tv";
+            }
+            return "movie";
+        }
+
         function normalizeTmdbItem(m, fallbackKind, idx = 0) {
-            const title = m.title || m.name;
-            const mediaKind = (m.media_type === "tv" || fallbackKind === "tv_drama" || fallbackKind === "anime" || fallbackKind === "series" || fallbackKind === "drama" || fallbackKind === "cartoon" || fallbackKind === "episode")
-                ? (fallbackKind === "episode" ? "episode" : "tv")
-                : "movie";
+            const title = m.title || m.name || "Untitled";
+            const mediaKind = detectMediaKind(m, fallbackKind);
             const date = m.release_date || m.first_air_date || "2026-11-21";
             const vote = m.vote_average ? Number(m.vote_average).toFixed(1) : (m.rating ? String(m.rating) : "7.5");
             const lang = (m.original_language || m.lang || "EN").toUpperCase();
@@ -3243,7 +3248,7 @@
                             <img src="${norm.poster || 'https://via.placeholder.com/80x110/161c28/9ca3af?text=ZMB'}" alt="${esc(norm.title)}">
                             <div>
                                 <div style="font-size: 13px; font-weight: 700;">${esc(norm.title)}</div>
-                                <div style="font-size: 11px; color: var(--muted);">${(norm.date || '').slice(0, 4)} • ${norm.mediaKind.toUpperCase()} • ★ ${norm.rating}</div>
+                                <div style="font-size: 11px; color: var(--muted);">${(norm.date || '').slice(0, 4)} • ${norm.mediaKind === "tv" ? "SERIES" : "MOVIE"} • ★ ${norm.rating}</div>
                             </div>
                         `;
                         drop.appendChild(row);
@@ -3561,7 +3566,7 @@
             document.getElementById("dPoster").src = normItem.poster || "https://via.placeholder.com/400x600/161c28/9ca3af?text=Zero+Movie+Box";
             document.getElementById("dTitle").textContent = normItem.title;
             document.getElementById("dSub").textContent = `${normItem.lang} • ${normItem.quality} • ★ ${normItem.rating}`;
-            document.getElementById("mType").textContent = normItem.type;
+            document.getElementById("mType").textContent = normItem.mediaKind === "tv" ? "Web Series / TV" : normItem.type;
             document.getElementById("mSeasonEp").textContent = normItem.mediaKind === "tv" ? "S1 • Ep 1" : "Movie";
             document.getElementById("dHook").textContent = buildHookLine(normItem.title, normItem.quality, normItem.lang, normItem.rating, agoText);
             document.getElementById("dStory").textContent = normItem.overview;
@@ -3586,14 +3591,25 @@
 
             const srvRow = document.getElementById("srvRow");
             const seriesPanel = document.getElementById("seriesEpisodesPanel");
-            seriesPanel.classList.remove("open");
 
             if (normItem.mediaKind === "episode") {
                 srvRow.style.display = "none";
+                seriesPanel.classList.remove("open");
                 mountStream(normItem.videoUrl || "", "Episode Stream");
             } else {
                 srvRow.style.display = "flex";
-                switchServer(1);
+                if (normItem.mediaKind === "tv") {
+                    const defaultSeasons = [
+                        { season_number: 1, episode_count: 8 },
+                        { season_number: 2, episode_count: 8 },
+                        { season_number: 3, episode_count: 8 }
+                    ];
+                    state.seriesSeasonsMeta = defaultSeasons;
+                    await renderAllSeasonsAndEpisodes(defaultSeasons, 1);
+                } else {
+                    seriesPanel.classList.remove("open");
+                    switchServer(1);
+                }
             }
 
             const modal = document.getElementById("detailModal");
@@ -3647,12 +3663,14 @@
                     castList.appendChild(cCard);
                 });
 
-                if (kind === "tv") {
-                    const seasonsArr = Array.isArray(details.seasons) && details.seasons.filter(s => s.season_number >= 1).length
-                        ? details.seasons.filter(s => s.season_number >= 1)
-                        : [{ season_number: 1, episode_count: 8 }];
-                    state.seriesSeasonsMeta = seasonsArr;
-                    renderAllSeasonsAndEpisodes(seasonsArr, 1);
+                if (item.mediaKind === "tv") {
+                    const validSeasons = Array.isArray(details.seasons)
+                        ? details.seasons.filter(s => Number(s.season_number) >= 1)
+                        : [];
+                    if (validSeasons.length) {
+                        state.seriesSeasonsMeta = validSeasons;
+                        await renderAllSeasonsAndEpisodes(validSeasons, Number(validSeasons[0].season_number) || 1);
+                    }
                 }
 
                 const relGrid = document.getElementById("relatedGrid");
@@ -3684,6 +3702,7 @@
             if (!panel || !tabsBar) return;
 
             panel.classList.add("open");
+            document.getElementById("mType").textContent = "Web Series / TV";
             state.selectedSeason = Number(activeSeasonNum || 1);
             if (countLabel) {
                 countLabel.textContent = `${seasonsArr.length} Seasons`;
@@ -3695,35 +3714,37 @@
                 const btn = document.createElement("button");
                 btn.type = "button";
                 btn.className = `season-pill-btn ${sNum === state.selectedSeason ? "active" : ""}`;
-                btn.textContent = `Season ${sNum} (${s.episode_count || "?"} Ep)`;
+                btn.textContent = `Season ${sNum} (${s.episode_count || 8} Ep)`;
                 btn.onclick = () => renderAllSeasonsAndEpisodes(seasonsArr, sNum);
                 tabsBar.appendChild(btn);
             });
 
-            const fallbackCount = Number(seasonsArr.find(s => Number(s.season_number) === state.selectedSeason)?.episode_count || 6);
-            let eps = Array.from({ length: Math.min(fallbackCount, 30) }, (_, idx) => ({
+            const fallbackCount = Number(seasonsArr.find(s => Number(s.season_number) === state.selectedSeason)?.episode_count || 8);
+            let eps = Array.from({ length: Math.min(fallbackCount > 0 ? fallbackCount : 8, 30) }, (_, idx) => ({
                 episode_number: idx + 1,
                 name: `Episode ${idx + 1}`,
                 air_date: "",
                 isNewEp: idx === 0
             }));
 
-            try {
-                const sData = await fetch(`${API_BASE}/tv/${state.currentItem.id}/season/${state.selectedSeason}?api_key=${TMDB_API_KEY}`).then(r => r.json());
-                if (Array.isArray(sData.episodes) && sData.episodes.length) {
-                    const todayStr = new Date().toISOString().slice(0, 10);
-                    eps = sData.episodes.map((ep, idx) => ({
-                        episode_number: Number(ep.episode_number || idx + 1),
-                        name: ep.name || `Episode ${idx + 1}`,
-                        air_date: ep.air_date || "",
-                        isNewEp: ep.air_date === todayStr || idx === sData.episodes.length - 1
-                    }));
-                }
-            } catch (e) {}
+            if (typeof state.currentItem?.id === "number") {
+                try {
+                    const sData = await fetch(`${API_BASE}/tv/${state.currentItem.id}/season/${state.selectedSeason}?api_key=${TMDB_API_KEY}`).then(r => r.json());
+                    if (Array.isArray(sData.episodes) && sData.episodes.length) {
+                        const todayStr = new Date().toISOString().slice(0, 10);
+                        eps = sData.episodes.map((ep, idx) => ({
+                            episode_number: Number(ep.episode_number || idx + 1),
+                            name: ep.name || `Episode ${idx + 1}`,
+                            air_date: ep.air_date || "",
+                            isNewEp: ep.air_date === todayStr || idx === sData.episodes.length - 1
+                        }));
+                    }
+                } catch (e) {}
+            }
 
             state.currentSeasonEpisodes = eps;
             const firstEpNum = eps[0]?.episode_number || 1;
-            selectSeriesEpisode(state.selectedSeason, firstEpNum, false);
+            selectSeriesEpisode(state.selectedSeason, firstEpNum, true);
         }
 
         function selectSeriesEpisode(sNum, eNum, shouldMount = true) {
@@ -3756,9 +3777,6 @@
             }
 
             if (shouldMount && state.currentItem) {
-                const srv = state.activeServerNum || 1;
-                mountStream(getServerUrl(srv, state.currentItem, state.selectedSeason, state.selectedEpisode), `Server ${srv} (S${state.selectedSeason} E${state.selectedEpisode})`);
-            } else if (!shouldMount && state.currentItem) {
                 const srv = state.activeServerNum || 1;
                 mountStream(getServerUrl(srv, state.currentItem, state.selectedSeason, state.selectedEpisode), `Server ${srv} (S${state.selectedSeason} E${state.selectedEpisode})`);
             }
