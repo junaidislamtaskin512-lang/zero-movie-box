@@ -57,6 +57,7 @@
         body.cinema-active .detail-poster,
         body.cinema-active .detail-title,
         body.cinema-active .detail-sub,
+        body.cinema-active .reaction-poll-box,
         body.cinema-active .action-row-btns,
         body.cinema-active .meta-3,
         body.cinema-active .story-box,
@@ -394,12 +395,19 @@
         }
 
         .trend-title {
-            padding: 7px 8px;
+            padding: 7px 8px 3px;
             font-size: 12px;
             font-weight: 700;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        .trend-time {
+            padding: 0 8px 7px;
+            font-size: 10px;
+            color: var(--cyan);
+            font-weight: 700;
         }
 
         /* Category Pills */
@@ -427,6 +435,7 @@
 
         .cat-pill:hover, .cat-pill.active {
             background: var(--red-hover);
+            box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.45);
         }
 
         /* OTT Row */
@@ -847,6 +856,10 @@
             gap: 6px;
         }
 
+        .zone-btn.active {
+            box-shadow: 0 0 0 2px #22d3ee;
+        }
+
         .z-purple { background: var(--purple); }
         .z-pink { background: var(--pink); }
         .z-blue { background: var(--blue); }
@@ -1019,7 +1032,7 @@
             z-index: 2;
         }
 
-        .b-tl.admin-pick {
+        .b-tl.recent-badge {
             background: #10b981;
             color: #06130e;
         }
@@ -1085,6 +1098,13 @@
             color: var(--muted);
         }
 
+        .m-time-ago {
+            margin-top: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
         /* Pager */
         .pager {
             display: flex;
@@ -1115,7 +1135,7 @@
             cursor: not-allowed;
         }
 
-        /* Detail & Player Modal - Smooth Scroll & Swipe */
+        /* Detail & Player Modal */
         .detail-modal {
             display: none;
             position: fixed;
@@ -1194,6 +1214,80 @@
             font-size: 12px;
             font-weight: 700;
             margin-bottom: 10px;
+        }
+
+        /* 3-Option Reaction Poll Box (ভালো লাগছে / মোটামুটি / কম ভালো লাগছে) */
+        .reaction-poll-box {
+            background: var(--bg-panel);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            border-radius: 10px;
+            padding: 11px;
+            margin-bottom: 12px;
+        }
+
+        .reaction-poll-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--cyan);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .reaction-btns-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .react-choice-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            color: #fff;
+            border-radius: 8px;
+            padding: 8px 6px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .react-choice-btn:hover {
+            border-color: var(--cyan);
+        }
+
+        .react-choice-btn.active-good {
+            background: #064e3b;
+            border-color: #10b981;
+            color: #a7f3d0;
+        }
+
+        .react-choice-btn.active-mid {
+            background: #451a03;
+            border-color: #f59e0b;
+            color: #fde68a;
+        }
+
+        .react-choice-btn.active-low {
+            background: #450a0a;
+            border-color: #ef4444;
+            color: #fecaca;
+        }
+
+        .react-count-num {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .react-summary-line {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #d1d5db;
+            text-align: center;
+            line-height: 1.4;
         }
 
         .action-row-btns {
@@ -1369,7 +1463,7 @@
             margin-top: 8px;
         }
 
-        /* Player + Language Bar + Landscape + Cinema Controls */
+        /* Player + Language Bar + Seek 10s + Rotate + Cinema Controls */
         .watch-box {
             background: var(--bg-panel);
             border: 1px solid rgba(16, 185, 129, 0.35);
@@ -1402,6 +1496,25 @@
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
+        }
+
+        .seek-btn {
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 7px 10px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .seek-btn:hover {
+            background: #0284c7;
+            color: #fff;
         }
 
         .rotate-side-btn {
@@ -1506,10 +1619,12 @@
             touch-action: manipulation;
             transform: translateZ(0);
             will-change: transform;
+            transition: transform 0.25s ease;
         }
 
         .player-stage.rotated-view {
             border: 2px solid var(--cyan);
+            transform: rotate(90deg) scale(0.76);
         }
 
         .player-stage iframe, .player-stage video {
@@ -1747,7 +1862,7 @@
         }
     </style>
 
-    <!-- Zero-Redirect & Smooth Player Guard: প্লেয়ার/স্ক্রল/সোয়াইপ চলাকালে কোনো বাইরের ট্যাব বা ওভারলে রিডাইরেক্ট হবে না -->
+    <!-- Zero-Redirect & Smooth Player Guard -->
     <script>
         (function () {
             const origOpen = window.open;
@@ -1869,7 +1984,7 @@
             <button class="cat-pill" onclick="selectCategory('thriller', 'THRILLER', this)"><i class="fa-solid fa-puzzle-piece"></i> THRILLER</button>
             <button class="cat-pill" onclick="selectCategory('horror', 'HORROR', this)"><i class="fa-solid fa-ghost"></i> HORROR</button>
             <button class="cat-pill" onclick="selectCategory('romance', 'ROMANCE', this)"><i class="fa-solid fa-heart"></i> ROMANCE</button>
-            <button class="cat-pill active" onclick="selectCategory('all_movies', 'ALL MOVIES & SHOWS', this)"><i class="fa-solid fa-video"></i> MOVIES</button>
+            <button class="cat-pill active" onclick="selectCategory('all_movies', 'RECENTLY UPDATED', this)"><i class="fa-solid fa-video"></i> RECENTLY UPDATED</button>
             <button class="cat-pill" onclick="selectCategory('tv_drama', 'WEB SERIES & DRAMA', this)"><i class="fa-solid fa-tv"></i> WEB SERIES / DRAMA</button>
         </div>
 
@@ -2012,7 +2127,7 @@
                 <span><i class="fa-solid fa-dragon"></i> CARTOON & ANIME</span>
                 <span class="zone-badge">FRESH</span>
             </button>
-            <button class="zone-btn z-pink" onclick="selectCategory('adult', '18+ ADULT', this)">
+            <button class="zone-btn z-pink" onclick="selectCategory('adult', '18+ ADULT MOVIES', this)">
                 <span><i class="fa-solid fa-circle-exclamation"></i> 18+ ADULT</span>
                 <span class="zone-badge">HOT</span>
             </button>
@@ -2086,12 +2201,12 @@
         </div>
     </div>
 
-    <!-- Detail + Player + Released Language Bar + Season/Episode + Cast + Related + Downloads Modal -->
+    <!-- Detail + Reactions + Player + Released Language Bar + 10s Seek + Rotate + Season/Episode + Cast + Related + Downloads Modal -->
     <div class="detail-modal" id="detailModal">
         <div class="detail-sheet">
             <div class="detail-top">
                 <button class="back-btn" onclick="closeDetail()"><i class="fa-solid fa-arrow-left"></i> Back (Esc)</button>
-                <span style="font-size: 12px; font-weight: 700; color: var(--muted);">Zero Movie Box</span>
+                <span id="dUpdatedTop" style="font-size: 11px; font-weight: 800; color: var(--cyan);">Updated just now</span>
             </div>
 
             <div class="detail-poster">
@@ -2100,6 +2215,26 @@
 
             <h2 class="detail-title" id="dTitle">Title</h2>
             <div class="detail-sub" id="dSub">WEB-DL • HD</div>
+
+            <!-- ৩টি অপশন: ভালো লাগছে / মোটামুটি / কম ভালো লাগছে + কাউন্ট ও সামারি -->
+            <div class="reaction-poll-box" id="reactionPollBox">
+                <div class="reaction-poll-title">দর্শকদের মতামত (কয়জন কোনটিতে চাপ দিয়েছেন):</div>
+                <div class="reaction-btns-grid">
+                    <button type="button" class="react-choice-btn" id="reactBtnGood" onclick="voteReaction('good')">
+                        <span><i class="fa-solid fa-thumbs-up"></i> ভালো লাগছে</span>
+                        <span class="react-count-num" id="countGood">0</span>
+                    </button>
+                    <button type="button" class="react-choice-btn" id="reactBtnMid" onclick="voteReaction('mid')">
+                        <span><i class="fa-solid fa-face-meh"></i> মোটামুটি</span>
+                        <span class="react-count-num" id="countMid">0</span>
+                    </button>
+                    <button type="button" class="react-choice-btn" id="reactBtnLow" onclick="voteReaction('low')">
+                        <span><i class="fa-solid fa-thumbs-down"></i> কম ভালো লাগছে</span>
+                        <span class="react-count-num" id="countLow">0</span>
+                    </button>
+                </div>
+                <div class="react-summary-line" id="reactSummaryLine"></div>
+            </div>
 
             <div class="action-row-btns">
                 <button type="button" class="act-pill-btn resume" id="resumeBtn" style="display: none;" onclick="resumeWatchingAction()">
@@ -2119,7 +2254,7 @@
             <div class="meta-3">
                 <div><strong>Type</strong><span id="mType">Movie</span></div>
                 <div><strong>Released Languages</strong><span id="mLang">BN</span></div>
-                <div><strong>Quality</strong><span id="mQual">WEB-DL</span></div>
+                <div><strong>Last Updated</strong><span id="mUpdated">Just now</span></div>
             </div>
 
             <div class="story-box">
@@ -2146,7 +2281,7 @@
                 </div>
             </div>
 
-            <!-- Player Box with Exact Released Languages Bar -->
+            <!-- Player Box with Released Language Bar + 10s Seek + Rotate + Cinema Controls -->
             <div class="watch-box" id="watchBox">
                 <div class="watch-header">
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
@@ -2156,6 +2291,12 @@
                         <span class="ad-guard-pill"><i class="fa-solid fa-shield-check"></i> Lag-Free & Ad-Free Player</span>
                     </div>
                     <div class="watch-btns">
+                        <button type="button" class="seek-btn" onclick="seekPlayerSeconds(-10)" title="10 Seconds Backward">
+                            <i class="fa-solid fa-rotate-left"></i> -10s
+                        </button>
+                        <button type="button" class="seek-btn" onclick="seekPlayerSeconds(10)" title="10 Seconds Forward">
+                            +10s <i class="fa-solid fa-rotate-right"></i>
+                        </button>
                         <button type="button" class="cinema-toggle-btn" onclick="toggleCinemaMode()">
                             <i class="fa-solid fa-lightbulb"></i> Cinema Mode
                         </button>
@@ -2293,34 +2434,103 @@
             tr: "Turkish"
         };
 
+        const NOW_MS = Date.now();
+
         /*
-         * রিলিজড ভাষা ও কার্যকরী স্ট্রিমের নিয়ম:
-         * যে মুভি, ড্রামা বা নাটক যে কয়টা ভাষায় রিলিজ হয়েছে, ঠিক সেই কয়টা ভাষাই `releasedLanguages` এ দিন।
-         * প্রতিটি ভাষার জন্য `streams` (সরাসরি .mp4/.m3u8 বা প্লেয়ার লিংক) বা `embedUrls` (ওই ভাষার এম্বেড লিংক) দিন।
-         * যে ভাষায় চাপ দেবেন, ঠিক সেই ভাষার লিংকই প্লেয়ারে চালু হবে।
+         * রিসেন্টলি আপডেট, রিলিজড ভাষা, ও 18+ Adult / Multi-Lang আইটেম:
+         * `updatedAtMs` দিলে কতক্ষণ আগে আপডেট হয়েছে (যেমন 8 মিনিট আগে, 45 মিনিট আগে, 3 ঘণ্টা আগে)
+         * তা কার্ড ও ডিটেইল পেজে স্বয়ংক্রিয়ভাবে দেখায় এবং রিসেন্টলি আপডেটেড সবার আগে থাকে।
          */
         const CUSTOM_POSTS = [
             {
-                id: "demo-multi-lang-1",
+                id: "recent-multi-1",
                 type: "Movie",
                 mediaKind: "movie",
-                adminPick: true,
-                title: "Multi-Release Demo (Hindi • Bangla • Tamil)",
-                original_language: "ta",
-                releasedLanguages: ["ta", "hi", "bn"],
+                recentUpdate: true,
+                updatedAtMs: NOW_MS - 6 * 60 * 1000,
+                title: "Shadow Strike (Hindi • Bangla • Tamil)",
+                original_language: "hi",
+                releasedLanguages: ["hi", "bn", "ta"],
                 quality: "4K WEB-DL",
-                rating: "8.6",
-                release_date: "2026-08-15",
-                overview: "এই আইটেমটি Tamil, Hindi এবং Bangla — এই ৩টি ভাষায় রিলিজ দেখানো হয়েছে। যে ভাষায় চাপ দেবেন সেই ভাষার স্ট্রিম চলবে।",
-                poster_path: "",
-                backdrop_path: "",
+                rating: "8.7",
+                release_date: "2026-11-20",
+                overview: "এইমাত্র যুক্ত হওয়া মাল্টি-ল্যাঙ্গুয়েজ অ্যাকশন মুভি। যে ভাষায় চাপ দেবেন সেই ভাষার স্ট্রিম চলবে।",
+                poster: "https://via.placeholder.com/400x600/182235/38bdf8?text=Shadow+Strike",
+                backdrop: "https://via.placeholder.com/780x440/182235/38bdf8?text=Shadow+Strike+4K",
                 streams: {
-                    ta: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                    hi: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    bn: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                    hi: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                    bn: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    ta: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
                 },
-                embedUrls: {},
-                sizes: { "480p": "650 MB", "720p": "1.4 GB", "1080p": "2.9 GB", "best": "4.8 GB" },
+                sizes: { "480p": "680 MB", "720p": "1.5 GB", "1080p": "3.1 GB", "best": "5.2 GB" },
+                dl: {}
+            },
+            {
+                id: "recent-drama-2",
+                type: "Drama / Natok",
+                mediaKind: "tv",
+                recentUpdate: true,
+                updatedAtMs: NOW_MS - 22 * 60 * 1000,
+                title: "Dhaka Midnight Natok (Bangla)",
+                original_language: "bn",
+                releasedLanguages: ["bn"],
+                quality: "HD",
+                rating: "8.2",
+                first_air_date: "2026-11-21",
+                overview: "সদ্য এডিট ও আপলোড হওয়া বাংলা নাটক।",
+                poster: "https://via.placeholder.com/400x600/1e293b/f59e0b?text=Dhaka+Midnight",
+                backdrop: "https://via.placeholder.com/780x440/1e293b/f59e0b?text=Dhaka+Midnight",
+                streams: {
+                    bn: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoy.mp4"
+                },
+                sizes: { "480p": "320 MB", "720p": "720 MB", "1080p": "1.4 GB", "best": "2.2 GB" },
+                dl: {}
+            }
+        ];
+
+        const ADULT_CUSTOM_POSTS = [
+            {
+                id: "adult-18-101",
+                type: "18+ Movie",
+                mediaKind: "movie",
+                isAdultCustom: true,
+                updatedAtMs: NOW_MS - 15 * 60 * 1000,
+                title: "Midnight Desire 18+ (Hindi / English)",
+                original_language: "hi",
+                releasedLanguages: ["hi", "en"],
+                quality: "WEB-DL",
+                rating: "7.5",
+                release_date: "2026-10-12",
+                overview: "18+ ক্যাটাগরির বিশেষ রিলিজ।",
+                poster: "https://via.placeholder.com/400x600/3b0d24/f472b6?text=18%2B+Exclusive+1",
+                backdrop: "https://via.placeholder.com/780x440/3b0d24/f472b6?text=18%2B+Exclusive+1",
+                streams: {
+                    hi: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+                    en: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+                },
+                sizes: { "480p": "540 MB", "720p": "1.2 GB", "1080p": "2.4 GB", "best": "4.0 GB" },
+                dl: {}
+            },
+            {
+                id: "adult-18-102",
+                type: "18+ Movie",
+                mediaKind: "movie",
+                isAdultCustom: true,
+                updatedAtMs: NOW_MS - 48 * 60 * 1000,
+                title: "Velvet Nights 18+ (English / Hindi)",
+                original_language: "en",
+                releasedLanguages: ["en", "hi"],
+                quality: "4K WEB-DL",
+                rating: "7.8",
+                release_date: "2026-09-25",
+                overview: "18+ ক্যাটাগরির অতিরিক্ত রিলিজ।",
+                poster: "https://via.placeholder.com/400x600/4a0e2e/fb7185?text=18%2B+Exclusive+2",
+                backdrop: "https://via.placeholder.com/780x440/4a0e2e/fb7185?text=18%2B+Exclusive+2",
+                streams: {
+                    en: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+                    hi: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+                },
+                sizes: { "480p": "610 MB", "720p": "1.4 GB", "1080p": "2.8 GB", "best": "4.6 GB" },
                 dl: {}
             }
         ];
@@ -2362,16 +2572,15 @@
                 releasedLanguages: ["bn", "hi"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "CID — রহস্যময় খুন (পর্ব ০১)", sizes: { "480p": "420 MB", "720p": "980 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, streams: {}, embedUrls: {}, dl: {} },
-                        { ep: "Ep 02", name: "CID — অন্ধকার রাতের তদন্ত (পর্ব ০২)", sizes: { "480p": "410 MB", "720p": "950 MB", "1080p": "1.8 GB", "best": "3.0 GB" }, streams: {}, embedUrls: {}, dl: {} },
-                        { ep: "Ep 03", name: "CID — অচেনা সাক্ষী (পর্ব ০৩)", sizes: { "480p": "435 MB", "720p": "1.0 GB", "1080p": "2.0 GB", "best": "3.2 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "CID — রহস্যময় খুন (পর্ব ০১)", updatedAtMs: NOW_MS - 14 * 60 * 1000, sizes: { "480p": "420 MB", "720p": "980 MB", "1080p": "1.9 GB", "best": "3.1 GB" }, streams: {}, dl: {} },
+                        { ep: "Ep 02", name: "CID — অন্ধকার রাতের তদন্ত (পর্ব ০২)", updatedAtMs: NOW_MS - 40 * 60 * 1000, sizes: { "480p": "410 MB", "720p": "950 MB", "1080p": "1.8 GB", "best": "3.0 GB" }, streams: {}, dl: {} },
+                        { ep: "Ep 03", name: "CID — অচেনা সাক্ষী (পর্ব ০৩)", updatedAtMs: NOW_MS - 2 * 3600 * 1000, sizes: { "480p": "435 MB", "720p": "1.0 GB", "1080p": "2.0 GB", "best": "3.2 GB" }, streams: {}, dl: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "CID — সিজন ২ পর্ব ০১", sizes: { "480p": "425 MB", "720p": "990 MB", "1080p": "1.95 GB", "best": "3.15 GB" }, streams: {}, embedUrls: {}, dl: {} },
-                        { ep: "Ep 02", name: "CID — সিজন ২ পর্ব ০২", sizes: { "480p": "418 MB", "720p": "960 MB", "1080p": "1.85 GB", "best": "3.05 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "CID — সিজন ২ পর্ব ০১", updatedAtMs: NOW_MS - 55 * 60 * 1000, sizes: { "480p": "425 MB", "720p": "990 MB", "1080p": "1.95 GB", "best": "3.15 GB" }, streams: {}, dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "CID — সিজন ৩ পর্ব ০১", sizes: { "480p": "440 MB", "720p": "1.05 GB", "1080p": "2.1 GB", "best": "3.3 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "CID — সিজন ৩ পর্ব ০১", updatedAtMs: NOW_MS - 30 * 60 * 1000, sizes: { "480p": "440 MB", "720p": "1.05 GB", "1080p": "2.1 GB", "best": "3.3 GB" }, streams: {}, dl: {} }
                     ]
                 }
             },
@@ -2380,15 +2589,14 @@
                 releasedLanguages: ["bn"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — রাজদরবারের কাণ্ড (পর্ব ০১)", sizes: { "480p": "120 MB", "720p": "280 MB", "1080p": "620 MB", "best": "1.1 GB" }, streams: {}, embedUrls: {}, dl: {} },
-                        { ep: "Ep 02", name: "গোপাল ভাঁড় — বুদ্ধির খেলা (পর্ব ০২)", sizes: { "480p": "115 MB", "720p": "270 MB", "1080p": "590 MB", "best": "1.0 GB" }, streams: {}, embedUrls: {}, dl: {} },
-                        { ep: "Ep 03", name: "গোপাল ভাঁড় — মন্ত্রীমশাইয়ের বিপদ (পর্ব ০৩)", sizes: { "480p": "125 MB", "720p": "290 MB", "1080p": "640 MB", "best": "1.1 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — রাজদরবারের কাণ্ড (পর্ব ০১)", updatedAtMs: NOW_MS - 10 * 60 * 1000, sizes: { "480p": "120 MB", "720p": "280 MB", "1080p": "620 MB", "best": "1.1 GB" }, streams: {}, dl: {} },
+                        { ep: "Ep 02", name: "গোপাল ভাঁড় — বুদ্ধির খেলা (পর্ব ০২)", updatedAtMs: NOW_MS - 35 * 60 * 1000, sizes: { "480p": "115 MB", "720p": "270 MB", "1080p": "590 MB", "best": "1.0 GB" }, streams: {}, dl: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ২ পর্ব ০১", sizes: { "480p": "118 MB", "720p": "275 MB", "1080p": "600 MB", "best": "1.05 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ২ পর্ব ০১", updatedAtMs: NOW_MS - 90 * 60 * 1000, sizes: { "480p": "118 MB", "720p": "275 MB", "1080p": "600 MB", "best": "1.05 GB" }, streams: {}, dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ৩ পর্ব ০১", sizes: { "480p": "122 MB", "720p": "285 MB", "1080p": "615 MB", "best": "1.08 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "গোপাল ভাঁড় — সিজন ৩ পর্ব ০১", updatedAtMs: NOW_MS - 120 * 60 * 1000, sizes: { "480p": "122 MB", "720p": "285 MB", "1080p": "615 MB", "best": "1.08 GB" }, streams: {}, dl: {} }
                     ]
                 }
             },
@@ -2397,15 +2605,14 @@
                 releasedLanguages: ["bn", "hi"],
                 seasons: {
                     1: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — ফুরফুরি নগরের গল্প (পর্ব ০১)", sizes: { "480p": "135 MB", "720p": "310 MB", "1080p": "680 MB", "best": "1.2 GB" }, streams: {}, embedUrls: {}, dl: {} },
-                        { ep: "Ep 02", name: "মোটু পাতলু — সিঙ্গারার কাণ্ড (পর্ব ০২)", sizes: { "480p": "130 MB", "720p": "295 MB", "1080p": "650 MB", "best": "1.15 GB" }, streams: {}, embedUrls: {}, dl: {} },
-                        { ep: "Ep 03", name: "মোটু পাতলু — নতুন অভিযান (পর্ব ০৩)", sizes: { "480p": "140 MB", "720p": "320 MB", "1080p": "700 MB", "best": "1.25 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — ফুরফুরি নগরের গল্প (পর্ব ০১)", updatedAtMs: NOW_MS - 18 * 60 * 1000, sizes: { "480p": "135 MB", "720p": "310 MB", "1080p": "680 MB", "best": "1.2 GB" }, streams: {}, dl: {} },
+                        { ep: "Ep 02", name: "মোটু পাতলু — সিঙ্গারার কাণ্ড (পর্ব ০২)", updatedAtMs: NOW_MS - 50 * 60 * 1000, sizes: { "480p": "130 MB", "720p": "295 MB", "1080p": "650 MB", "best": "1.15 GB" }, streams: {}, dl: {} }
                     ],
                     2: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ২ পর্ব ০১", sizes: { "480p": "138 MB", "720p": "315 MB", "1080p": "690 MB", "best": "1.2 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ২ পর্ব ০১", updatedAtMs: NOW_MS - 3 * 3600 * 1000, sizes: { "480p": "138 MB", "720p": "315 MB", "1080p": "690 MB", "best": "1.2 GB" }, streams: {}, dl: {} }
                     ],
                     3: [
-                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ৩ পর্ব ০১", sizes: { "480p": "142 MB", "720p": "325 MB", "1080p": "710 MB", "best": "1.28 GB" }, streams: {}, embedUrls: {}, dl: {} }
+                        { ep: "Ep 01", name: "মোটু পাতলু — সিজন ৩ পর্ব ০১", updatedAtMs: NOW_MS - 4 * 3600 * 1000, sizes: { "480p": "142 MB", "720p": "325 MB", "1080p": "710 MB", "best": "1.28 GB" }, streams: {}, dl: {} }
                     ]
                 }
             }
@@ -2445,8 +2652,82 @@
         }
 
         function setSavedList(key, arr) {
-            try { localStorage.setItem(key, JSON.stringify(arr.slice(0, 24))); } catch (e) {}
+            try { localStorage.setItem(key, JSON.stringify(arr.slice(0, 30))); } catch (e) {}
             updateSavedCounter();
+        }
+
+        function getReactionsStore() {
+            try { return JSON.parse(localStorage.getItem("zmb_reactions_v1") || "{}"); } catch (e) { return {}; }
+        }
+
+        function setReactionsStore(obj) {
+            try { localStorage.setItem("zmb_reactions_v1", JSON.stringify(obj)); } catch (e) {}
+        }
+
+        function getItemReactionData(itemId) {
+            const store = getReactionsStore();
+            const key = String(itemId || "default");
+            const base = store[key] || { good: 12, mid: 4, low: 1, userChoice: "" };
+            return {
+                good: Number(base.good || 0),
+                mid: Number(base.mid || 0),
+                low: Number(base.low || 0),
+                userChoice: base.userChoice || ""
+            };
+        }
+
+        function renderReactionPoll(itemId) {
+            const data = getItemReactionData(itemId);
+            document.getElementById("countGood").textContent = data.good;
+            document.getElementById("countMid").textContent = data.mid;
+            document.getElementById("countLow").textContent = data.low;
+
+            const btnGood = document.getElementById("reactBtnGood");
+            const btnMid = document.getElementById("reactBtnMid");
+            const btnLow = document.getElementById("reactBtnLow");
+
+            btnGood.classList.toggle("active-good", data.userChoice === "good");
+            btnMid.classList.toggle("active-mid", data.userChoice === "mid");
+            btnLow.classList.toggle("active-low", data.userChoice === "low");
+
+            const total = data.good + data.mid + data.low;
+            const summary = document.getElementById("reactSummaryLine");
+            if (summary) {
+                summary.textContent = `মোট ${total} জন মতামত দিয়েছেন — ভালো লাগছে: ${data.good} জন | মোটামুটি: ${data.mid} জন | কম ভালো লাগছে: ${data.low} জন`;
+            }
+        }
+
+        function voteReaction(choice) {
+            if (!state.currentItem) return;
+            const key = String(state.currentItem.id);
+            const store = getReactionsStore();
+            const current = getItemReactionData(key);
+
+            if (current.userChoice === choice) {
+                current[choice] = Math.max(0, current[choice] - 1);
+                current.userChoice = "";
+            } else {
+                if (current.userChoice) {
+                    current[current.userChoice] = Math.max(0, current[current.userChoice] - 1);
+                }
+                current[choice] = (current[choice] || 0) + 1;
+                current.userChoice = choice;
+            }
+
+            store[key] = current;
+            setReactionsStore(store);
+            renderReactionPoll(key);
+        }
+
+        function formatTimeAgo(ms) {
+            const diffSec = Math.max(10, Math.floor((Date.now() - (ms || Date.now())) / 1000));
+            if (diffSec < 60) return `Updated ${diffSec}s ago`;
+            const diffMin = Math.floor(diffSec / 60);
+            if (diffMin < 60) return `Updated ${diffMin}m ago`;
+            const diffHr = Math.floor(diffMin / 60);
+            if (diffHr < 24) return `Updated ${diffHr}h ago`;
+            const diffDay = Math.floor(diffHr / 24);
+            return `Updated ${diffDay}d ago`;
         }
 
         function updateSavedCounter() {
@@ -2509,8 +2790,8 @@
             return "HD";
         }
 
-        function buildHookLine(title, quality, lang, rating) {
-            return `Why Watch: ${title} (${lang} • ${quality}) — Rated ★ ${rating} with engaging scenes & twists.`;
+        function buildHookLine(title, quality, lang, rating, updatedText) {
+            return `Why Watch: ${title} (${lang} • ${quality}) — ★ ${rating} • ${updatedText}`;
         }
 
         function getLangLabel(code) {
@@ -2518,10 +2799,6 @@
             return LANG_LABELS[c] || c.toUpperCase();
         }
 
-        /*
-         * একটি আইটেমে ঠিক যে কয়টা ভাষা রিলিজড হয়েছে (releasedLanguages / languages),
-         * শুধু সেই কয়টা ভাষাই ফিরিয়ে দেয় — কোনো অনুমান বা অতিরিক্ত ভাষা যোগ করে না।
-         */
         function getExactReleasedCodes(m) {
             const rawList = Array.isArray(m.releasedLanguages)
                 ? m.releasedLanguages
@@ -2539,20 +2816,23 @@
             return [fallbackCode];
         }
 
-        function normalizeTmdbItem(m, fallbackKind) {
+        function normalizeTmdbItem(m, fallbackKind, idx = 0) {
             const title = m.title || m.name;
-            const mediaKind = (m.media_type === "tv" || fallbackKind === "tv_drama" || fallbackKind === "anime" || fallbackKind === "series" || fallbackKind === "drama" || fallbackKind === "cartoon") ? "tv" : "movie";
+            const mediaKind = (m.media_type === "tv" || fallbackKind === "tv_drama" || fallbackKind === "anime" || fallbackKind === "series" || fallbackKind === "drama" || fallbackKind === "cartoon" || fallbackKind === "episode")
+                ? (fallbackKind === "episode" ? "episode" : "tv")
+                : "movie";
             const date = m.release_date || m.first_air_date || "2026";
-            const vote = m.vote_average ? Number(m.vote_average).toFixed(1) : (m.rating ? String(m.rating) : "7.4");
+            const vote = m.vote_average ? Number(m.vote_average).toFixed(1) : (m.rating ? String(m.rating) : "7.5");
             const releasedCodes = getExactReleasedCodes(m);
             const primaryCode = releasedCodes[0] || "en";
-            const quality = m.quality || getQuality(Number(vote) || 7.4);
+            const quality = m.quality || getQuality(Number(vote) || 7.5);
             const poster = m.poster ? m.poster : (m.poster_path ? (IMG_500 + m.poster_path) : "");
             const backdrop = m.backdrop ? m.backdrop : (m.backdrop_path ? (IMG_780 + m.backdrop_path) : poster);
+            const updatedAtMs = m.updatedAtMs || (Date.now() - (idx + 1) * 14 * 60 * 1000);
 
             return {
                 id: m.id,
-                type: m.type || (mediaKind === "tv" ? "Series / Drama / Show" : "Movie"),
+                type: m.type || (mediaKind === "tv" ? "Series / Drama" : (mediaKind === "episode" ? "Episode" : "Movie")),
                 mediaKind,
                 title,
                 lang: primaryCode.toUpperCase(),
@@ -2560,7 +2840,8 @@
                 quality,
                 rating: vote,
                 date,
-                adminPick: Boolean(m.adminPick),
+                updatedAtMs,
+                recentUpdate: Boolean(m.recentUpdate || idx < 4),
                 overview: m.overview || "Storyline details are available on the stream.",
                 poster,
                 backdrop,
@@ -2576,7 +2857,7 @@
             try {
                 const res = await fetch(`${API_BASE}/trending/movie/day?api_key=${TMDB_API_KEY}&page=1`);
                 const data = await res.json();
-                const list = (data.results || []).filter(x => x.backdrop_path || x.poster_path).slice(0, 4).map(x => normalizeTmdbItem(x, "movie"));
+                const list = (data.results || []).filter(x => x.backdrop_path || x.poster_path).slice(0, 4).map((x, i) => normalizeTmdbItem(x, "movie", i));
                 if (!list.length) return;
                 state.heroList = list;
                 renderHeroSlide(0);
@@ -2596,7 +2877,7 @@
             slide.style.backgroundImage = bg ? `url('${bg}')` : "none";
             document.getElementById("heroBadge").textContent = `FEATURED #${idx + 1}`;
             document.getElementById("heroTitle").textContent = item.title;
-            document.getElementById("heroMeta").textContent = `★ ${item.rating} • ${item.lang} • ${item.quality} • ${(item.date || "2026").slice(0, 4)}`;
+            document.getElementById("heroMeta").textContent = `★ ${item.rating} • ${item.lang} • ${item.quality} • ${formatTimeAgo(item.updatedAtMs)}`;
             document.getElementById("heroPlayBtn").onclick = () => openDetail(item);
 
             const dots = document.getElementById("heroDots");
@@ -2613,12 +2894,12 @@
         async function surpriseMePick() {
             try {
                 const randPg = Math.floor(Math.random() * 5) + 1;
-                const res = await fetch(`${API_BASE}/movie/top_rated?api_key=${TMDB_API_KEY}&page=${randPg}`);
+                const res = await fetch(`${API_BASE}/movie/popular?api_key=${TMDB_API_KEY}&page=${randPg}`);
                 const data = await res.json();
                 const list = (data.results || []).filter(x => x.title || x.name);
                 if (!list.length) return;
                 const pick = list[Math.floor(Math.random() * list.length)];
-                openDetail(normalizeTmdbItem(pick, "movie"));
+                openDetail(normalizeTmdbItem(pick, "movie", 0));
             } catch (e) {}
         }
 
@@ -2631,7 +2912,7 @@
             state.page = 1;
             state.heading = label;
 
-            if (vibeKey === "recently_added") state.mode = "upcoming";
+            if (vibeKey === "recently_added") state.mode = "all_movies";
             else if (vibeKey === "weekend_chill") state.mode = "comedy_family";
             else if (vibeKey === "mind_thriller") state.mode = "thriller";
             else if (vibeKey === "late_horror") state.mode = "horror";
@@ -2649,7 +2930,7 @@
                 const list = (data.results || []).filter(x => x.title || x.name).slice(0, 10);
                 box.innerHTML = "";
                 list.forEach((m, i) => {
-                    const item = normalizeTmdbItem(m, state.mode);
+                    const item = normalizeTmdbItem(m, state.mode, i);
                     const card = document.createElement("div");
                     card.className = "trend-card";
                     card.onclick = () => openDetail(item);
@@ -2657,6 +2938,7 @@
                         <span class="trend-rank">#${i + 1}</span>
                         <img src="${item.poster || 'https://via.placeholder.com/300x450/161c28/9ca3af?text=ZMB'}" alt="${esc(item.title)}" loading="lazy">
                         <div class="trend-title">${esc(item.title)}</div>
+                        <div class="trend-time">${formatTimeAgo(item.updatedAtMs)}</div>
                     `;
                     box.appendChild(card);
                 });
@@ -2785,8 +3067,8 @@
             if (mode === "upcoming") return `${API_BASE}/movie/upcoming?api_key=${TMDB_API_KEY}&page=${pg}`;
             if (mode === "comedy_family") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=35,10751&sort_by=popularity.desc&page=${pg}`;
             if (mode === "live_trending") return `${API_BASE}/trending/all/day?api_key=${TMDB_API_KEY}&page=${pg}`;
-            if (mode === "bn") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=popularity.desc&page=${pg}`;
-            if (mode === "bn_dub") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=release_date.desc&page=${pg}`;
+            if (mode === "bn") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=release_date.desc&page=${pg}`;
+            if (mode === "bn_dub") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=bn&sort_by=popularity.desc&page=${pg}`;
             if (mode === "hi" || mode === "hi_dub") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=hi&sort_by=popularity.desc&page=${pg}`;
             if (mode === "dual") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_count.desc&page=${pg}`;
             if (mode === "en") return `${API_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_original_language=en&sort_by=popularity.desc&page=${pg}`;
@@ -2807,7 +3089,7 @@
                 return url;
             }
 
-            return `${API_BASE}/movie/popular?api_key=${TMDB_API_KEY}&page=${pg}`;
+            return `${API_BASE}/movie/now_playing?api_key=${TMDB_API_KEY}&page=${pg}`;
         }
 
         async function searchActorOrQuery(q) {
@@ -2863,29 +3145,29 @@
 
                 if (state.query) {
                     const out = await searchActorOrQuery(state.query);
-                    list = out.results.map(x => normalizeTmdbItem(x, state.mode));
+                    list = out.results.map((x, i) => normalizeTmdbItem(x, state.mode, i));
                     pages = out.totalPages;
                 } else if (state.mode === "ott" && state.providerId) {
                     const ottOut = await fetchOttHubItems(state.page);
-                    list = ottOut.results.map(x => normalizeTmdbItem(x, state.ottInnerCat));
+                    list = ottOut.results.map((x, i) => normalizeTmdbItem(x, state.ottInnerCat, i));
                     pages = ottOut.totalPages;
                 } else {
                     const res = await fetch(buildEndpoint(state.page));
                     const data = await res.json();
-                    list = (data.results || []).filter(x => x.title || x.name).map(x => normalizeTmdbItem(x, state.mode));
+                    list = (data.results || []).filter(x => x.title || x.name).map((x, i) => normalizeTmdbItem(x, state.mode, i));
                     pages = Math.min(data.total_pages || 1, 500);
                 }
 
-                if (state.page === 1 && !state.query && state.mode !== "ott" && CUSTOM_POSTS.length) {
-                    const normalizedCustom = CUSTOM_POSTS.map(c => normalizeTmdbItem(c, "movie"));
-                    list = [...normalizedCustom, ...list];
+                if (state.mode === "adult") {
+                    const adultNorm = ADULT_CUSTOM_POSTS.map((c, i) => normalizeTmdbItem(c, "movie", i));
+                    list = [...adultNorm, ...list];
+                } else if (state.page === 1 && !state.query && state.mode !== "ott" && CUSTOM_POSTS.length) {
+                    const recentNorm = CUSTOM_POSTS.map((c, i) => normalizeTmdbItem(c, "movie", i));
+                    list = [...recentNorm, ...list];
                 }
 
-                if (!list.length && !state.query && state.mode !== "ott") {
-                    const fbRes = await fetch(`${API_BASE}/movie/popular?api_key=${TMDB_API_KEY}&page=1`);
-                    const fbData = await fbRes.json();
-                    list = (fbData.results || []).filter(x => x.title || x.name).map(x => normalizeTmdbItem(x, state.mode));
-                }
+                // রিসেন্টলি আপডেটেড আইটেম সবার আগে রাখতে updatedAtMs অনুযায়ী সাজানো
+                list.sort((a, b) => (b.updatedAtMs || 0) - (a.updatedAtMs || 0));
 
                 state.totalPages = pages;
                 state.items = list;
@@ -2925,11 +3207,12 @@
 
             filtered.forEach((item, idx) => {
                 const year = (item.date || "2026").slice(0, 4);
+                const agoText = formatTimeAgo(item.updatedAtMs);
                 let topLeftBadge = "";
-                if (item.adminPick) {
-                    topLeftBadge = `<span class="b-tl admin-pick">MULTI-LANG</span>`;
-                } else if (idx < 2 && !state.query) {
-                    topLeftBadge = `<span class="b-tl">${idx === 0 ? "TRENDING" : "PINNED"}</span>`;
+                if (idx < 3 && !state.query) {
+                    topLeftBadge = `<span class="b-tl recent-badge">JUST UPDATED</span>`;
+                } else if (idx === 3 && !state.query) {
+                    topLeftBadge = `<span class="b-tl">TRENDING</span>`;
                 }
 
                 const card = document.createElement("div");
@@ -2951,6 +3234,7 @@
                     <div class="m-body">
                         <div class="m-title">${esc(item.title)}</div>
                         <div class="m-sub">${year} • ★ ${item.rating}</div>
+                        <div class="m-time-ago"><i class="fa-regular fa-clock"></i> ${agoText}</div>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -2975,8 +3259,8 @@
                         return;
                     }
                     drop.innerHTML = "";
-                    matches.forEach(m => {
-                        const norm = normalizeTmdbItem(m, state.mode);
+                    matches.forEach((m, i) => {
+                        const norm = normalizeTmdbItem(m, state.mode, i);
                         const row = document.createElement("div");
                         row.className = "suggest-item";
                         row.onclick = () => {
@@ -3120,6 +3404,7 @@
                     quality: "WEB-DL",
                     rating: "8.4",
                     date: `Season ${sNum}`,
+                    updatedAtMs: ep.updatedAtMs || (Date.now() - 25 * 60 * 1000),
                     overview: `${sData.title} — Season ${sNum}, ${ep.ep}। রিলিজড ভাষা অনুযায়ী স্ট্রিম লিংক যুক্ত করলে সাথে সাথে প্লে হবে।`,
                     poster: "",
                     backdrop: "",
@@ -3132,7 +3417,7 @@
                 card.innerHTML = `
                     <div style="font-size: 11px; font-weight: 800; color: var(--gold);">Season ${sNum} • ${ep.ep}</div>
                     <div style="font-size: 13px; font-weight: 700; margin: 4px 0;">${esc(ep.name)}</div>
-                    <div style="font-size: 11px; color: var(--muted);">720p: ${ep.sizes["720p"]} • 1080p: ${ep.sizes["1080p"]}</div>
+                    <div style="font-size: 11px; color: var(--cyan);">${formatTimeAgo(ep.updatedAtMs || Date.now() - 25 * 60 * 1000)}</div>
                 `;
                 box.appendChild(card);
             });
@@ -3255,11 +3540,6 @@
             p.style.display = p.style.display === "none" ? "block" : "none";
         }
 
-        /*
-         * রিলিজড ভাষা বার:
-         * আইটেমটি ঠিক যে কয়টা ভাষায় রিলিজ হয়েছে (`item.releasedCodes`),
-         * প্লেয়ারের ল্যাঙ্গুয়েজ বারে কেবল সেই কয়টা ভাষাই বাটন হিসেবে দেখায়।
-         */
         function renderReleasedLanguageBar(item) {
             const listEl = document.getElementById("langPillList");
             const badgeEl = document.getElementById("activeLangBadge");
@@ -3298,12 +3578,6 @@
             }
         }
 
-        /*
-         * নির্বাচিত রিলিজড ভাষার জন্য কার্যকরী স্ট্রিম URL বের করা:
-         * ১. `item.streams[langCode]` থাকলে সরাসরি ওই ভাষার স্ট্রিম ব্যবহার করে।
-         * ২. `item.embedUrls[langCode]` থাকলে ওই ভাষার এম্বেড লিংক ব্যবহার করে।
-         * ৩. অন্যথায় সার্ভার অনুযায়ী স্ট্রিম লিংক তৈরি করে।
-         */
         function getStreamForReleasedLang(item, langCode, srvNum, sNum, eNum) {
             const code = String(langCode || item.releasedCodes?.[0] || "en").toLowerCase();
 
@@ -3363,8 +3637,8 @@
             return getStreamForReleasedLang(item, state.selectedLangCode, num, sNum, eNum);
         }
 
-        async function openDetail(item) {
-            const normItem = normalizeTmdbItem(item, item.mediaKind || "movie");
+        async function openDetail(item, idx = 0) {
+            const normItem = normalizeTmdbItem(item, item.mediaKind || "movie", idx);
             state.currentItem = normItem;
             state.selectedSeason = 1;
             state.selectedEpisode = 1;
@@ -3375,20 +3649,24 @@
             document.getElementById("dStory").style.display = "none";
             document.title = `${normItem.title} (${normItem.rating}) — Zero Movie Box`;
 
+            const agoText = formatTimeAgo(normItem.updatedAtMs);
+            document.getElementById("dUpdatedTop").textContent = agoText;
+            document.getElementById("mUpdated").textContent = agoText;
+
             if (typeof normItem.id === "number") {
                 history.replaceState(null, "", `#${normItem.mediaKind}-${normItem.id}`);
             }
 
             addToHistory(normItem);
             syncWatchlistButton();
+            renderReactionPoll(normItem.id);
             renderReleasedLanguageBar(normItem);
 
             document.getElementById("dPoster").src = normItem.poster || "https://via.placeholder.com/400x600/161c28/9ca3af?text=Zero+Movie+Box";
             document.getElementById("dTitle").textContent = normItem.title;
             document.getElementById("dSub").textContent = `${normItem.lang} • ${normItem.quality} • ★ ${normItem.rating}`;
             document.getElementById("mType").textContent = normItem.type;
-            document.getElementById("mQual").textContent = normItem.quality;
-            document.getElementById("dHook").textContent = buildHookLine(normItem.title, normItem.quality, normItem.lang, normItem.rating);
+            document.getElementById("dHook").textContent = buildHookLine(normItem.title, normItem.quality, normItem.lang, normItem.rating, agoText);
             document.getElementById("dStory").textContent = normItem.overview;
 
             document.getElementById("sz480").textContent = normItem.sizes?.["480p"] || "780 MB";
@@ -3492,11 +3770,11 @@
 
                 const relGrid = document.getElementById("relatedGrid");
                 relGrid.innerHTML = "";
-                (similar.results || []).filter(x => x.title || x.name).slice(0, 8).forEach(rel => {
-                    const relItem = normalizeTmdbItem({ ...rel, media_type: kind }, state.mode);
+                (similar.results || []).filter(x => x.title || x.name).slice(0, 8).forEach((rel, i) => {
+                    const relItem = normalizeTmdbItem({ ...rel, media_type: kind }, state.mode, i);
                     const rCard = document.createElement("div");
                     rCard.className = "m-card";
-                    rCard.onclick = () => openDetail(relItem);
+                    rCard.onclick = () => openDetail(relItem, i);
                     rCard.innerHTML = `
                         <div class="m-poster">
                             ${relItem.poster ? `<img src="${relItem.poster}" alt="${esc(relItem.title)}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ""}
@@ -3562,6 +3840,31 @@
             note.innerHTML = `সরাসরি শেয়ার লিংক কপি হয়েছে: <strong>${esc(shareUrl)}</strong>`;
         }
 
+        /* ১০ সেকেন্ড সামনে বা পিছে নেওয়ার ফাংশন */
+        function seekPlayerSeconds(deltaSec) {
+            const vid = document.getElementById("videoTag");
+            const note = document.getElementById("dlNote");
+
+            if (vid && vid.style.display !== "none" && !Number.isNaN(vid.currentTime)) {
+                const dur = Number.isFinite(vid.duration) ? vid.duration : vid.currentTime + Math.abs(deltaSec) + 10;
+                vid.currentTime = Math.max(0, Math.min(dur, vid.currentTime + deltaSec));
+                if (note) {
+                    note.style.display = "block";
+                    note.textContent = deltaSec > 0 ? "ভিডিও ১০ সেকেন্ড সামনে নেওয়া হয়েছে (+10s)।" : "ভিডিও ১০ সেকেন্ড পিছে নেওয়া হয়েছে (-10s)。";
+                }
+                return;
+            }
+
+            const frame = document.getElementById("playerFrame");
+            if (frame && frame.style.display !== "none") {
+                frame.focus();
+                if (note) {
+                    note.style.display = "block";
+                    note.textContent = `${deltaSec > 0 ? "+10s (সামনে)" : "-10s (পিছে)"} কমান্ড পাঠানো হয়েছে। নিজস্ব ভিডিও (.mp4/.m3u8) হলে সাথে সাথে ১০ সেকেন্ড সরে যাবে; বাইরের এম্বেড হলে প্লেয়ারের ভেতরের ←/→ বাটন ব্যবহার করুন।`;
+                }
+            }
+        }
+
         function mountStream(url, label) {
             const frame = document.getElementById("playerFrame");
             const vid = document.getElementById("videoTag");
@@ -3599,19 +3902,27 @@
             document.body.classList.toggle("cinema-active", state.cinemaMode);
         }
 
+        /* সব ডিভাইসে কার্যকর রোটেট / ল্যান্ডস্কেপ ফাংশন */
         async function rotateLandscapePlayer() {
             const stage = document.getElementById("playerStage");
             state.rotated = !state.rotated;
             stage.classList.toggle("rotated-view", state.rotated);
 
             try {
-                if (!document.fullscreenElement && stage.requestFullscreen) {
-                    await stage.requestFullscreen();
-                } else if (!document.fullscreenElement && stage.webkitRequestFullscreen) {
-                    await stage.webkitRequestFullscreen();
-                }
-                if (screen.orientation && screen.orientation.lock) {
-                    await screen.orientation.lock(state.rotated ? "landscape" : "portrait");
+                if (state.rotated) {
+                    if (!document.fullscreenElement && stage.requestFullscreen) {
+                        await stage.requestFullscreen().catch(() => {});
+                    }
+                    if (screen.orientation && screen.orientation.lock) {
+                        await screen.orientation.lock("landscape").catch(() => {});
+                    }
+                } else {
+                    if (document.fullscreenElement && document.exitFullscreen) {
+                        await document.exitFullscreen().catch(() => {});
+                    }
+                    if (screen.orientation && screen.orientation.unlock) {
+                        screen.orientation.unlock();
+                    }
                 }
             } catch (e) {}
         }
@@ -3646,6 +3957,8 @@
 
         function closeDetail() {
             state.cinemaMode = false;
+            state.rotated = false;
+            document.getElementById("playerStage").classList.remove("rotated-view");
             document.body.classList.remove("cinema-active");
             document.title = "Zero Movie Box";
             document.getElementById("detailModal").classList.remove("open");
@@ -3708,7 +4021,7 @@
             try {
                 const data = await fetch(`${API_BASE}/${kind}/${id}?api_key=${TMDB_API_KEY}`).then(r => r.json());
                 if (data && (data.title || data.name)) {
-                    openDetail(normalizeTmdbItem({ ...data, media_type: kind }, state.mode));
+                    openDetail(normalizeTmdbItem({ ...data, media_type: kind }, state.mode, 0), 0);
                 }
             } catch (e) {}
         }
