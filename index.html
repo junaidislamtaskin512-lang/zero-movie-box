@@ -1216,7 +1216,7 @@
             margin-bottom: 10px;
         }
 
-        /* 3-Option Reaction Poll Box (ভালো লাগছে / মোটামুটি / কম ভালো লাগছে) */
+        /* 3-Option Reaction Poll Box */
         .reaction-poll-box {
             background: var(--bg-panel);
             border: 1px solid rgba(6, 182, 212, 0.35);
@@ -1442,7 +1442,7 @@
             line-height: 1.25;
         }
 
-        /* Dynamic TV Season & Episode Picker */
+        /* Dynamic TV Series Season & Episode Picker */
         .tv-picker-box {
             display: none;
             background: var(--bg-panel);
@@ -1639,13 +1639,14 @@
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
+            align-items: center;
         }
 
         .srv-btn {
             background: var(--bg-card);
             color: #fff;
             border: 1px solid var(--line);
-            padding: 6px 11px;
+            padding: 6px 12px;
             border-radius: 6px;
             font-size: 11px;
             font-weight: 700;
@@ -2201,7 +2202,7 @@
         </div>
     </div>
 
-    <!-- Detail + Reactions + Player + Released Language Bar + 10s Seek + Rotate + Season/Episode + Cast + Related + Downloads Modal -->
+    <!-- Detail + Reactions + Player + Multi-Language Bar + 10s Seek + Rotate Modal -->
     <div class="detail-modal" id="detailModal">
         <div class="detail-sheet">
             <div class="detail-top">
@@ -2216,7 +2217,7 @@
             <h2 class="detail-title" id="dTitle">Title</h2>
             <div class="detail-sub" id="dSub">WEB-DL • HD</div>
 
-            <!-- ৩টি অপশন: ভালো লাগছে / মোটামুটি / কম ভালো লাগছে + কাউন্ট ও সামারি -->
+            <!-- ৩টি অপশন: ভালো লাগছে / মোটামুটি / কম ভালো লাগছে -->
             <div class="reaction-poll-box" id="reactionPollBox">
                 <div class="reaction-poll-title">দর্শকদের মতামত (কয়জন কোনটিতে চাপ দিয়েছেন):</div>
                 <div class="reaction-btns-grid">
@@ -2253,7 +2254,7 @@
 
             <div class="meta-3">
                 <div><strong>Type</strong><span id="mType">Movie</span></div>
-                <div><strong>Released Languages</strong><span id="mLang">BN</span></div>
+                <div><strong>Released Languages</strong><span id="mLang">Loading...</span></div>
                 <div><strong>Last Updated</strong><span id="mUpdated">Just now</span></div>
             </div>
 
@@ -2281,14 +2282,14 @@
                 </div>
             </div>
 
-            <!-- Player Box with Released Language Bar + 10s Seek + Rotate + Cinema Controls -->
+            <!-- Player Box: ১টি ফাস্ট মেইন সার্ভার + ১টি ব্যাকআপ সার্ভার + রিলিজড ভাষা বার -->
             <div class="watch-box" id="watchBox">
                 <div class="watch-header">
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                         <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">
                             <i class="fa-solid fa-play-circle"></i> WATCH ONLINE (<span id="srvLabel">Server 1</span>)
                         </span>
-                        <span class="ad-guard-pill"><i class="fa-solid fa-shield-check"></i> Lag-Free & Ad-Free Player</span>
+                        <span class="ad-guard-pill"><i class="fa-solid fa-bolt"></i> Fast & Working Server</span>
                     </div>
                     <div class="watch-btns">
                         <button type="button" class="seek-btn" onclick="seekPlayerSeconds(-10)" title="10 Seconds Backward">
@@ -2306,11 +2307,11 @@
                     </div>
                 </div>
 
-                <!-- যে কয়টা ভাষায় রিলিজড হয়েছে, ঠিক সেই কয়টা ভাষাই এখানে থাকবে -->
+                <!-- যে মুভি/শো যে কয়টা ভাষায় রিলিজ হয়েছে, সেই ভাষাগুলো এখানে থাকবে -->
                 <div class="lang-top-bar" id="langTopBar">
                     <div class="lang-bar-head">
                         <span><i class="fa-solid fa-language"></i> রিলিজড ভাষা (Released Languages)</span>
-                        <span id="activeLangBadge" style="font-size: 11px; color: var(--gold);">Bangla (BN)</span>
+                        <span id="activeLangBadge" style="font-size: 11px; color: var(--gold);">Loading...</span>
                     </div>
                     <div class="lang-pill-list" id="langPillList"></div>
                     <div class="lang-status-note" id="langStatusNote"></div>
@@ -2322,12 +2323,8 @@
                 </div>
 
                 <div class="srv-row" id="srvRow">
-                    <button type="button" class="srv-btn active" id="s1" onclick="switchServer(1)">Server 1</button>
-                    <button type="button" class="srv-btn" id="s2" onclick="switchServer(2)">Server 2</button>
-                    <button type="button" class="srv-btn" id="s3" onclick="switchServer(3)">Server 3</button>
-                    <button type="button" class="srv-btn" id="s4" onclick="switchServer(4)">Server 4</button>
-                    <button type="button" class="srv-btn" id="s5" onclick="switchServer(5)">Server 5</button>
-                    <button type="button" class="srv-btn" id="s6" onclick="switchServer(6)">Server 6</button>
+                    <button type="button" class="srv-btn active" id="s1" onclick="switchServer(1)">Server 1 (Main Fast)</button>
+                    <button type="button" class="srv-btn" id="s2" onclick="switchServer(2)">Server 2 (Backup)</button>
                 </div>
             </div>
 
@@ -2436,11 +2433,6 @@
 
         const NOW_MS = Date.now();
 
-        /*
-         * রিসেন্টলি আপডেট, রিলিজড ভাষা, ও 18+ Adult / Multi-Lang আইটেম:
-         * `updatedAtMs` দিলে কতক্ষণ আগে আপডেট হয়েছে (যেমন 8 মিনিট আগে, 45 মিনিট আগে, 3 ঘণ্টা আগে)
-         * তা কার্ড ও ডিটেইল পেজে স্বয়ংক্রিয়ভাবে দেখায় এবং রিসেন্টলি আপডেটেড সবার আগে থাকে।
-         */
         const CUSTOM_POSTS = [
             {
                 id: "recent-multi-1",
@@ -2635,10 +2627,11 @@
             heroTimer: null,
             activeSeries: "cid",
             currentItem: null,
+            activeServerNum: 1,
             selectedSeason: 1,
             selectedEpisode: 1,
-            selectedLangCode: "bn",
-            selectedLangLabel: "Bangla",
+            selectedLangCode: "en",
+            selectedLangLabel: "English",
             availableLangs: [],
             trailerKey: "",
             rotated: false,
@@ -2682,13 +2675,9 @@
             document.getElementById("countMid").textContent = data.mid;
             document.getElementById("countLow").textContent = data.low;
 
-            const btnGood = document.getElementById("reactBtnGood");
-            const btnMid = document.getElementById("reactBtnMid");
-            const btnLow = document.getElementById("reactBtnLow");
-
-            btnGood.classList.toggle("active-good", data.userChoice === "good");
-            btnMid.classList.toggle("active-mid", data.userChoice === "mid");
-            btnLow.classList.toggle("active-low", data.userChoice === "low");
+            document.getElementById("reactBtnGood").classList.toggle("active-good", data.userChoice === "good");
+            document.getElementById("reactBtnMid").classList.toggle("active-mid", data.userChoice === "mid");
+            document.getElementById("reactBtnLow").classList.toggle("active-low", data.userChoice === "low");
 
             const total = data.good + data.mid + data.low;
             const summary = document.getElementById("reactSummaryLine");
@@ -2790,8 +2779,8 @@
             return "HD";
         }
 
-        function buildHookLine(title, quality, lang, rating, updatedText) {
-            return `Why Watch: ${title} (${lang} • ${quality}) — ★ ${rating} • ${updatedText}`;
+        function buildHookLine(title, quality, langSummary, rating, updatedText) {
+            return `Why Watch: ${title} (${langSummary} • ${quality}) — ★ ${rating} • ${updatedText}`;
         }
 
         function getLangLabel(code) {
@@ -2799,7 +2788,12 @@
             return LANG_LABELS[c] || c.toUpperCase();
         }
 
-        function getExactReleasedCodes(m) {
+        /*
+         * কাস্টম আইটেমে `releasedLanguages` দেওয়া থাকলে সেটি নেয়,
+         * আর TMDb মুভি/শো হলে তার `original_language` এবং ডিটেইল/ট্রান্সলেশন থেকে
+         * পাওয়া রিলিজড/অ্যাভেইলেবল ভাষাগুলো (যেমন hi, bn, ta, te, en ইত্যাদি) সংগ্রহ করে।
+         */
+        function getInitialLangCodes(m) {
             const rawList = Array.isArray(m.releasedLanguages)
                 ? m.releasedLanguages
                 : (Array.isArray(m.languages) ? m.languages : []);
@@ -2812,8 +2806,11 @@
                 return Array.from(new Set(cleaned));
             }
 
-            const fallbackCode = String(m.original_language || m.lang || "en").trim().toLowerCase() || "en";
-            return [fallbackCode];
+            const orig = String(m.original_language || m.lang || "en").trim().toLowerCase() || "en";
+            if (orig === "bn") return ["bn", "hi", "en"];
+            if (orig === "hi") return ["hi", "bn", "ta", "te", "en"];
+            if (["ta", "te", "ml", "kn"].includes(orig)) return [orig, "hi", "te", "ta", "en"];
+            return [orig, "hi", "bn", "en"];
         }
 
         function normalizeTmdbItem(m, fallbackKind, idx = 0) {
@@ -2823,7 +2820,7 @@
                 : "movie";
             const date = m.release_date || m.first_air_date || "2026";
             const vote = m.vote_average ? Number(m.vote_average).toFixed(1) : (m.rating ? String(m.rating) : "7.5");
-            const releasedCodes = getExactReleasedCodes(m);
+            const releasedCodes = getInitialLangCodes(m);
             const primaryCode = releasedCodes[0] || "en";
             const quality = m.quality || getQuality(Number(vote) || 7.5);
             const poster = m.poster ? m.poster : (m.poster_path ? (IMG_500 + m.poster_path) : "");
@@ -2837,6 +2834,7 @@
                 title,
                 lang: primaryCode.toUpperCase(),
                 releasedCodes,
+                hasExplicitCustomLangs: Array.isArray(m.releasedLanguages) && m.releasedLanguages.length > 0,
                 quality,
                 rating: vote,
                 date,
@@ -2878,7 +2876,7 @@
             document.getElementById("heroBadge").textContent = `FEATURED #${idx + 1}`;
             document.getElementById("heroTitle").textContent = item.title;
             document.getElementById("heroMeta").textContent = `★ ${item.rating} • ${item.lang} • ${item.quality} • ${formatTimeAgo(item.updatedAtMs)}`;
-            document.getElementById("heroPlayBtn").onclick = () => openDetail(item);
+            document.getElementById("heroPlayBtn").onclick = () => openDetail(item, idx);
 
             const dots = document.getElementById("heroDots");
             dots.innerHTML = "";
@@ -2899,7 +2897,7 @@
                 const list = (data.results || []).filter(x => x.title || x.name);
                 if (!list.length) return;
                 const pick = list[Math.floor(Math.random() * list.length)];
-                openDetail(normalizeTmdbItem(pick, "movie", 0));
+                openDetail(normalizeTmdbItem(pick, "movie", 0), 0);
             } catch (e) {}
         }
 
@@ -2933,7 +2931,7 @@
                     const item = normalizeTmdbItem(m, state.mode, i);
                     const card = document.createElement("div");
                     card.className = "trend-card";
-                    card.onclick = () => openDetail(item);
+                    card.onclick = () => openDetail(item, i);
                     card.innerHTML = `
                         <span class="trend-rank">#${i + 1}</span>
                         <img src="${item.poster || 'https://via.placeholder.com/300x450/161c28/9ca3af?text=ZMB'}" alt="${esc(item.title)}" loading="lazy">
@@ -3166,7 +3164,6 @@
                     list = [...recentNorm, ...list];
                 }
 
-                // রিসেন্টলি আপডেটেড আইটেম সবার আগে রাখতে updatedAtMs অনুযায়ী সাজানো
                 list.sort((a, b) => (b.updatedAtMs || 0) - (a.updatedAtMs || 0));
 
                 state.totalPages = pages;
@@ -3217,7 +3214,7 @@
 
                 const card = document.createElement("div");
                 card.className = "m-card";
-                card.onclick = () => openDetail(item);
+                card.onclick = () => openDetail(item, idx);
 
                 card.innerHTML = `
                     <div class="m-poster">
@@ -3265,7 +3262,7 @@
                         row.className = "suggest-item";
                         row.onclick = () => {
                             drop.classList.remove("open");
-                            openDetail(norm);
+                            openDetail(norm, i);
                         };
                         row.innerHTML = `
                             <img src="${norm.poster || 'https://via.placeholder.com/80x110/161c28/9ca3af?text=ZMB'}" alt="${esc(norm.title)}">
@@ -3412,7 +3409,7 @@
                     embedUrls: ep.embedUrls || {},
                     sizes: ep.sizes,
                     dl: ep.dl || {}
-                }, "episode"));
+                }, "episode"), 0);
 
                 card.innerHTML = `
                     <div style="font-size: 11px; font-weight: 800; color: var(--gold);">Season ${sNum} • ${ep.ep}</div>
@@ -3462,7 +3459,7 @@
                 const prog = it.progress || 45;
                 const card = document.createElement("div");
                 card.className = "m-card";
-                card.onclick = () => openDetail(it);
+                card.onclick = () => openDetail(it, 0);
                 card.innerHTML = `
                     <div class="m-poster">
                         ${it.poster ? `<img src="${it.poster}" alt="${esc(it.title)}">` : `<div class="m-alt" style="display:flex;"><span>${esc(it.title)}</span></div>`}
@@ -3540,27 +3537,32 @@
             p.style.display = p.style.display === "none" ? "block" : "none";
         }
 
-        function renderReleasedLanguageBar(item) {
+        function renderReleasedLanguageBar(item, codesOverride = null) {
             const listEl = document.getElementById("langPillList");
             const badgeEl = document.getElementById("activeLangBadge");
             const noteEl = document.getElementById("langStatusNote");
             const metaLangEl = document.getElementById("mLang");
             if (!listEl) return;
 
-            const codes = getExactReleasedCodes(item);
+            const codes = Array.isArray(codesOverride) && codesOverride.length
+                ? Array.from(new Set(codesOverride.map(c => String(c).toLowerCase())))
+                : getInitialLangCodes(item);
+
+            item.releasedCodes = codes;
             const langs = codes.map(code => ({
                 code,
                 label: getLangLabel(code)
             }));
             state.availableLangs = langs;
 
-            const summary = langs.map(l => `${l.label} (${l.code.toUpperCase()})`).join(", ");
+            const summary = langs.map(l => l.label).join(" • ");
             if (metaLangEl) metaLangEl.textContent = summary;
 
-            const firstLang = langs[0];
-            state.selectedLangCode = firstLang.code;
-            state.selectedLangLabel = firstLang.label;
-            if (badgeEl) badgeEl.textContent = `${firstLang.label} (${firstLang.code.toUpperCase()})`;
+            const currentStillExists = langs.find(l => l.code === state.selectedLangCode);
+            const chosen = currentStillExists || langs[0];
+            state.selectedLangCode = chosen.code;
+            state.selectedLangLabel = chosen.label;
+            if (badgeEl) badgeEl.textContent = `${chosen.label} (${chosen.code.toUpperCase()})`;
 
             listEl.innerHTML = "";
             langs.forEach(langObj => {
@@ -3574,10 +3576,14 @@
             });
 
             if (noteEl) {
-                noteEl.textContent = `রিলিজড ভাষা (${langs.length}টি): ${summary}। যেকোনো ভাষায় ক্লিক করলে সেই ভাষার স্ট্রিম লোড হবে।`;
+                noteEl.textContent = `উপলব্ধ ভাষা (${langs.length}টি): ${summary}। নিজের পছন্দের ভাষায় ক্লিক করুন।`;
             }
         }
 
+        /*
+         * ১টি ফাস্ট মেইন সার্ভার (Server 1: vidsrc.to) ও ১টি ব্যাকআপ সার্ভার (Server 2: vidsrc.me)
+         * যেকোনো মুভি/সিরিজে "Not Found" বা লোডিং সমস্যা কমাতে কার্যকর লিংক তৈরি করে।
+         */
         function getStreamForReleasedLang(item, langCode, srvNum, sNum, eNum) {
             const code = String(langCode || item.releasedCodes?.[0] || "en").toLowerCase();
 
@@ -3596,12 +3602,11 @@
 
             const kind = item.mediaKind === "tv" ? "tv" : "movie";
             const path = kind === "tv" ? `${item.id}/${sNum}/${eNum}` : `${item.id}`;
-            if (srvNum === 1) return `https://vidsrc.xyz/embed/${kind}/${path}?ds_lang=${encodeURIComponent(code)}`;
-            if (srvNum === 2) return `https://vidsrc.to/embed/${kind}/${path}`;
-            if (srvNum === 3) return `https://vidsrc.pro/embed/${kind}/${path}`;
-            if (srvNum === 4) return `https://multiembed.mov/?video_id=${item.id}&tmdb=1${kind === "tv" ? `&s=${sNum}&e=${eNum}` : ""}`;
-            if (srvNum === 5) return `https://vidsrc.me/embed/${kind}/${path}`;
-            return `https://www.2embed.cc/embed${kind === "tv" ? "tv" : ""}/${kind === "tv" ? `${item.id}&s=${sNum}&e=${eNum}` : item.id}`;
+
+            if (srvNum === 2) {
+                return `https://vidsrc.me/embed/${kind}/${path}?ds_lang=${encodeURIComponent(code)}`;
+            }
+            return `https://vidsrc.to/embed/${kind}/${path}?ds_lang=${encodeURIComponent(code)}`;
         }
 
         function selectReleasedLanguage(langObj) {
@@ -3616,21 +3621,21 @@
             const badgeEl = document.getElementById("activeLangBadge");
             if (badgeEl) badgeEl.textContent = `${langObj.label} (${langObj.code.toUpperCase()})`;
 
-            const activeSrv = Number(document.querySelector(".srv-btn.active")?.id?.replace("s", "") || 1);
+            const srvNum = state.activeServerNum || 1;
             const url = getStreamForReleasedLang(
                 state.currentItem,
                 langObj.code,
-                activeSrv,
+                srvNum,
                 state.selectedSeason,
                 state.selectedEpisode
             );
 
             const noteEl = document.getElementById("langStatusNote");
             if (noteEl) {
-                noteEl.textContent = `${langObj.label} (${langObj.code.toUpperCase()}) ভাষা সক্রিয় করা হয়েছে এবং প্লেয়ার আপডেট হয়েছে।`;
+                noteEl.textContent = `${langObj.label} ভাষায় প্লেয়ার চালু করা হয়েছে।`;
             }
 
-            mountStream(url, `${langObj.label} • Server ${activeSrv}`);
+            mountStream(url, `${langObj.label} • Server ${srvNum}`);
         }
 
         function getServerUrl(num, item, sNum = 1, eNum = 1) {
@@ -3640,6 +3645,7 @@
         async function openDetail(item, idx = 0) {
             const normItem = normalizeTmdbItem(item, item.mediaKind || "movie", idx);
             state.currentItem = normItem;
+            state.activeServerNum = 1;
             state.selectedSeason = 1;
             state.selectedEpisode = 1;
             state.trailerKey = "";
@@ -3666,7 +3672,7 @@
             document.getElementById("dTitle").textContent = normItem.title;
             document.getElementById("dSub").textContent = `${normItem.lang} • ${normItem.quality} • ★ ${normItem.rating}`;
             document.getElementById("mType").textContent = normItem.type;
-            document.getElementById("dHook").textContent = buildHookLine(normItem.title, normItem.quality, normItem.lang, normItem.rating, agoText);
+            document.getElementById("dHook").textContent = buildHookLine(normItem.title, normItem.quality, normItem.releasedCodes.map(c => getLangLabel(c)).join(", "), normItem.rating, agoText);
             document.getElementById("dStory").textContent = normItem.overview;
 
             document.getElementById("sz480").textContent = normItem.sizes?.["480p"] || "780 MB";
@@ -3716,12 +3722,40 @@
         async function enrichTmdbDetails(item) {
             const kind = item.mediaKind === "tv" ? "tv" : "movie";
             try {
-                const [details, credits, videos, similar] = await Promise.all([
+                const [details, translations, credits, videos, similar] = await Promise.all([
                     fetch(`${API_BASE}/${kind}/${item.id}?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({})),
+                    fetch(`${API_BASE}/${kind}/${item.id}/translations?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ translations: [] })),
                     fetch(`${API_BASE}/${kind}/${item.id}/credits?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ cast: [] })),
                     fetch(`${API_BASE}/${kind}/${item.id}/videos?api_key=${TMDB_API_KEY}`).then(r => r.json()).catch(() => ({ results: [] })),
                     fetch(`${API_BASE}/${kind}/${item.id}/similar?api_key=${TMDB_API_KEY}&page=1`).then(r => r.json()).catch(() => ({ results: [] }))
                 ]);
+
+                // কাস্টম ল্যাঙ্গুয়েজ লিস্ট না থাকলে TMDb-এর আসল ভাষা ও ট্রান্সলেশন থেকে ভাষাগুলো সাজানো
+                if (!item.hasExplicitCustomLangs) {
+                    const collected = [];
+                    if (details.original_language) collected.push(String(details.original_language).toLowerCase());
+                    if (Array.isArray(details.spoken_languages)) {
+                        details.spoken_languages.forEach(sp => {
+                            if (sp.iso_639_1) collected.push(String(sp.iso_639_1).toLowerCase());
+                        });
+                    }
+                    if (Array.isArray(translations.translations)) {
+                        translations.translations.forEach(tr => {
+                            if (tr.iso_639_1) collected.push(String(tr.iso_639_1).toLowerCase());
+                        });
+                    }
+                    const supportedCodes = Array.from(new Set(collected)).filter(c => LANG_LABELS[c] || c === details.original_language);
+                    if (supportedCodes.length) {
+                        renderReleasedLanguageBar(item, supportedCodes);
+                        document.getElementById("dHook").textContent = buildHookLine(
+                            item.title,
+                            item.quality,
+                            supportedCodes.map(c => getLangLabel(c)).join(", "),
+                            item.rating,
+                            formatTimeAgo(item.updatedAtMs)
+                        );
+                    }
+                }
 
                 const yt = (videos.results || []).find(v => v.site === "YouTube" && (v.type === "Trailer" || v.type === "Teaser")) || (videos.results || []).find(v => v.site === "YouTube");
                 state.trailerKey = yt ? yt.key : "";
@@ -3818,7 +3852,7 @@
             const eNum = Number(document.getElementById("tvEpisodeSelect").value || 1);
             state.selectedSeason = sNum;
             state.selectedEpisode = eNum;
-            mountStream(getServerUrl(1, state.currentItem, sNum, eNum), `${state.selectedLangLabel} • S${sNum} E${eNum} • Server 1`);
+            mountStream(getServerUrl(state.activeServerNum || 1, state.currentItem, sNum, eNum), `${state.selectedLangLabel} • S${sNum} E${eNum} • Server ${state.activeServerNum || 1}`);
         }
 
         function playOfficialTrailer() {
@@ -3840,7 +3874,6 @@
             note.innerHTML = `সরাসরি শেয়ার লিংক কপি হয়েছে: <strong>${esc(shareUrl)}</strong>`;
         }
 
-        /* ১০ সেকেন্ড সামনে বা পিছে নেওয়ার ফাংশন */
         function seekPlayerSeconds(deltaSec) {
             const vid = document.getElementById("videoTag");
             const note = document.getElementById("dlNote");
@@ -3860,7 +3893,7 @@
                 frame.focus();
                 if (note) {
                     note.style.display = "block";
-                    note.textContent = `${deltaSec > 0 ? "+10s (সামনে)" : "-10s (পিছে)"} কমান্ড পাঠানো হয়েছে। নিজস্ব ভিডিও (.mp4/.m3u8) হলে সাথে সাথে ১০ সেকেন্ড সরে যাবে; বাইরের এম্বেড হলে প্লেয়ারের ভেতরের ←/→ বাটন ব্যবহার করুন।`;
+                    note.textContent = `${deltaSec > 0 ? "+10s (সামনে)" : "-10s (পিছে)"} কমান্ড পাঠানো হয়েছে।`;
                 }
             }
         }
@@ -3890,10 +3923,9 @@
 
         function switchServer(num) {
             if (!state.currentItem || state.currentItem.mediaKind === "episode") return;
-            for (let i = 1; i <= 6; i++) {
-                const btn = document.getElementById(`s${i}`);
-                if (btn) btn.classList.toggle("active", i === num);
-            }
+            state.activeServerNum = num;
+            document.getElementById("s1")?.classList.toggle("active", num === 1);
+            document.getElementById("s2")?.classList.toggle("active", num === 2);
             mountStream(getServerUrl(num, state.currentItem, state.selectedSeason, state.selectedEpisode), `${state.selectedLangLabel} • Server ${num}`);
         }
 
@@ -3902,7 +3934,6 @@
             document.body.classList.toggle("cinema-active", state.cinemaMode);
         }
 
-        /* সব ডিভাইসে কার্যকর রোটেট / ল্যান্ডস্কেপ ফাংশন */
         async function rotateLandscapePlayer() {
             const stage = document.getElementById("playerStage");
             state.rotated = !state.rotated;
@@ -3934,7 +3965,7 @@
 
             if (!targetUrl) {
                 note.style.display = "block";
-                note.innerHTML = `<strong>${qKey.toUpperCase()} (${state.currentItem.sizes?.[qKey] || ""})</strong> ডাউনলোড লিংক এখনো যুক্ত করা হয়নি। উপরে প্লেয়ারে সার্ভার ও ভাষা নির্বাচন করে সরাসরি দেখতে পারবেন।`;
+                note.innerHTML = `<strong>${qKey.toUpperCase()} (${state.currentItem.sizes?.[qKey] || ""})</strong> ডাউনলোড লিংক এখনো যুক্ত করা হয়নি। উপরে প্লেয়ারে ভাষা ও সার্ভার নির্বাচন করে সরাসরি দেখতে পারবেন।`;
                 return;
             }
 
